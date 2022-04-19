@@ -11,6 +11,10 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
 		return df
 	end
 
+	if size(df)[2] < 2
+		return df
+	end
+
 	if isnothing(x)
 		x = Symbol(names(df)[1])
 	end
