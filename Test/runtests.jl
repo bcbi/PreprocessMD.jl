@@ -23,14 +23,22 @@ B = long_to_wide(A)
 B = long_to_wide(A, "a", "b")
 @test B == C
 
+for x in [DataFrame(), DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )]
+	try
+		y = long_to_wide(x)
+	catch err
+		@test true
 #=
-x = DataFrame()
-y = long_to_wide(x)
-@test x == y
-
-A = DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )
-B = long_to_wide(A)
+		#if isa(err, DomainError))
+		if isa(err, MethodError))
+			@test true
+		else
+			@test false
+		end
 =#
+	end
+end
+
 
 
 
