@@ -1,2 +1,2 @@
-# Reformat.jl
-Reformat data structures in Julia
+# ReformatMD.jl
+Reformat biomedical data structures in Julia 
