@@ -1,5 +1,7 @@
 module Reformat
 
+export long_to_wide
+
 import DataFrames
 
 greet() = print("Hello World!")
