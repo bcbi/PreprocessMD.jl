@@ -7,6 +7,10 @@ using DataFrames
 greet() = print("Hello World!")
 
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
+	if isempty(df)
+		return df
+	end
+
 	if isnothing(x)
 		x = Symbol(names(df)[1])
 	end
