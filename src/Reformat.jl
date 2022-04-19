@@ -7,12 +7,15 @@ using DataFrames
 greet() = print("Hello World!")
 
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
+
 	if isempty(df)
-		return df
+		@warn "Reformat: DataFrame must not be empty"
+		return DataFrame()
 	end
 
-	if size(df)[2] < 2
-		return df
+	if size(df)[2] == 1
+		@warn "Reformat: DataFrame must have more than one column"
+		return DataFrame()
 	end
 
 	if isnothing(x)
