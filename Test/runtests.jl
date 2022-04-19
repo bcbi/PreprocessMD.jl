@@ -20,6 +20,9 @@ B = long_to_wide(A, :a)
 B = long_to_wide(A)
 @test B == C
 
+B = long_to_wide(A, "a", "b")
+@test B == C
+
 x = DataFrame()
 y = long_to_wide(x)
 @test x == y
@@ -38,6 +41,62 @@ US_coins = DataFrame(
 	mass = [2.500, 5.000, 2.268, 5.67],
 )
 =#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
