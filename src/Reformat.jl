@@ -11,7 +11,8 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
 		x = Symbol(names(df)[1])
 	end
 	if isnothing(y)
-		y = names(select(df, Not(x)))
+		#y = Symbol.(names(select(df, Not(x))))
+		y = Symbol(names(df)[2])
 	end
 
         B = unstack(combine(groupby(df, [x,y]), nrow => :count), x, y, :count, fill=0)
@@ -21,7 +22,7 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
         return B
 end
 
-end # module
+end # module Reformat
 
 
 
