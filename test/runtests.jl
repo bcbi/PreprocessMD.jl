@@ -12,6 +12,17 @@ using DataFrames
 	@test_throws MethodError qqx = long_to_wide("")
 	@test_throws MethodError qqx = long_to_wide("test")
 	@test_throws MethodError qqx = long_to_wide(long_to_wide())
+
+	@test_throws DomainError qqx = long_to_wide(DataFrame())
+
+	for x in [
+		DataFrame(),
+		DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3]),
+		]
+		@test_throws DomainError long_to_wide(x)
+	end
+		
+		
 end;
 
 A = DataFrame(a=[1,2], b=['x','y'])
@@ -30,22 +41,6 @@ B = long_to_wide(A)
 
 B = long_to_wide(A, "a", "b")
 @test B == C
-
-for x in [DataFrame(), DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )]
-	try
-		y = long_to_wide(x)
-	catch err
-		@test true
-#=
-		#if isa(err, DomainError))
-		if isa(err, MethodError))
-			@test true
-		else
-			@test false
-		end
-=#
-	end
-end
 
 x = DataFrame()
 
