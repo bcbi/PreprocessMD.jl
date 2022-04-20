@@ -4,8 +4,6 @@ export long_to_wide, wide_to_long
 
 using DataFrames
 
-greet() = print("Hello World!")
-
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
