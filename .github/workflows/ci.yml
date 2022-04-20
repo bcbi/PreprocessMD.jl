@@ -1,0 +1,21 @@
+name: CI
+on: [push, pull_request]
+jobs:
+	CI:
+	runs-on: ${{ matrix.os }}
+	strategy:
+	fail-fast: false
+	matrix:
+		julia-version: ["1.7", "1.6", "nightly"]
+		arch: x64
+		os: ["macos-latest", "ubuntu-latest"]
+	steps:
+		- uses: actions/checkout@v2
+		- uses: julia-actions/setup-julia@v1
+		with:
+		version: ${{ matrix.julia-version }}
+		arch: ${{ matrix.arch }}
+		- uses: julia-actions/julia-buildpkg@latest
+		- uses: julia-actions/julia-runtest@latest
+		- uses: julia-actions/julia-processcoverage@v1
+
