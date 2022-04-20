@@ -12,9 +12,6 @@ jobs:
       matrix:
         julia-version:
           - "1.7"
-          - "1.6"
-          - "1.5"
-          - "nightly"
         arch:
           - x64
         os:
