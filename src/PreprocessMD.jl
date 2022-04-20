@@ -8,7 +8,7 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
 
 	if size(df)[2] < 2
 		#@warn "ReformatMD: DataFrame must have at lease 2 columns"
-		throw(DomainError())
+		throw(DomainError(df))
 		return DataFrame()
 	end
 
