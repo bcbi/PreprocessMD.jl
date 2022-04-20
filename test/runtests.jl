@@ -3,13 +3,19 @@ using Test
 @test true
 
 using PreprocessMD
-
 using DataFrames
 
+@testset "Intended exceptions" begin
+	@test_throws MethodError qqx = long_to_wide()
+	@test_throws MethodError qqx = long_to_wide(12)
+	@test_throws MethodError qqx = long_to_wide(1.0)
+	@test_throws MethodError qqx = long_to_wide("")
+	@test_throws MethodError qqx = long_to_wide("test")
+	@test_throws MethodError qqx = long_to_wide(long_to_wide())
+end;
 
 A = DataFrame(a=[1,2], b=['x','y'])
 @test A == DataFrame(a=[1,2], b=['x','y'])
-
 
 A = DataFrame(a=[1,2,1], b=['x','y','y'])
 B = long_to_wide(A, :a, :b)
@@ -24,7 +30,6 @@ B = long_to_wide(A)
 
 B = long_to_wide(A, "a", "b")
 @test B == C
-
 
 for x in [DataFrame(), DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )]
 	try
@@ -45,14 +50,6 @@ end
 x = DataFrame()
 
 
-@testset "Intended exceptions" begin
-	@test_throws MethodError qqx = long_to_wide()
-	@test_throws MethodError qqx = long_to_wide(12)
-	@test_throws MethodError qqx = long_to_wide(1.0)
-	@test_throws MethodError qqx = long_to_wide("")
-	@test_throws MethodError qqx = long_to_wide("test")
-	@test_throws MethodError qqx = long_to_wide(long_to_wide())
-end;
 
 
 
