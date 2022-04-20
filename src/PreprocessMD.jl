@@ -1,4 +1,4 @@
-module ReformatMD
+module PreprocessMD
 
 export long_to_wide, wide_to_long
 
