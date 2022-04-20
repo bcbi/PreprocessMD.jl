@@ -5,18 +5,17 @@ using Test
 using PreprocessMD
 using DataFrames
 
-@testset "Intended exceptions" begin
-
-	# MethodError
-	for x in [12, 1.0, "", x -> x]
-		@test_throws MethodError long_to_wide(x)
+@testset verbose = true "Intended exceptions" begin
+	@testset "MethodError" begin
+		for x in [12, 1.0, "", x -> x]
+			@test_throws MethodError long_to_wide(x)
+		end
 	end
-
-	# DomainError
-	for x in [DataFrame(), DataFrame(x = [0,1,2,3])]
-		@test_throws DomainError long_to_wide(x)
+	@testset "DomainError" begin
+		for x in [DataFrame(), DataFrame(x = [0,1,2,3])]
+			@test_throws DomainError long_to_wide(x)
+		end
 	end
-		
 end;
 
 A = DataFrame(a=[1,2], b=['x','y'])
