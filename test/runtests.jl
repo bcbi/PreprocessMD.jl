@@ -6,22 +6,16 @@ using PreprocessMD
 using DataFrames
 
 @testset "Intended exceptions" begin
-	@test_throws MethodError qqx = long_to_wide()
-	@test_throws MethodError qqx = long_to_wide(12)
-	@test_throws MethodError qqx = long_to_wide(1.0)
-	@test_throws MethodError qqx = long_to_wide("")
-	@test_throws MethodError qqx = long_to_wide("test")
-	@test_throws MethodError qqx = long_to_wide(long_to_wide())
 
-	@test_throws DomainError qqx = long_to_wide(DataFrame())
+	# MethodError
+	for x in [12, 1.0, "", x -> x]
+		@test_throws MethodError long_to_wide(x)
+	end
 
-	for x in [
-		DataFrame(),
-		DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3]),
-		]
+	# DomainError
+	for x in [DataFrame(), DataFrame(x = [0,1,2,3])]
 		@test_throws DomainError long_to_wide(x)
 	end
-		
 		
 end;
 
