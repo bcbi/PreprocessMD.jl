@@ -6,8 +6,10 @@ using PreprocessMD
 
 using DataFrames
 
+
 A = DataFrame(a=[1,2], b=['x','y'])
 @test A == DataFrame(a=[1,2], b=['x','y'])
+
 
 A = DataFrame(a=[1,2,1], b=['x','y','y'])
 B = long_to_wide(A, :a, :b)
@@ -22,6 +24,7 @@ B = long_to_wide(A)
 
 B = long_to_wide(A, "a", "b")
 @test B == C
+
 
 for x in [DataFrame(), DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )]
 	try
@@ -38,6 +41,10 @@ for x in [DataFrame(), DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3] )]
 =#
 	end
 end
+
+x = DataFrame()
+@test_throws DomainError long_to_wide(x)
+
 
 
 
