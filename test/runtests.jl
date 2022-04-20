@@ -45,12 +45,14 @@ end
 x = DataFrame()
 
 
-@test_throws MethodError qqx = long_to_wide()
-@test_throws MethodError qqx = long_to_wide(12)
-@test_throws MethodError qqx = long_to_wide(1.0)
-@test_throws MethodError qqx = long_to_wide("")
-@test_throws MethodError qqx = long_to_wide("test")
-@test_throws MethodError qqx = long_to_wide(long_to_wide())
+@testset "Intended exceptions" begin
+	@test_throws MethodError qqx = long_to_wide()
+	@test_throws MethodError qqx = long_to_wide(12)
+	@test_throws MethodError qqx = long_to_wide(1.0)
+	@test_throws MethodError qqx = long_to_wide("")
+	@test_throws MethodError qqx = long_to_wide("test")
+	@test_throws MethodError qqx = long_to_wide(long_to_wide())
+end;
 
 
 
