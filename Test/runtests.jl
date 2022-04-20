@@ -2,7 +2,7 @@
 using Test
 @test true
 
-using ReformatMD
+using PreprocessMD
 
 using DataFrames
 

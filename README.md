@@ -1,2 +1,2 @@
-# ReformatMD.jl
-Reformat biomedical data structures in Julia 
+# PreprocessMD.jl
+Biomedically-informed data preprocessing for machine learning
