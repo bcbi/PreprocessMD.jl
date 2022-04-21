@@ -17,7 +17,7 @@ function get_data(file_name::String)::AbstractDataFrame
 	parse_conf!(conf)
 	path = retrieve(conf, "local", "med_code_directory")
 	
-	#file = joinpath(path, file_name)
+	#file = joinpath(homedir(), path, file_name)
 	file = "C:/Users/aharri69/Files/Desktop/DXCCSR_v2022-1/DXCCSR_v2022-1.CSV"
 	return File(file, header = 1) |> DataFrame
 end
