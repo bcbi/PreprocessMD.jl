@@ -3,8 +3,8 @@ using Test
 @test true
 
 using PreprocessMD
-using DataFrames
 
+using DataFrames
 
 @testset verbose = true "long_to_wide()" begin
 
@@ -55,8 +55,9 @@ US_coins = DataFrame(
 
 
 @testset verbose = true "get_data()" begin
-	@testset verbose = true "Simple examples" begin
-		@test df = get_data("DXCCSR_v2022-1.csv")
+	@testset verbose = true "Open files" begin
+		df = get_data("DXCCSR_v2022-1.CSV")
+		@test true
 	end
 end
 
