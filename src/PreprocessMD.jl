@@ -29,7 +29,7 @@ end
 
 wide_to_long = stack
 
-end # module ReformatMD
+end # module PreprocessMD
 
 
 
