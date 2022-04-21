@@ -3,6 +3,7 @@ module PreprocessMD
 export long_to_wide, wide_to_long
 
 using DataFrames
+using ConfParser
 
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
@@ -40,7 +41,7 @@ Return the contents of a CSV file as a DataFrame
 function get_data(file_name::String)::AbstractDataFrame
 	conf = ConfParse("./config.ini")
 	parse_conf!(conf)
-	path = retrieve(conf, "local", "input_directory")
+	path = retrieve(conf, "local", "med_code_directory")
 	
 	file = joinpath(path, file_name)
 	return File(file, header = 1) |> DataFrame
