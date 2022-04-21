@@ -54,6 +54,11 @@ US_coins = DataFrame(
 =#
 
 
+@testset verbose = true "get_data()" begin
+	@testset verbose = true "Simple examples" begin
+		@test df = get_data("DXCCSR_v2022-1.csv")
+	end
+end
 
 
 
