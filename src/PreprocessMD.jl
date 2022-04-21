@@ -32,6 +32,20 @@ wide_to_long = stack
 end # module PreprocessMD
 
 module PreprocessCSV
+
+"""
+	function get_data(file_name::String)::AbstractDataFrame
+Return the contents of a CSV file as a DataFrame
+"""
+function get_data(file_name::String)::AbstractDataFrame
+	conf = ConfParse("./config.ini")
+	parse_conf!(conf)
+	path = retrieve(conf, "local", "input_directory")
+	
+	file = joinpath(path, file_name)
+	return File(file, header = 1) |> DataFrame
+end
+
 end #module PreprocessCSV
 
 
