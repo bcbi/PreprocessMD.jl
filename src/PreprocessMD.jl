@@ -1,10 +1,16 @@
 
+
 module PreprocessMD
+
+
+end # module PreprocessMD
+
+module PreprocessCSV
 
 using CSV: File
 using DataFrames
 
-export get_data, long_to_wide, wide_to_long
+export long_to_wide, wide_to_long
 
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
@@ -30,11 +36,6 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
 end
 
 wide_to_long = stack
-
-end # module PreprocessMD
-
-module PreprocessCSV
-
 
 end #module PreprocessCSV
 
