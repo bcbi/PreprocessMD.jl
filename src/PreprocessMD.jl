@@ -8,15 +8,6 @@ module PreprocessMD
 end # module PreprocessMD
 
 
-# Example.jl Documentation
-
-```@meta
-CurrentModule = Example
-```
-
-```@docs
-func(x)
-```
 
 
 

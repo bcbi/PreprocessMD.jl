@@ -1,5 +1,8 @@
 push!(LOAD_PATH,"../src/")
 
-using Documenter
+using Documenter, PreprocessMD
 
 makedocs(sitename="PreprocessMD")
+
+# Example.jl Documentation
+

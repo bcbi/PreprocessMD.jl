@@ -8,6 +8,14 @@ CurrentModule = Example
 func(x)
 ```
 
+```@meta
+CurrentModule = Example
+```
+
+```@docs
+func(x)
+```
+
 
 
 
