@@ -7,21 +7,6 @@ using DataFrames
 
 export get_data, long_to_wide, wide_to_long
 
-
-"""
-	function get_data(file_name::String)::AbstractDataFrame
-Return the contents of a CSV file as a DataFrame
-"""
-function get_data(file_name::String)::AbstractDataFrame
-	conf = ConfParse(joinpath(pkgdir(PreprocessMD), "config.ini"))
-	parse_conf!(conf)
-	path = retrieve(conf, "local", "med_code_directory")
-	
-	#file = joinpath(homedir(), path, file_name)
-	file = "C:/Users/aharri69/Files/Desktop/DXCCSR_v2022-1/DXCCSR_v2022-1.CSV"
-	return File(file, header = 1) |> DataFrame
-end
-
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
