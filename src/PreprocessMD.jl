@@ -18,6 +18,8 @@ using DataFrames
 export long_to_wide, wide_to_long
 
 """
+    function long_to_wide(df::AbstractDataFrame [, x, y])::AbstractDataFrame
+
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
 Optional arguments `x` and `y` are columns of `df`.
