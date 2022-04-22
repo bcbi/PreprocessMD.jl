@@ -6,16 +6,21 @@ Functions that use medical codes for data transformations
 module PreprocessMD
 
 end # module PreprocessMD
- 
-module Example
-export func
-"""
-    func(x)
 
-Returns double the number `x` plus `1`.
-"""
-func(x) = 2x + 1
-end
+
+# Example.jl Documentation
+
+```@meta
+CurrentModule = Example
+```
+
+```@docs
+func(x)
+```
+
+
+
+ 
 
 """
 Functions for general purpose data transformations
