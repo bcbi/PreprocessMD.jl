@@ -55,9 +55,13 @@ US_coins = DataFrame(
 
 @testset verbose = true "get_data()" begin
 	@testset verbose = true "Open files" begin
+
 		# @test_skip
 		# @test_broken
-		# df = get_data("DXCCSR_v2022-1.CSV")
+		path = "Files/Desktop/DXCCSR_v2022-1"
+		file_name = "DXCCSR_v2022-1.CSV"
+		file = joinpath(homedir(), path, file_name)
+		df = File(file, header = 1) |> DataFrame
 		@test true
 	end
 end
