@@ -1,10 +1,15 @@
 
 
+"""
+Functions that use medical codes for data transformations
+"""
 module PreprocessMD
-
 
 end # module PreprocessMD
 
+"""
+Functions for general purpose data transformations
+"""
 module PreprocessCSV
 
 using CSV: File
@@ -12,6 +17,13 @@ using DataFrames
 
 export long_to_wide, wide_to_long
 
+"""
+Express the long format DataFrame `df` as a wide format DataFrame `B`.
+
+Optional arguments `x` and `y` are columns of `df`.
+The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
+Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
+"""
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
@@ -35,6 +47,9 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
         return B
 end
 
+"""
+Express a long format DataFrame as a wide format DataFrame.
+"""
 wide_to_long = stack
 
 end #module PreprocessCSV
