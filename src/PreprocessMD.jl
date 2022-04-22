@@ -10,22 +10,9 @@ export func
 """
     func(x)
 
-Returns double the number `x` plus `1`.
+Example function
 """
 func(x) = 2x + 1
-
-end # module PreprocessMD
-
-
-
-
-
- 
-
-"""
-Functions for general purpose data transformations
-"""
-module PreprocessCSV
 
 using CSV: File
 using DataFrames
@@ -33,7 +20,7 @@ using DataFrames
 export long_to_wide, wide_to_long
 
 """
-    function long_to_wide(df::AbstractDataFrame [, x, y])::AbstractDataFrame
+    function long_to_wide(df::AbstractDataFrame[, x, y])::AbstractDataFrame
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -69,7 +56,7 @@ Express a long format DataFrame as a wide format DataFrame.
 """
 wide_to_long = stack
 
-end #module PreprocessCSV
+end #module PreprocessMD
 
 
 
