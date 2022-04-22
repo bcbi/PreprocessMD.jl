@@ -1,7 +1,6 @@
 
 module PreprocessMD
 
-using ConfParser
 using CSV: File
 using DataFrames
 
