@@ -5,7 +5,6 @@ using Documenter, PreprocessMD
 makedocs(
 	sitename="PreprocessMD",
 	# root = PreprocessMD.package_directory("docs",),
-        pages = ["Home" => "index.md",]
 )
 
 deploydocs(
