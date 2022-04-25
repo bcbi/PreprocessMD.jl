@@ -15,9 +15,7 @@ jobs:
         arch:
           - x64
         os:
-          - windows-latest
           - ubuntu-latest
-          - macos-latest
     steps:
       - uses: actions/checkout@v2
       - uses: julia-actions/setup-julia@v1
