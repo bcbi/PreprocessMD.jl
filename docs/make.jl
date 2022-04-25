@@ -9,6 +9,7 @@ makedocs(
 deploydocs(
 	repo = "github.com/ashlinharris/PreprocessMD.jl.git",
 	versions = nothing,
+	deploy_config = "GitHubActions",
 )
 
 
