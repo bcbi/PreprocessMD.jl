@@ -13,7 +13,7 @@ deploydocs(
 	versions = nothing,
 	target = "build",
 	branch = "gh-pages",
-	devbranch = "master",
+	devbranch = "main",
 	devurl = "development",
 )
 
