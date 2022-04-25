@@ -11,9 +11,5 @@ makedocs(
 deploydocs(
 	repo = "github.com/ashlinharris/PreprocessMD.jl.git",
 	versions = nothing,
-	target = "build",
-	branch = "gh-pages",
-	devbranch = "main",
-	devurl = "development",
 )
 
