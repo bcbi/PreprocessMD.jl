@@ -8,7 +8,7 @@ makedocs(
 )
 
 deploydocs(
-	repo = "github.com/ashlinharris/PreprocessMD.jl.git",
+	repo = "github.com/ashlinharris/PreprocessMD.jl",
 	versions = nothing,
 )
 
