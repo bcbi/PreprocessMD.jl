@@ -7,8 +7,3 @@ makedocs(;
 	sitename="PreprocessMD",
 )
 
-deploydocs(
-	repo = "github.com/ashlinharris/PreprocessMD.jl",
-	versions = nothing,
-)
-
