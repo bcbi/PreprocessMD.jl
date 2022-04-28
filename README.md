@@ -4,6 +4,8 @@
 
 Medically-informed data preprocessing for machine learning
 
+Development is active on https://github.com/AshlinHarris/MLDemo. Once medical code features are implemented in the pipeline, functions will be incorporated into Preprocess.jl.
+
 <!-- Biomedical data sets are messy! 
 
 , and sources of bias can't always be known without clinical experience.
