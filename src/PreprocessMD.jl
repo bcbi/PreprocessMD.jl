@@ -5,15 +5,6 @@ Functions that use medical codes for data transformations
 """
 module PreprocessMD
 
-export func
-
-"""
-    func(x)
-
-Example function
-"""
-func(x) = 2x + 1
-
 using CSV: File
 using DataFrames
 
