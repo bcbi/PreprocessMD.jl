@@ -1,4 +1,6 @@
 # Generated files
 docs/build/
 Manifest.toml
+*.jl.cov
+*.jl.*.cov
 *.swp
