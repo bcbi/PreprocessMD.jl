@@ -1,3 +1,4 @@
-*.swp
+# Generated files
 docs/build/
-
+Manifest.toml
+*.swp
