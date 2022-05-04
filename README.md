@@ -1,9 +1,9 @@
 # PreprocessMD.jl
 
-[![Documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://ashlinharris.github.io/PreprocessMD.jl/stable/)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ashlinharris.github.io/PreprocessMD.jl/stable/)
+[![](https://img.shields.io/badge/docs-development-inactive.svg)](https://ashlinharris.github.io/PreprocessMD.jl/dev)
 [![Build Status](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl)
-
 
 Medically-informed data preprocessing for machine learning
 
