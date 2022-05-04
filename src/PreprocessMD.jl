@@ -8,10 +8,10 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export pivot_bool, wide_to_long
+export pivot, wide_to_long
 
 """
-    function pivot_bool(df::AbstractDataFrame[, x, y])::AbstractDataFrame
+    function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -19,7 +19,7 @@ Optional arguments `x` and `y` are columns of `df`.
 The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
-function pivot_bool(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
+function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
 		#@warn "DataFrame must have at least 2 columns"

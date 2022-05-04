@@ -45,6 +45,7 @@ using CSV: File
 
 end
 
+#=
 @testset verbose = true "wide_to_long()" begin
 
 	@testset verbose = true "Intended exceptions" begin
@@ -64,6 +65,7 @@ end
 		@test new_long == long
 	end
 end
+=#
 
 #=
 A = DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3], 
