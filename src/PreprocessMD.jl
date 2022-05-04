@@ -8,10 +8,10 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export long_to_wide, wide_to_long
+export pivot_bool, wide_to_long
 
 """
-    function long_to_wide(df::AbstractDataFrame[, x, y])::AbstractDataFrame
+    function pivot_bool(df::AbstractDataFrame[, x, y])::AbstractDataFrame
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -19,23 +19,23 @@ Optional arguments `x` and `y` are columns of `df`.
 The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
-function (df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
+function pivot_bool(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
 		#@warn "DataFrame must have at least 2 columns"
 		throw(DomainError(df))
 	end
 
-	if isnothing(x)
-		x = Symbol(names(df)[1])
+	if isnothing(newcols)
+		newcols = Symbol(names(df)[1])
 	end
 	if isnothing(y)
-		#y = Symbol.(names(select(df, Not(x))))
+		#y = Symbol.(names(select(df, Not(newcols))))
 		y = Symbol(names(df)[2])
 	end
 
-        B = unstack(combine(groupby(df, [x,y]), nrow => :count), x, y, :count, fill=0)
-        for q in names(select(B, Not(x)))
+        B = unstack(combine(groupby(df, [newcols,y]), nrow => :count), newcols, y, :count, fill=0)
+        for q in names(select(B, Not(newcols)))
                 B[!,q] = B[!,q] .!= 0
         end
         return B

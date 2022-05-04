@@ -7,17 +7,17 @@ using PreprocessMD
 using DataFrames
 using CSV: File
 
-@testset verbose = true "rotate()" begin
+@testset verbose = true "pivot()" begin
 
 	@testset verbose = true "Intended exceptions" begin
 		@testset "MethodError" begin
 			for x in [12, 1.0, "", x -> x]
-				@test_throws MethodError rotate(x)
+				@test_throws MethodError pivot(x)
 			end
 		end
 		@testset "DomainError" begin
 			for x in [DataFrame(), DataFrame(x = [0,1,2,3])]
-				@test_throws DomainError rotate(x)
+				@test_throws DomainError pivot(x)
 			end
 		end
 	end
@@ -26,17 +26,17 @@ using CSV: File
 		@test A == DataFrame(a=[1,2], b=['x','y'])
 
 		A = DataFrame(a=[1,2,1], b=['x','y','y'])
-		B = rotate(A, :a, :b)
+		B = pivot(A, :a, :b)
 		C = DataFrame(a=[1,2], x=[true,false], y=[true,true])
 		@test B == C
 
-		B = rotate(A, :a)
+		B = pivot(A, :a)
 		@test B == C
 
-		B = rotate(A)
+		B = pivot(A)
 		@test B == C
 
-		B = rotate(A, "a", "b")
+		B = pivot(A, "a", "b")
 		@test B == C
 
 
@@ -59,7 +59,7 @@ end
 		sort!(long)
 		display(long)
 
-		wide = rotate(long)
+		wide = pivot(long)
 		new_long = wide_to_long(wide)
 		@test new_long == long
 	end
