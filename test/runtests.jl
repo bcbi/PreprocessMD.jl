@@ -38,6 +38,27 @@ using CSV: File
 
 		B = long_to_wide(A, "a", "b")
 		@test B == C
+
+
+
+	end
+
+end
+
+@testset verbose = true "wide_to_long()" begin
+
+	@testset verbose = true "Intended exceptions" begin
+		@test true
+	end
+
+	@testset verbose = true "Simple examples" begin
+		long = DataFrame(
+		       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
+		       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w']
+		       )
+
+		wide = long_to_wide(long)
+		@test wide_to_long(wide) == long
 	end
 end
 
@@ -52,6 +73,11 @@ US_coins = DataFrame(
 	value = [1, 5, 10, 25] .// 100,
 	mass = [2.500, 5.000, 2.268, 5.67],
 )
+
+df=DataFrame(name=["aaa","bbb","ccc","ddd"], x=[1,3,4,3], y=[0,1,1,0], z=[0,1,0,1])
+
+
+
 =#
 
 @testset verbose = true "get_data()" begin
