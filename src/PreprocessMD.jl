@@ -1,9 +1,8 @@
 
-
 """
-Functions that use medical codes for data transformations
+Data transformations that are domain agnostic
 """
-module PreprocessMD
+module PreprocessML
 
 using CSV: File
 using DataFrames
@@ -46,68 +45,12 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         return B
 end
 
-end #module PreprocessMD
+end #module PreprocessML
 
+"""
+Medically informed data transformations
+"""
+module PreprocessMD
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+end #module PreprocessM.
