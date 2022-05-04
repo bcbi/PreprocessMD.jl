@@ -15,11 +15,11 @@ using CSV: File
 				@test_throws MethodError pivot(x)
 			end
 		end
+
 		@testset "DomainError" begin
 			for x in [
 				DataFrame(),
 				DataFrame(x = [0,1,2,3]),
-				DataFrame(x=[1],y=[2],z=["a"])
 			]
 				@test_throws DomainError pivot(x)
 			end
@@ -42,8 +42,6 @@ using CSV: File
 
 		B = pivot(A, "a", "b")
 		@test B == C
-
-
 
 	end
 
