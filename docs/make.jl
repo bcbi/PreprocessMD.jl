@@ -12,8 +12,9 @@ makedocs(;
 deploydocs(
 	repo="github.com/AshlinHarris/PreprocessMD.jl.git",
 	versions=[
-		"stable" => "v^",
-		"dev" => "v^",
+		"stable" => "v^", "v#.#",
+		"dev" => "dev",
+		"latest" => "dev",
 	],
 )
 
