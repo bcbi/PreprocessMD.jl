@@ -2,7 +2,7 @@
 """
 Data transformations that are domain agnostic
 """
-module PreprocessML
+module PreprocessMD
 
 using CSV: File
 using DataFrames
@@ -45,12 +45,12 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         return B
 end
 
-end #module PreprocessML
+end #module PreprocessMD
 
 """
 Medically informed data transformations
 """
-module PreprocessMD
+module PreprocessML
 
 
-end #module PreprocessM.
+end #module PreprocessML
