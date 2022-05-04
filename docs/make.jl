@@ -11,6 +11,6 @@ makedocs(;
 )
 
 deploydocs(;
-	repo="github.com/ashlinharris/PreprocessMD.jl",
+	repo="github.com/AshlinHarris/PreprocessMD.jl",
 )
 
