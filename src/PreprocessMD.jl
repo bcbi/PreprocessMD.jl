@@ -4,6 +4,8 @@ Medically informed data transformations
 """
 module PreprocessMD
 
+using CSV: File
+using DataFrames
 
 """
 Data transformations that are not directly contingent on medical data
