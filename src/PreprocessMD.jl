@@ -22,7 +22,7 @@ Column(s) `y` (all columns besides `x`, by default) become the column names of `
 function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
-		#@warn "ReformatMD: DataFrame must have at lease 2 columns"
+		#@warn "DataFrame must have at least 2 columns"
 		throw(DomainError(df))
 	end
 
