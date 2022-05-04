@@ -1,14 +1,16 @@
 # PreprocessMD.jl
 
+[![Documentation](https://img.shields.io/badge/docs-stable-blue.svg)](https://ashlinharris.github.io/PreprocessMD.jl/stable/)
 [![Build Status](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl)
+
 
 Medically-informed data preprocessing for machine learning
 
 Development is active on https://github.com/AshlinHarris/MLDemo. Once medical code features are implemented in the pipeline, functions will be incorporated into PreprocessMD.jl.
 
 <!--
-Buttons for documentation?
+Buttons for development documentation?
 
 Draft text
 Biomedical data sets are messy! 
