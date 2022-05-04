@@ -8,7 +8,7 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export pivot, wide_to_long
+export pivot
 
 """
     function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame
@@ -20,6 +20,11 @@ The single column `x` (the first column of `df`, by default) becomes the row nam
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
 function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
+
+	if size(df)[1] < 1
+		#@warn "DataFrame must have at least 1 row"
+		throw(DomainError(df))
+	end
 
 	if size(df)[2] < 2
 		#@warn "DataFrame must have at least 2 columns"
@@ -39,14 +44,6 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
                 B[!,q] = B[!,q] .!= 0
         end
         return B
-end
-
-"""
-Express a long format DataFrame as a wide format DataFrame.
-"""
-function wide_to_long(df::AbstractDataFrame)
-	B = stack(df)
-	return B
 end
 
 end #module PreprocessMD
