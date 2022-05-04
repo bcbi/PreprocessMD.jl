@@ -1,5 +1,3 @@
-#push!(LOAD_PATH,"../src/")
-
 using Documenter, PreprocessMD
 
 makedocs(;
@@ -10,7 +8,12 @@ makedocs(;
 	]
 )
 
-deploydocs(;
+#https://juliadocs.github.io/Documenter.jl/stable/lib/public/#Documenter.deploydocs
+deploydocs(
 	repo="github.com/AshlinHarris/PreprocessMD.jl.git",
+	versions=[
+		"stable" => "v^",
+		"dev" => "v^",
+	],
 )
 
