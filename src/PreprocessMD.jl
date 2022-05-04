@@ -4,16 +4,10 @@ Medically informed data transformations
 """
 module PreprocessMD
 
-end #module PreprocessMD
 
 """
 Data transformations that are not directly contingent on medical data
 """
-module PreprocessML
-
-using CSV: File
-using DataFrames
-
 export pivot
 
 """
@@ -52,5 +46,4 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         return B
 end
 
-end #module PreprocessML
-
+end #module PreprocessMD
