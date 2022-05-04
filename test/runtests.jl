@@ -54,11 +54,12 @@ end
 	@testset verbose = true "Simple examples" begin
 		long = DataFrame(
 		       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
-		       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w']
+		       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
 		       )
 
 		wide = long_to_wide(long)
-		@test wide_to_long(wide) == long
+		new_long = wide_to_long(wide)
+		@test new_long == long
 	end
 end
 
