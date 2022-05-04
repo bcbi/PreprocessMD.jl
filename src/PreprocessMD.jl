@@ -38,6 +38,7 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
         for q in names(select(B, Not(x)))
                 B[!,q] = B[!,q] .!= 0
         end
+	sort!(B)
         return B
 end
 

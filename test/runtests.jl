@@ -56,6 +56,8 @@ end
 		       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
 		       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
 		       )
+		sort!(long)
+		display(long)
 
 		wide = long_to_wide(long)
 		new_long = wide_to_long(wide)
