@@ -19,7 +19,7 @@ Optional arguments `x` and `y` are columns of `df`.
 The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
-function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
+function (df::AbstractDataFrame, x=nothing, y=nothing)::AbstractDataFrame
 
 	if size(df)[2] < 2
 		#@warn "DataFrame must have at least 2 columns"
@@ -38,14 +38,16 @@ function long_to_wide(df::AbstractDataFrame, x=nothing, y=nothing)::AbstractData
         for q in names(select(B, Not(x)))
                 B[!,q] = B[!,q] .!= 0
         end
-	sort!(B)
         return B
 end
 
 """
 Express a long format DataFrame as a wide format DataFrame.
 """
-wide_to_long = stack
+function wide_to_long(df::AbstractDataFrame)
+	B = stack(df)
+	return B
+end
 
 end #module PreprocessMD
 
