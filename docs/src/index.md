@@ -7,8 +7,8 @@
 
 
 ```@docs
-wide_to_long
-long_to_wide
+add_label_column!
+pivot
 ```
 
 ```@index
