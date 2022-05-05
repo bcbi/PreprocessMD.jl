@@ -82,9 +82,9 @@ using Test
 			@testset "MethodError" begin
 				y=DataFrame(x=[1,2,3],y=['a','b','c'])
 				for x in [12, 1.0, "", x -> x]
-					@test_throws MethodError append_target_column!(x, x)
-					@test_throws MethodError append_target_column!(x, y)
-					@test_throws MethodError append_target_column!(y, x)
+					@test_throws MethodError add_label_column!(x, x)
+					@test_throws MethodError add_label_column!(x, y)
+					@test_throws MethodError add_label_column!(y, x)
 				end
 			end
 		end
