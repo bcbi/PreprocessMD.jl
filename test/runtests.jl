@@ -42,18 +42,39 @@ end
 	add_label_column!(new, X, :name, :name, :LABEL)
 	@test new == results
 
-	new = deepcopy(short)
-	add_label_column!(new, X, :name, :name)
-	@test new == results
+	@testset verbose = true "Default options" begin
+		new = deepcopy(short)
+		add_label_column!(new, X, :name, :name)
+		@test new == results
 
-	new = deepcopy(short)
-	add_label_column!(new, X, :name)
-	@test new == results
+		new = deepcopy(short)
+		add_label_column!(new, X, :name)
+		@test new == results
 
-	new = deepcopy(short)
-	add_label_column!(new, X)
-	@test new == results
+		new = deepcopy(short)
+		add_label_column!(new, X)
+		@test new == results
+	end
 
+	@testset verbose = true "Bad options" begin
+
+		new = deepcopy(short)
+		@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
+
+#=
+		new = deepcopy(short)
+		add_label_column!(new, X, :name, :name)
+		@test new == results
+
+		new = deepcopy(short)
+		add_label_column!(new, X, :name)
+		@test new == results
+
+		new = deepcopy(short)
+		add_label_column!(new, X)
+		@test new == results
+=#
+	end
 end
 
 @testset verbose = true "pivot()" begin
