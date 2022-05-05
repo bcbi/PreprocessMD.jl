@@ -1,11 +1,12 @@
 
-using Test
-@test true
-
-using PreprocessMD
-
 using CSV: File
 using DataFrames
+using PreprocessMD
+using Test
+
+@testset verbose = true "Sanity check" begin
+	@test true
+end
 
 @testset verbose = true "pivot()" begin
 
