@@ -17,7 +17,23 @@ end
 	       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
 	       )
 	short = pivot(long)
+
+	X = DataFrame(
+		name=["aaa","bbb","ccc","ddd","eee"],
+		g=["AAA","BBB","CCC","DDD","EEE"],
+	)
+
+
+	#short |> display
+
+	add_target_column!(short, :TEST, X, :name)
+
+	#short |> display
+
 	@test true
+
+	
+
 end
 
 @testset verbose = true "pivot()" begin
