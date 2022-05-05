@@ -19,20 +19,20 @@ end
 	short = pivot(long)
 
 	X = DataFrame(
-		q=["aaa","bbb","ccc","ddd","eee"],
-		r=["AAA","BBB","CCC","DDD","EEE"],
+		name=["bbb","ccc","fff"],
+		r=["BBB","CCC","FFF"],
 	)
 
 
 	short |> display
+	X |> display
 
-	add_label_column!(short, :LABEL, X, :q)
+	add_label_column!(short, :LABEL, X, :name)
+
 
 	short |> display
 
 	@test true
-
-	
 
 end
 
