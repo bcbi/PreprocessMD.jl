@@ -22,9 +22,14 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
-	new_col_name::Symbol,
-	label_symb_to::Symbol, label_symb_from::Symbol,
+	label_symb_to=nothing, label_symb_from=nothing,
+	new_col_name=nothing,
 	)::Nothing
+
+	#if isnothing(label
+
+
+
 	insertcols!(to_df, new_col_name => [x[label_symb_to] in from_df[!,label_symb_from] for x in eachrow(to_df)])
 	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
