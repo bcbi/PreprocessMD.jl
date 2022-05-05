@@ -30,9 +30,6 @@ end
 		end
 	end
 	@testset verbose = true "Simple examples" begin
-		A = DataFrame(a=[1,2], b=['x','y'])
-		@test A == DataFrame(a=[1,2], b=['x','y'])
-
 		A = DataFrame(a=[1,2,1], b=['x','y','y'])
 		B = pivot(A, :a, :b)
 		C = DataFrame(a=[1,2], x=[true,false], y=[true,true])
