@@ -32,7 +32,19 @@ end
 
 	short |> display
 
-	@test true
+	results = DataFrame(
+		name=["aaa","bbb","ccc","eee"],
+		x=[ true, false, false, false,],
+		w=[ true,  true, false,  true,],
+		y=[ true, false,  true, false,],
+		z=[false, false,  true, false,],
+		q=[ true, false, false, false,],
+		a=[false, false,  true, false,],
+		LABEL=[false,  true,  true, false,],
+	)
+
+
+	@test short == results
 
 end
 
