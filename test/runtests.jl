@@ -39,16 +39,18 @@ end
 	)
 
 	@testset verbose = true "Intended exceptions" begin
+		@testset verbose = true "ArgumentError" begin
 
-		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
+			new = deepcopy(short)
+			@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
 
-		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
+			new = deepcopy(short)
+			@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
 
-		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
+			new = deepcopy(short)
+			@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
 
+		end
 	end
 
 	@testset verbose = true "Default options" begin
