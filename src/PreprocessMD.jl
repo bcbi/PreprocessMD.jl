@@ -43,7 +43,10 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 	end
 
 	# Pivot
-        B = unstack(combine(groupby(df, [newcols,y]), nrow => :count), newcols, y, :count, fill=0)
+        B = unstack(
+		combine(groupby(df, [newcols,y]), nrow => :count),
+		newcols, y, :count, fill=0,
+	)
         for q in names(select(B, Not(newcols)))
                 B[!,q] = B[!,q] .!= 0
         end
