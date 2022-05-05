@@ -7,6 +7,7 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
+import ScientificTypes:coerce!
 import ScientificTypesBase:OrderedFactor
 
 export add_label_column!, pivot
