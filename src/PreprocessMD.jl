@@ -7,7 +7,7 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export add_target_column!, pivot, pivot!
+export add_target_column!, pivot
 
 """
 Data transformations that are not directly contingent on biomedical knowledge
@@ -62,10 +62,13 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         end
         return B
 end
+#=
 function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 	df = pivot(df,x,y)
+	df |> display
 	return nothing
 end
+=#
 
 end #module PreprocessMD
 
