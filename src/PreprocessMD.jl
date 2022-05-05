@@ -26,6 +26,16 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	new_col_name=nothing,
 	)::Nothing
 
+	# Error checks
+	if size(df)[1] < 1
+		#@warn "DataFrame must have at least 1 row"
+		throw(DomainError(df))
+	end
+	if size(df)[2] < 1
+		#@warn "DataFrame must have at least 1 column"
+		throw(DomainError(df))
+	end
+
 	# Assign missing arguments
 	if isnothing(label_symb_to)
 		label_symb_to = Symbol(names(to_df)[1])
@@ -53,7 +63,7 @@ The single column `x` (the first column of `df`, by default) becomes the row nam
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
 function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
-	# Checks for DomainError
+	# Error checks
 	if size(df)[1] < 1
 		#@warn "DataFrame must have at least 1 row"
 		throw(DomainError(df))

@@ -39,16 +39,32 @@ end
 	)
 
 	@testset verbose = true "Intended exceptions" begin
+		@testset "DomainError" begin
+				@test_throws DomainError
+					add_label_column!(DataFrame(), DataFrame)
+				@test_throws DomainError
+					add_label_column!(
+						DataFrame(x = [0,1,2,3]),
+						DataFrame(x = [0,1,2,3]),
+					)
+			end
+		end
 		@testset verbose = true "ArgumentError" begin
 
 			new = deepcopy(short)
-			@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
+			@test_throws ArgumentError add_label_column!(
+				new, X, :name, :name, :w
+			)
 
 			new = deepcopy(short)
-			@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
+			@test_throws ArgumentError add_label_column!(
+				new, X, :name, :NONEXISTENT
+			)
 
 			new = deepcopy(short)
-			@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
+			@test_throws ArgumentError add_label_column!(
+				new, X, :NONEXISTENT
+			)
 
 		end
 	end
