@@ -242,6 +242,12 @@ version = "1.2.2"
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 
+[[deps.ScientificTypesBase]]
+git-tree-sha1 = "a8e18eb383b5ecf1b5e6fc237eb39255044fd92b"
+repo-subdir = "OrderedFactor"
+uuid = "30f210dd-8aff-4c5f-94ba-8e64358c1161"
+version = "3.0.0"
+
 [[deps.SentinelArrays]]
 deps = ["Dates", "Random"]
 git-tree-sha1 = "6a2f7d70512d205ca8c7ee31bfa9f142fe74310c"
