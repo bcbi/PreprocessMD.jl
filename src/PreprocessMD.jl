@@ -7,11 +7,21 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export pivot
+export add_target_column!, pivot, pivot!
 
 """
-Data transformations that are not directly contingent on medical data
+Data transformations that are not directly contingent on biomedical knowledge
 """
+
+"""
+	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+Add column to a DataFrame based on symbol presence in the target DataFrame 
+"""
+function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
+	coerce!(df, symb => OrderedFactor{2})
+	return nothing
+end
 
 """
     function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame
@@ -56,5 +66,64 @@ end
 function pivot!(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
 	df = pivot(df,x,y)
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 end #module PreprocessMD
