@@ -90,5 +90,30 @@ function dataframe_subset(df::AbstractDataFrame, check::Any, symb::Symbol)::Abst
 	return filter(symb => x -> isequal(x, check), df)
 end
 
+"""
+	function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+Decision tree classifier on a DataFrame over a given output
+"""
+function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+	y = df[:, output]
+	X = select(df, Not([:PATIENT, output]))
+	
+	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
+
+	# Evaluate model
+	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+	tree_model = Tree(max_depth = 3)
+	evaluate(tree_model, X, y) |> display
+
+	# Return scores
+	tree = machine(tree_model, X, y)
+	fit!(tree, rows = train)
+	yhat = predict(tree, X[test, :])
+	acc = accuracy(MLJ.mode.(yhat), y[test])
+	f1_score = f1score(MLJ.mode.(yhat), y[test])
+
+	return acc, f1_score
+end
+
 end #module EXPERIMENTAL
 =#
