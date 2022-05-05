@@ -17,7 +17,6 @@ end
 	       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
 	       )
 	short = pivot(long)
-	short |> display
 	@test true
 end
 
