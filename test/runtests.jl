@@ -20,17 +20,17 @@ end
 
 	X = DataFrame(
 		name=["aaa","bbb","ccc","ddd","eee"],
-		g=["AAA","BBB","CCC","DDD","EEE"],
+		q=["AAA","BBB","CCC","DDD","EEE"],
 	)
 
 
-	#short |> display
+	short |> display
 
-	#add_label_column!(short, :TEST, X, :name)
+	add_label_column!(short, :LABEL, X, :q)
 
-	#short |> display
+	short |> display
 
-	@test_skip true
+	@test true
 
 	
 
