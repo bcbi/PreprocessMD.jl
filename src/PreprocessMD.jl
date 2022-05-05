@@ -4,7 +4,6 @@ Medically informed data transformations
 """
 module PreprocessMD
 
-using CSV: File
 using DataFrames
 
 import ScientificTypes:coerce!
