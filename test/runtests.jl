@@ -11,7 +11,7 @@ using Test
 	@test true
 end
 
-@testset verbose = true "add_target_column!()" begin
+@testset verbose = true "add_label_column!()" begin
 	long = DataFrame(
 	       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
 	       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
@@ -26,7 +26,7 @@ end
 
 	#short |> display
 
-	#add_target_column!(short, :TEST, X, :name)
+	#add_label_column!(short, :TEST, X, :name)
 
 	#short |> display
 
