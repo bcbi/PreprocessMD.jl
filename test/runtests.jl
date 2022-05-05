@@ -26,11 +26,11 @@ end
 
 	#short |> display
 
-	add_target_column!(short, :TEST, X, :name)
+	#add_target_column!(short, :TEST, X, :name)
 
 	#short |> display
 
-	@test true
+	@test_skip true
 
 	
 
