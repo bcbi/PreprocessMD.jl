@@ -38,9 +38,18 @@ end
 		LABEL=[false,  true,  true, false,],
 	)
 
-	new = deepcopy(short)
-	add_label_column!(new, X, :name, :name, :LABEL)
-	@test new == results
+	@testset verbose = true "Intended exceptions" begin
+
+		new = deepcopy(short)
+		@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
+
+		new = deepcopy(short)
+		@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
+
+		new = deepcopy(short)
+		@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
+
+	end
 
 	@testset verbose = true "Default options" begin
 		new = deepcopy(short)
@@ -56,18 +65,13 @@ end
 		@test new == results
 	end
 
-	@testset verbose = true "Bad options" begin
 
+	@testset verbose = true "Simple examples" begin
 		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
-
-		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
-
-		new = deepcopy(short)
-		@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
-
+		add_label_column!(new, X, :name, :name, :LABEL)
+		@test new == results
 	end
+
 end
 
 @testset verbose = true "pivot()" begin
