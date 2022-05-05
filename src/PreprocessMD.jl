@@ -7,21 +7,12 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
-export add_target_column!, pivot, pivot!
+export pivot, pivot!
 
 """
 Data transformations that are not directly contingent on biomedical knowledge
 """
 
-"""
-	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-Add column to a DataFrame based on symbol presence in the target DataFrame 
-"""
-function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
-	coerce!(df, symb => OrderedFactor{2})
-	return nothing
-end
 
 """
     function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame
@@ -77,6 +68,16 @@ Functions that require significant and breaking changes before release
 module EXPERIMENTAL
 
 """
+	function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+Add column to a DataFrame based on symbol presence in the target DataFrame 
+"""
+function add_target_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+	insertcols!(df, symb => [x[:PATIENT] in target_df.PATIENT for x in eachrow(df)])
+	coerce!(df, symb => OrderedFactor{2})
+	return nothing
+end
+
+"""
 	function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
 Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
@@ -118,6 +119,7 @@ end
 """
 	function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
 Find top n values by occurence
+Useful for initial feasibility checks, but medical codes are not considered
 """
 function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
 	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
