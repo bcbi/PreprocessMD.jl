@@ -12,8 +12,6 @@ using Test
 end
 
 @testset verbose = true "add_label_column!()" begin
-
-
 	@testset verbose = true "Intended exceptions" begin
 		@testset "DomainError" begin
 				@test_throws DomainError add_label_column!(
@@ -44,27 +42,26 @@ end
 		end
 		@testset verbose = true "ArgumentError" begin
 
-	long = DataFrame(
-	       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
-	       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
-	       )
-	short = pivot(long)
-
-	X = DataFrame(
-		name=["bbb","ccc","fff"],
-		r=["BBB","CCC","FFF"],
-	)
-
-	results = DataFrame(
-		name=["aaa","bbb","ccc","eee"],
-		x=[ true, false, false, false,],
-		w=[ true,  true, false,  true,],
-		y=[ true, false,  true, false,],
-		z=[false, false,  true, false,],
-		q=[ true, false, false, false,],
-		a=[false, false,  true, false,],
-		LABEL=[false,  true,  true, false,],
-	)
+			# DataFrame definitions
+			long = DataFrame(
+			       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
+			       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
+			       )
+			short = pivot(long)
+			X = DataFrame(
+				name=["bbb","ccc","fff"],
+				r=["BBB","CCC","FFF"],
+			)
+			results = DataFrame(
+				name=["aaa","bbb","ccc","eee"],
+				x=[ true, false, false, false,],
+				w=[ true,  true, false,  true,],
+				y=[ true, false,  true, false,],
+				z=[false, false,  true, false,],
+				q=[ true, false, false, false,],
+				a=[false, false,  true, false,],
+				LABEL=[false,  true,  true, false,],
+			)
 
 			new = deepcopy(short)
 			@test_throws ArgumentError add_label_column!(
