@@ -11,6 +11,16 @@ using Test
 	@test true
 end
 
+@testset verbose = true "add_target_column!()" begin
+	long = DataFrame(
+	       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
+	       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
+	       )
+	short = pivot(long)
+	short |> display
+	@test true
+end
+
 @testset verbose = true "pivot()" begin
 
 	@testset verbose = true "Intended exceptions" begin
