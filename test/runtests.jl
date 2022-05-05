@@ -40,11 +40,30 @@ end
 
 	@testset verbose = true "Intended exceptions" begin
 		@testset "DomainError" begin
-				@test_throws DomainError add_label_column!(DataFrame(), DataFrame)
 				@test_throws DomainError add_label_column!(
-						DataFrame(x = []),
-						DataFrame(x = []),
-					)
+					DataFrame(),
+					DataFrame()
+				)
+				@test_throws DomainError add_label_column!(
+					DataFrame(),
+					DataFrame(x = []),
+				)
+				@test_throws DomainError add_label_column!(
+					DataFrame(x = []),
+					DataFrame(),
+				)
+				@test_throws DomainError add_label_column!(
+					DataFrame(x = []),
+					DataFrame(x = []),
+				)
+				@test_throws DomainError add_label_column!(
+					DataFrame(x = [1,2]),
+					DataFrame(x = []),
+				)
+				@test_throws DomainError add_label_column!(
+					DataFrame(x = []),
+					DataFrame(x = [1,2]),
+				)
 			end
 		end
 		@testset verbose = true "ArgumentError" begin
