@@ -13,10 +13,6 @@ import ScientificTypesBase:OrderedFactor
 export add_label_column!, pivot
 
 """
-Data transformations that are not directly contingent on biomedical knowledge
-"""
-
-"""
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 
