@@ -24,7 +24,7 @@ end
 	)
 
 
-	add_label_column!(short, X, :name, :name, :LABEL)
+	add_label_column!(short, X, :LABEL, :name, :name)
 
 	results = DataFrame(
 		name=["aaa","bbb","ccc","eee"],
