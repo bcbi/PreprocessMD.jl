@@ -190,39 +190,6 @@ using Test
 	end
 
 	#=
-	@testset verbose = true "pivot!()" begin
-
-		A = DataFrame(a=[1,2,1], b=['x','y','y'])
-		pivot!(A, :a, :b)
-		C = DataFrame(a=[1,2], x=[true,false], y=[true,true])
-		@test A == C
-
-	end
-	=#
-
-	#=
-	@testset verbose = true "wide_to_long()" begin
-
-		@testset verbose = true "Intended exceptions" begin
-			@test true
-		end
-
-		@testset verbose = true "Simple examples" begin
-			long = DataFrame(
-			       name=["aaa","bbb","aaa","ccc","ccc","aaa","aaa","ccc","eee"],
-			       val=['x',   'w',  'w',  'y',  'z',  'q',  'y',  'a',  'w'],
-			       )
-			sort!(long)
-			display(long)
-
-			wide = pivot(long)
-			new_long = wide_to_long(wide)
-			@test new_long == long
-		end
-	end
-	=#
-
-	#=
 	A = DataFrame(x = [0,1,5,1,2,5,4,3,8,6,9,9,5,1,1,3], 
 		y = ['a','b','c','a','a','a','c','d', 'a','b','c','a','a','a','c','d'],
 		z = ['1','3','3','2','1','4','4','5', '4','3','3','2','2','4','3','1'],
