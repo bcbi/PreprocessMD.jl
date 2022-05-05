@@ -26,20 +26,18 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	new_col_name=nothing,
 	)::Nothing
 
+	# Assign missing arguments
 	if isnothing(label_symb_to)
 		label_symb_to = Symbol(names(to_df)[1])
 	end
-
 	if isnothing(label_symb_from)
 		label_symb_from = label_symb_to
 	end
-
 	if isnothing(new_col_name)
 		new_col_name = :LABEL
 	end
 
-
-
+	# Add column
 	insertcols!(to_df, new_col_name => [x[label_symb_to] in from_df[!,label_symb_from] for x in eachrow(to_df)])
 	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
@@ -65,7 +63,7 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 		throw(DomainError(df))
 	end
 
-	# Checks for arguments
+	# Assign missing arguments
 	if isnothing(newcols)
 		newcols = Symbol(names(df)[1])
 	end
