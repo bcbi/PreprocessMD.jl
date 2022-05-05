@@ -10,4 +10,9 @@ ScientificTypes = "321657f4-b219-11e9-178b-2701a2544e81"
 ScientificTypesBase = "30f210dd-8aff-4c5f-94ba-8e64358c1161"
 
 [compat]
-DataFrames = "1.3.3"
+DataFrames = "v1.3.4"
+Documenter = "v0.27.16"
+ScientificTypes = "v2.0.1"
+ScientificTypesBase = "v2.0.0"
+
+
