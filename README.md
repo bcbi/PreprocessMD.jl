@@ -1,19 +1,36 @@
 # PreprocessMD.jl
 
+Medically-informed data preprocessing for machine learning
+
+
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://ashlinharris.github.io/PreprocessMD.jl/stable/)
-[![](https://img.shields.io/badge/docs-development-inactive.svg)](https://ashlinharris.github.io/PreprocessMD.jl/dev)
+[![](https://img.shields.io/badge/docs-development-blue.svg)](https://ashlinharris.github.io/PreprocessMD.jl/dev)
 [![Build Status](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/AshlinHarris/PreprocessMD.jl/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/AshlinHarris/PreprocessMD.jl)
 
-Medically-informed data preprocessing for machine learning
+## Summary
 
-Development is active on https://github.com/AshlinHarris/MLDemo. Once medical code features are implemented in the pipeline, functions will be incorporated into PreprocessMD.jl.
+Biomedical data sets are messy! 
+Biostatistical pipelines require many iterative stages of data manipulations.
+Following the definitions of Hu et al.[^cite], we consider **data preprocessing** to be project-level data manipulations,
+as opposed to the upstream **data cleaning** (e.g., error-corrections and standardizations) that is typically performed over an entire database,
+and the downstream **data preparing** (e.g., labelling and classification), which might vary across any number of analyses within a project.
+Are these categories exclusive?
+Let's just say we wouldn't use tree-based methods to separate them...
+
+[^cite]: Wu, Hulin, Jose Miguel Yamal, Ashraf Yaseen, and Vahed Maroufy, eds. Statistics and Machine Learning Methods for EHR Data: From Data Extraction to Data Analytics. CRC Press, 2020.
+
+## Planned features
+
+Planned features for PreprocessMD.jl include:
+* Summaries and feasibility checks
+* Feature extraction and derivation
+* Generate derived variables
+* Data imputation
+* Dimension reduction
 
 <!--
-Buttons for development documentation?
-
 Draft text
-Biomedical data sets are messy! 
 
 , and sources of bias can't always be known without clinical experience.
 
