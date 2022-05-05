@@ -24,8 +24,6 @@ end
 	)
 
 
-	add_label_column!(short, X, :name, :name, :LABEL)
-
 	results = DataFrame(
 		name=["aaa","bbb","ccc","eee"],
 		x=[ true, false, false, false,],
@@ -37,7 +35,21 @@ end
 		LABEL=[false,  true,  true, false,],
 	)
 
-	@test short == results
+	new = short
+	add_label_column!(new, X, :name, :name, :LABEL)
+	@test new == results
+
+	new = short
+	add_label_column!(new, X, :name, :name)
+	@test new == results
+
+	new = short
+	add_label_column!(new, X, :name)
+	@test new == results
+
+	new = short
+	add_label_column!(new, X)
+	@test new == results
 
 end
 

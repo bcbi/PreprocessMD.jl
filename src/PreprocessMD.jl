@@ -26,7 +26,17 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	new_col_name=nothing,
 	)::Nothing
 
-	#if isnothing(label
+	if isnothing(label_symb_to)
+		newcols = Symbol(names(to_df)[1])
+	end
+
+	if isnothing(label_symb_from)
+		newcols = label_symb_to
+	end
+
+	if isnothing(new_col_name)
+		new_col_name = :LABEL
+	end
 
 
 
