@@ -50,4 +50,8 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         return B
 end
 
+function pivot!(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
+	df = pivot(df,x,y)
+end
+
 end #module PreprocessMD
