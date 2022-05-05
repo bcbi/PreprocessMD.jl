@@ -42,8 +42,8 @@ end
 		@testset "DomainError" begin
 				@test_throws DomainError add_label_column!(DataFrame(), DataFrame)
 				@test_throws DomainError add_label_column!(
-						DataFrame(x = [0,1,2,3]),
-						DataFrame(x = [0,1,2,3]),
+						DataFrame(x = []),
+						DataFrame(x = []),
 					)
 			end
 		end
