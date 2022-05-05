@@ -24,13 +24,7 @@ end
 	)
 
 
-	short |> display
-	X |> display
-
 	add_label_column!(short, :LABEL, X, :name)
-
-
-	short |> display
 
 	results = DataFrame(
 		name=["aaa","bbb","ccc","eee"],
@@ -42,7 +36,6 @@ end
 		a=[false, false,  true, false,],
 		LABEL=[false,  true,  true, false,],
 	)
-
 
 	@test short == results
 
