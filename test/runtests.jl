@@ -61,19 +61,12 @@ end
 		new = deepcopy(short)
 		@test_throws ArgumentError add_label_column!(new, X, :name, :name, :w)
 
-#=
 		new = deepcopy(short)
-		add_label_column!(new, X, :name, :name)
-		@test new == results
+		@test_throws ArgumentError add_label_column!(new, X, :name, :NONEXISTENT)
 
 		new = deepcopy(short)
-		add_label_column!(new, X, :name)
-		@test new == results
+		@test_throws ArgumentError add_label_column!(new, X, :NONEXISTENT)
 
-		new = deepcopy(short)
-		add_label_column!(new, X)
-		@test new == results
-=#
 	end
 end
 
