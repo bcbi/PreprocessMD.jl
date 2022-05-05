@@ -52,6 +52,17 @@ end
 end
 
 #=
+@testset verbose = true "pivot!()" begin
+
+	A = DataFrame(a=[1,2,1], b=['x','y','y'])
+	pivot!(A, :a, :b)
+	C = DataFrame(a=[1,2], x=[true,false], y=[true,true])
+	@test A == C
+
+end
+=#
+
+#=
 @testset verbose = true "wide_to_long()" begin
 
 	@testset verbose = true "Intended exceptions" begin
