@@ -62,7 +62,7 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
         end
         return B
 end
-function pivot!(df::AbstractDataFrame, newcols=nothing, y=nothing)::Nothing
+function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 	df = pivot(df,x,y)
 	return nothing
 end
