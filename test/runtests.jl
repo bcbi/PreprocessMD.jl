@@ -39,7 +39,6 @@ using Test
 						DataFrame(x = [1,2]),
 					)
 			end
-		end
 		@testset verbose = true "ArgumentError" begin
 
 			# DataFrame definitions
