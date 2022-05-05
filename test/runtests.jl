@@ -78,6 +78,12 @@ using Test
 				)
 
 			end
+			@testset "MethodError" begin
+				for x in [12, 1.0, "", x -> x]
+					@test_throws MethodError append_target_column(x, DataFrame())
+					@test_throws MethodError append_target_column(DataFrame(), x)
+				end
+			end
 		end
 		@testset verbose = true "Default options" begin
 
