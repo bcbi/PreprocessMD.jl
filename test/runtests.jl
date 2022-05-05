@@ -19,8 +19,8 @@ end
 	short = pivot(long)
 
 	X = DataFrame(
-		name=["aaa","bbb","ccc","ddd","eee"],
-		q=["AAA","BBB","CCC","DDD","EEE"],
+		q=["aaa","bbb","ccc","ddd","eee"],
+		r=["AAA","BBB","CCC","DDD","EEE"],
 	)
 
 
