@@ -207,15 +207,5 @@ using Test
 
 	=#
 
-	@testset verbose = true "get_data()" begin
-		@testset verbose = true "Open files" begin
-			# @test_skip
-			# @test_broken
-			file = joinpath(pkgdir(PreprocessMD), "test", "example.csv")
-			df =File(file, header = 1) |> DataFrame
-			@test true
-		end
-	end
-
 end
 
