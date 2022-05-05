@@ -115,5 +115,14 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tu
 	return acc, f1_score
 end
 
+"""
+	function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
+Find top n values by occurence
+"""
+function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
+	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
+end
+
+
 end #module EXPERIMENTAL
 =#
