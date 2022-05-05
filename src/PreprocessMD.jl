@@ -7,10 +7,11 @@ module PreprocessMD
 using CSV: File
 using DataFrames
 
+export pivot
+
 """
 Data transformations that are not directly contingent on medical data
 """
-export pivot
 
 """
     function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame

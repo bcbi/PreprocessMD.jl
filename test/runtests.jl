@@ -4,8 +4,8 @@ using Test
 
 using PreprocessMD
 
-using DataFrames
 using CSV: File
+using DataFrames
 
 @testset verbose = true "pivot()" begin
 
