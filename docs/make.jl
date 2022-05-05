@@ -10,7 +10,7 @@ makedocs(;
 
 #https://juliadocs.github.io/Documenter.jl/stable/lib/public/#Documenter.deploydocs
 deploydocs(
-	repo="github.com/AshlinHarris/PreprocessMD.jl.git",
+	repo="github.com/BCBI/PreprocessMD.jl.git",
 	versions=[
 		"stable" => "v^",
 		"latest" => "v#.#",
