@@ -67,63 +67,28 @@ function pivot!(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractData
 	df = pivot(df,x,y)
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end #module PreprocessMD
+
+
+"""
+Functions that require significant and breaking changes before release
+"""
+#=
+module EXPERIMENTAL
+
+"""
+	function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
+Return a DataFrame subset
+For check::DataFrame, including only PATIENTs present in check
+Otherwise, Subset DataFrame of PATIENTs with condition
+Condition column name is given by symb
+"""
+function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
+	return filter(symb => x -> x in check.PATIENT, df)
+end
+function dataframe_subset(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
+	return filter(symb => x -> isequal(x, check), df)
+end
+
+end #module EXPERIMENTAL
+=#
