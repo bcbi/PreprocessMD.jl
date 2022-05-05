@@ -20,8 +20,8 @@ Data transformations that are not directly contingent on biomedical knowledge
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
 Add column to a DataFrame based on symbol presence in the target DataFrame 
 """
-function add_label_column!(target_df::AbstractDataFrame, new_col_name::Symbol, label_df::AbstractDataFrame, label_symb::Symbol)::Nothing
-	insertcols!(target_df, new_col_name => [x[label_symb] in label_df[!,label_symb] for x in eachrow(target_df)])
+function add_label_column!(target_df::AbstractDataFrame, new_col_name::Symbol, label_df::AbstractDataFrame, label_symb_target::Symbol, label_symb_label::Symbol)::Nothing
+	insertcols!(target_df, new_col_name => [x[label_symb_target] in label_df[!,label_symb_label] for x in eachrow(target_df)])
 	coerce!(target_df, new_col_name => OrderedFactor{2})
 	return nothing
 end
