@@ -27,13 +27,15 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	)::Nothing
 
 	# Error checks
-	if size(df)[1] < 1
-		#@warn "DataFrame must have at least 1 row"
-		throw(DomainError(df))
-	end
-	if size(df)[2] < 1
-		#@warn "DataFrame must have at least 1 column"
-		throw(DomainError(df))
+	for arg in [to_df, from_df]
+		if size(arg)[1] < 1
+			#@warn "DataFrame must have at least 1 row"
+			throw(DomainError(arg))
+		end
+		if size(arg)[2] < 1
+			#@warn "DataFrame must have at least 1 column"
+			throw(DomainError(arg))
+		end
 	end
 
 	# Assign missing arguments
