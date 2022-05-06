@@ -106,11 +106,6 @@ function repr(df::AbstractDataFrame)::Nothing
 	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
 	return nothing
 end
-function repr(df::DataFrame)::Nothing
-	# https://discourse.julialang.org/t/given-an-object-return-julia-code-that-defines-the-object/80579/12
-	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
-	return nothing
-end
 
 end #module PreprocessMD
 
