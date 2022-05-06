@@ -9,7 +9,7 @@ using DataFrames
 import ScientificTypes:coerce!
 import ScientificTypesBase:OrderedFactor
 
-export add_label_column!, pivot
+export add_label_column!, pivot, show
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
@@ -96,6 +96,12 @@ function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 	return nothing
 end
 =#
+
+function show(df::AbstractDataFrame)::Nothing
+	# https://discourse.julialang.org/t/given-an-object-return-julia-code-that-defines-the-object/80579/12
+	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
+	return nothing
+end
 
 end #module PreprocessMD
 
