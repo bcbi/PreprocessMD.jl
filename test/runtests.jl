@@ -13,6 +13,11 @@ import CSV: File
 		@test_throws UndefVarError NONEXISTENT_FUNCTION()
 	end
 
+	@testset verbose = true "File IO" begin
+	end
+
+
+
 	@testset verbose = true "add_label_column!()" begin
 		@testset verbose = true "Intended exceptions" begin
 			@testset "DomainError" begin
