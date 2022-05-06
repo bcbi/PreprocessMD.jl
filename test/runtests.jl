@@ -2,6 +2,7 @@
 using DataFrames
 using PreprocessMD
 using Test
+using Downloads
 
 import CSV: File
 
@@ -14,6 +15,8 @@ import CSV: File
 	end
 
 	@testset verbose = true "File IO" begin
+		#PERSON = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv") |> CSV.File |> DataFrame
+		
 	end
 
 
