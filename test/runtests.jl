@@ -3,8 +3,7 @@ using DataFrames
 using PreprocessMD
 using Test
 using Downloads
-
-import CSV: File
+using CSV
 
 
 @testset verbose = true "PreprocessMD" begin
@@ -15,11 +14,28 @@ import CSV: File
 	end
 
 	@testset verbose = true "File IO" begin
-		#PERSON = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv") |> CSV.File |> DataFrame
+
+		try
+			PERSON    = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv")               |> CSV.File |> DataFrame 
+			DRUG      = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv")        |> CSV.File |> DataFrame
+			CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame
+
+			@test PERSON |> summary == "100×18 DataFrame"
+			@test names(PERSON) == ["person_id", "gender_concept_id", "year_of_birth", "month_of_birth",
+							"day_of_birth", "birth_datetime", "race_concept_id", "ethnicity_concept_id",
+							"location_id", "provider_id", "care_site_id", "person_source_value", "gender_source_value",
+							"gender_source_concept_id", "race_source_value", "race_source_concept_id",
+							"ethnicity_source_value", "ethnicity_source_concept_id"
+							]
+
+			@test DRUG |> summary == "18229×23 DataFrame"
+			@test CONDITION |> summary == "16441×16 DataFrame"
+
+		catch
+			@test false	
+		end
 		
 	end
-
-
 
 	@testset verbose = true "add_label_column!()" begin
 		@testset verbose = true "Intended exceptions" begin
