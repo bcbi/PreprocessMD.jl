@@ -3,6 +3,8 @@ using DataFrames
 using PreprocessMD
 using Test
 
+import CSV: File
+
 
 @testset verbose = true "PreprocessMD" begin
 
