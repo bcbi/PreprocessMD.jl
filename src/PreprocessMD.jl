@@ -17,7 +17,7 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
-	label_symb_to=nothing, label_symb_from=nothing,
+	id=nothing,
 	new_col_name=nothing,
 	)::Nothing
 
@@ -34,18 +34,17 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	end
 
 	# Assign missing arguments
-	if isnothing(label_symb_to)
-		label_symb_to = Symbol(names(to_df)[1])
-	end
-	if isnothing(label_symb_from)
-		label_symb_from = label_symb_to
+	if isnothing(id)
+		id = Symbol(names(to_df)[1])
 	end
 	if isnothing(new_col_name)
 		new_col_name = :LABEL
 	end
 
 	# Add column
-	insertcols!(to_df, new_col_name => [x[label_symb_to] in from_df[!,label_symb_from] for x in eachrow(to_df)])
+	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_name => map( x -> x in from_df[!,id], to_df[!,id]))
+
 	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
 end
@@ -97,6 +96,7 @@ function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 end
 =#
 
+#=
 """
 	function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
@@ -106,6 +106,7 @@ function repr(df::AbstractDataFrame)::Nothing
 	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
 	return nothing
 end
+=#
 
 end #module PreprocessMD
 
