@@ -233,7 +233,7 @@ using CSV
 
 		# Add label data
 		DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
-		insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, temp.person_id))
+		insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, p_AGGREGATE.person_id))
 
 		@test size(p_AGGREGATE) == (100, 1877)
 
