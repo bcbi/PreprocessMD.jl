@@ -13,15 +13,27 @@ using CSV
 
     @testset verbose = true "File IO" begin
         try
-            PERSON = DataFrame(CSV.File.(Downloads.download(
-                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
-            )))
-            DRUG = DataFrame(CSV.File.(Downloads.download(
-                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
-            )))
-            CONDITION = DataFrame(CSV.File.(Downloads.download(
-                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
-            )))
+            PERSON = DataFrame(
+                CSV.File.(
+                    Downloads.download(
+                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
+                    )
+                ),
+            )
+            DRUG = DataFrame(
+                CSV.File.(
+                    Downloads.download(
+                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
+                    )
+                ),
+            )
+            CONDITION = DataFrame(
+                CSV.File.(
+                    Downloads.download(
+                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
+                    )
+                ),
+            )
 
             @test summary(PERSON) == "100×18 DataFrame"
             @test names(PERSON) == [
@@ -200,21 +212,33 @@ using CSV
     end
 
     @testset verbose = true "Full pipeline" begin
-        CONDITION = DataFrame(CSV.File.(Downloads.download(
-            "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
-        )))
-        DRUG = DataFrame(CSV.File.(Downloads.download(
-            "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
-        )))
+        CONDITION = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
+                )
+            ),
+        )
+        DRUG = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
+                )
+            ),
+        )
 
         p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id)
         p_DRUG = pivot(DRUG, :person_id, :drug_concept_id)
 
         p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG; on=:person_id)
 
-        DEATH = DataFrame(CSV.File.(Downloads.download(
-            "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv",
-        )))
+        DEATH = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv",
+                )
+            ),
+        )
         add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
         @test size(p_AGGREGATE) == (100, 1878)
