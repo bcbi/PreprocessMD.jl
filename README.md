@@ -12,15 +12,20 @@ Medically-informed data preprocessing for machine learning
 
 Biomedical data sets are messy! 
 Biostatistical pipelines require many iterative stages of data manipulations.
-Following the definitions of Hu et al.[^cite], we consider **data preprocessing** to be project-level data manipulations,
-as opposed to the upstream **data cleaning** (e.g., error-corrections and standardizations) that is typically performed over an entire database,
-and the downstream **data preparing** (e.g., labelling and classification), which might vary across any number of analyses within a project.
+Following the definitions of Hu et al.[^cite], we consider *data preprocessing* to be project-level data manipulations,
+as opposed to the upstream *data cleaning* (e.g., error-corrections and standardizations) that is typically performed over an entire database,
+and the downstream *data preparing* (e.g., labelling and classification), which might vary across any number of analyses within a project.
 Are these categories exclusive?
 Let's just say we wouldn't use tree-based methods to separate them...
 
 [^cite]: Wu, Hulin, Jose Miguel Yamal, Ashraf Yaseen, and Vahed Maroufy, eds. Statistics and Machine Learning Methods for EHR Data: From Data Extraction to Data Analytics. CRC Press, 2020.
 
 ## Example Usage
+
+Currently, **PreprocessMD.jl** offers two functions, `pivot()` and `add_label_column()`, as
+we have not been able to find a robust API for both of these operations.
+The scope of this package is medical data preprocessing, and our intended use case is the OMOP Common Data Format.
+We will develop functions that are specific to biomedical research but general enough for widespread use. 
 
 ```
 using CSV
@@ -50,10 +55,10 @@ insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, temp.person_i
 
 ## Planned features
 
-Planned features for PreprocessMD.jl include:
+Planned features for **PreprocessMD.jl** include:
 * Summaries and feasibility checks
-* Feature extraction and derivation
-* Generate derived variables
+* Feature extraction
+* Variable derivation
 * Data imputation
 * Dimension reduction
 
