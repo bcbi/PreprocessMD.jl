@@ -5,7 +5,7 @@ module PreprocessMD
 
 using DataFrames: AbstractDataFrame
 using DataFrames: Not
-using DataFrames: combine 
+using DataFrames: combine
 using DataFrames: groupby
 using DataFrames: insertcols!
 using DataFrames: nrow
