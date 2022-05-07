@@ -1,17 +1,24 @@
+import PreprocessMD
 
-using DataFrames
-using PreprocessMD
-using Test
-using Downloads
-using CSV
+import Aqua
+import DataFrames
+import Test
+import Downloads
+import CSV
 
-@testset verbose = true "PreprocessMD" begin
-    @testset verbose = true "Sanity check" begin
-        @test true
-        @test_throws UndefVarError NONEXISTENT_FUNCTION()
-    end
+using PreprocessMD: add_label_column!
+using PreprocessMD: pivot
 
-    @testset verbose = true "File IO" begin
+using DataFrames: DataFrame
+using DataFrames: innerjoin
+using DataFrames: summary
+using Test: @testset
+using Test: @test
+using Test: @test_throws
+using Test: @test_skip
+
+@testset "PreprocessMD" begin
+    @testset "File IO" begin
         try
             PERSON = DataFrame(
                 CSV.File.(
@@ -65,8 +72,8 @@ using CSV
         end
     end
 
-    @testset verbose = true "add_label_column!()" begin
-        @testset verbose = true "Intended exceptions" begin
+    @testset "add_label_column!()" begin
+        @testset "Intended exceptions" begin
             @testset "DomainError" begin
                 @test_throws DomainError add_label_column!(DataFrame(), DataFrame())
                 @test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]))
@@ -81,7 +88,7 @@ using CSV
                     DataFrame(; x=[]), DataFrame(; x=[1, 2])
                 )
             end
-            @testset verbose = true "ArgumentError" begin
+            @testset "ArgumentError" begin
 
                 # DataFrame definitions
                 long = DataFrame(;
@@ -125,7 +132,7 @@ using CSV
                 end
             end
         end
-        @testset verbose = true "Default options" begin
+        @testset "Default options" begin
 
             # DataFrame definitions
             long = DataFrame(;
@@ -154,7 +161,7 @@ using CSV
             @test new == results
         end
 
-        @testset verbose = true "Simple examples" begin
+        @testset "Simple examples" begin
 
             # DataFrame definitions
             long = DataFrame(;
@@ -180,8 +187,8 @@ using CSV
             @test new == results
         end
     end
-    @testset verbose = true "pivot()" begin
-        @testset verbose = true "Intended exceptions" begin
+    @testset "pivot()" begin
+        @testset "Intended exceptions" begin
             @testset "MethodError" begin
                 for x in [12, 1.0, "", x -> x]
                     @test_throws MethodError pivot(x)
@@ -194,7 +201,7 @@ using CSV
                 end
             end
         end
-        @testset verbose = true "Simple examples" begin
+        @testset "Simple examples" begin
             A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
             B = pivot(A, :a, :b)
             C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
@@ -211,7 +218,7 @@ using CSV
         end
     end
 
-    @testset verbose = true "Full pipeline" begin
+    @testset "Full pipeline" begin
         CONDITION = DataFrame(
             CSV.File.(
                 Downloads.download(
@@ -242,5 +249,10 @@ using CSV
         add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
         @test size(p_AGGREGATE) == (100, 1878)
+    end
+
+    @testset "Aqua.jl" begin
+        # Aqua.test_all(PreprocessMD) # TODO: uncomment this line
+        Aqua.test_all(PreprocessMD; ambiguities = false) # TODO: delete this line
     end
 end
