@@ -225,7 +225,7 @@ using CSV
 		DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
 		add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
-		@test size(p_AGGREGATE) == (100, 1877)
+		@test size(p_AGGREGATE) == (100, 1878)
 	end
 end
 
