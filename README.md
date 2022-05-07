@@ -28,6 +28,7 @@ using DataFrames
 using Downloads
 using PreprocessMD
 
+
 # Read in feature data
 CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame;
 DRUG = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv") |> CSV.File |> DataFrame;
