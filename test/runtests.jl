@@ -137,16 +137,13 @@ using CSV
 			)
 			new = deepcopy(short)
 
-			add_label_column!(new, X, :name, :name)
-			@test new == results
-
-			new = deepcopy(short)
-			add_label_column!(new, X, :name)
+			add_label_column!(new, X, :name,)
 			@test new == results
 
 			new = deepcopy(short)
 			add_label_column!(new, X)
 			@test new == results
+
 		end
 
 		@testset verbose = true "Simple examples" begin
