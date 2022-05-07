@@ -1,7 +1,10 @@
 using Documenter, PreprocessMD
 
 makedocs(;
-    authors="Ashlin Harris", sitename="PreprocessMD.jl", pages=["home" => "index.md"]
+    authors="Ashlin Harris",
+    sitename="PreprocessMD.jl",
+    pages=["home" => "index.md"],
+    strict=true,
 )
 
 #https://juliadocs.github.io/Documenter.jl/stable/lib/public/#Documenter.deploydocs
