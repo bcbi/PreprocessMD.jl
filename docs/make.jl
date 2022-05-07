@@ -1,4 +1,4 @@
-import PreprocessMD
+using PreprocessMD: PreprocessMD
 
 using Documenter: HTML
 using Documenter: makedocs
@@ -14,13 +14,8 @@ makedocs(;
         canonical="https://bcbi.github.io/PreprocessMD.jl",
         assets=String[],
     ),
-    pages=[
-        "Home" => "index.md",
-    ],
+    pages=["Home" => "index.md"],
     strict=true,
 )
 
-deploydocs(;
-    repo="github.com/bcbi/PreprocessMD.jl",
-    devbranch="main",
-)
+deploydocs(; repo="github.com/bcbi/PreprocessMD.jl", devbranch="main")
