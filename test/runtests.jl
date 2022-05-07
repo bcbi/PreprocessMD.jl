@@ -1,10 +1,10 @@
-import PreprocessMD
+using PreprocessMD: PreprocessMD
 
-import Aqua
-import DataFrames
-import Test
-import Downloads
-import CSV
+using Aqua: Aqua
+using DataFrames: DataFrames
+using Test: Test
+using Downloads: Downloads
+using CSV: CSV
 
 using PreprocessMD: add_label_column!
 using PreprocessMD: pivot
@@ -253,6 +253,6 @@ using Test: @test_skip
 
     @testset "Aqua.jl" begin
         # Aqua.test_all(PreprocessMD) # TODO: uncomment this line
-        Aqua.test_all(PreprocessMD; ambiguities = false) # TODO: delete this line
+        Aqua.test_all(PreprocessMD; ambiguities=false) # TODO: delete this line
     end
 end
