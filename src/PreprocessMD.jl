@@ -45,7 +45,9 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	end
 
 	# Add column
-	insertcols!(to_df, new_col_name => [x[label_symb_to] in from_df[!,label_symb_from] for x in eachrow(to_df)])
+	#insertcols!(to_df, new_col_name => [x[label_symb_to] in from_df[!,label_symb_from] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_name => map( x -> x in from_df[!,label_symb_from], to_df[!,label_symb_to]))
+
 	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
 end
