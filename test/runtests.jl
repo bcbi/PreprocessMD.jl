@@ -213,5 +213,31 @@ using CSV
 		end
 	end
 
+	@testset verbose = true "Full pipeline" begin
+		using CSV
+		using DataFrames
+		using Downloads
+		using PreprocessMD
+
+		# Read in feature data
+		CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame;
+		DRUG = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv") |> CSV.File |> DataFrame;
+
+		# Pivot feature data (1 person per row, 1 Concept per column, 1 value per cell)
+		p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id);
+		p_DRUG = pivot(DRUG, :person_id, :drug_concept_id);
+
+		# Combine feature data 
+		p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
+
+
+		# Add label data
+		DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
+		insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, temp.person_id))
+
+		@test size(p_AGGREGATE) == (100, 1877)
+
+		# Implement machine learning model...
+	end
 end
 
