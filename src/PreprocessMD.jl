@@ -37,9 +37,6 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	if isnothing(id)
 		id = Symbol(names(to_df)[1])
 	end
-	if isnothing(id)
-		id = id
-	end
 	if isnothing(new_col_name)
 		new_col_name = :LABEL
 	end
