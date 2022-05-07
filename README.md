@@ -20,6 +20,26 @@ Let's just say we wouldn't use tree-based methods to separate them...
 
 [^cite]: Wu, Hulin, Jose Miguel Yamal, Ashraf Yaseen, and Vahed Maroufy, eds. Statistics and Machine Learning Methods for EHR Data: From Data Extraction to Data Analytics. CRC Press, 2020.
 
+## Example Usage
+
+```
+using CSV
+using DataFrames
+using Downloads
+using PreprocessMD
+
+# Read in data
+CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame;
+DRUG = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv") |> CSV.File |> DataFrame;
+
+# Pivot data (1 person per row, 1 Concept per column, 1 value per cell)
+p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id);
+p_DRUG = pivot(DRUG, :person_id, :drug_concept_id);
+
+# Combine data 
+p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
+```
+
 ## Planned features
 
 Planned features for PreprocessMD.jl include:
