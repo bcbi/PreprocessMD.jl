@@ -7,15 +7,10 @@ import Downloads
 import CSV
 
 using DataFrames: DataFrame
-using Test: @testset, @test
+using Test: @testset, @test, @test_throws
 
-@testset verbose = true "PreprocessMD" begin
-    @testset verbose = true "Sanity check" begin
-        @test true
-        @test_throws UndefVarError NONEXISTENT_FUNCTION()
-    end
-
-    @testset verbose = true "File IO" begin
+@testset "PreprocessMD" begin
+    @testset "File IO" begin
         try
             PERSON = DataFrame(
                 CSV.File.(
@@ -69,8 +64,8 @@ using Test: @testset, @test
         end
     end
 
-    @testset verbose = true "add_label_column!()" begin
-        @testset verbose = true "Intended exceptions" begin
+    @testset "add_label_column!()" begin
+        @testset "Intended exceptions" begin
             @testset "DomainError" begin
                 @test_throws DomainError add_label_column!(DataFrame(), DataFrame())
                 @test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]))
@@ -85,7 +80,7 @@ using Test: @testset, @test
                     DataFrame(; x=[]), DataFrame(; x=[1, 2])
                 )
             end
-            @testset verbose = true "ArgumentError" begin
+            @testset "ArgumentError" begin
 
                 # DataFrame definitions
                 long = DataFrame(;
@@ -129,7 +124,7 @@ using Test: @testset, @test
                 end
             end
         end
-        @testset verbose = true "Default options" begin
+        @testset "Default options" begin
 
             # DataFrame definitions
             long = DataFrame(;
@@ -158,7 +153,7 @@ using Test: @testset, @test
             @test new == results
         end
 
-        @testset verbose = true "Simple examples" begin
+        @testset "Simple examples" begin
 
             # DataFrame definitions
             long = DataFrame(;
@@ -184,8 +179,8 @@ using Test: @testset, @test
             @test new == results
         end
     end
-    @testset verbose = true "pivot()" begin
-        @testset verbose = true "Intended exceptions" begin
+    @testset "pivot()" begin
+        @testset "Intended exceptions" begin
             @testset "MethodError" begin
                 for x in [12, 1.0, "", x -> x]
                     @test_throws MethodError pivot(x)
@@ -198,7 +193,7 @@ using Test: @testset, @test
                 end
             end
         end
-        @testset verbose = true "Simple examples" begin
+        @testset "Simple examples" begin
             A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
             B = pivot(A, :a, :b)
             C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
@@ -215,7 +210,7 @@ using Test: @testset, @test
         end
     end
 
-    @testset verbose = true "Full pipeline" begin
+    @testset "Full pipeline" begin
         CONDITION = DataFrame(
             CSV.File.(
                 Downloads.download(
