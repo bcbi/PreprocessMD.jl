@@ -99,6 +99,7 @@ function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 end
 =#
 
+#=
 """
 	function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
@@ -108,6 +109,7 @@ function repr(df::AbstractDataFrame)::Nothing
 	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
 	return nothing
 end
+=#
 
 end #module PreprocessMD
 
