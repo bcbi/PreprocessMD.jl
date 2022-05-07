@@ -10,6 +10,7 @@ using PreprocessMD: add_label_column!
 using PreprocessMD: pivot
 
 using DataFrames: DataFrame
+using DataFrames: innerjoin
 using DataFrames: summary
 using Test: @testset
 using Test: @test
