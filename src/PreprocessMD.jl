@@ -1,19 +1,24 @@
-
 """
 Medically informed data transformations
 """
 module PreprocessMD
 
-using DataFrames
-
-import ScientificTypes: coerce!
-import ScientificTypesBase: OrderedFactor
+using DataFrames: AbstractDataFrame
+using DataFrames: Not
+using DataFrames: combine 
+using DataFrames: groupby
+using DataFrames: insertcols!
+using DataFrames: nrow
+using DataFrames: select
+using DataFrames: unstack
+using ScientificTypes: coerce!
+using ScientificTypesBase: OrderedFactor
 
 export add_label_column!, pivot, repr
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
-Add column to a DataFrame based on symbol presence in the target DataFrame 
+Add column to a DataFrame based on symbol presence in the target DataFrame
 
 """
 function add_label_column!(
