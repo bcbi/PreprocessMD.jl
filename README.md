@@ -42,8 +42,7 @@ p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
 
 # Add label data
 DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
-insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, temp.person_id))
-
+add_label_column!(p_AGGREGATE, DEATH, :person_id, :person_id, :death)
 
 # Implement machine learning model...
 ```

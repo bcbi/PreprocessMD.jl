@@ -17,7 +17,7 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
-	label_to=nothing, label_from=nothing,
+	id=nothing,
 	new_col_name=nothing,
 	)::Nothing
 
@@ -34,19 +34,19 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	end
 
 	# Assign missing arguments
-	if isnothing(label_to)
-		label_to = Symbol(names(to_df)[1])
+	if isnothing(id)
+		id = Symbol(names(to_df)[1])
 	end
-	if isnothing(label_from)
-		label_from = label_to
+	if isnothing(id)
+		id = id
 	end
 	if isnothing(new_col_name)
 		new_col_name = :LABEL
 	end
 
 	# Add column
-	#insertcols!(to_df, new_col_name => [x[label_to] in from_df[!,label_from] for x in eachrow(to_df)])
-	insertcols!(to_df, new_col_name => map( x -> x in from_df[!,label_from], to_df[!,label_to]))
+	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_name => map( x -> x in from_df[!,id], to_df[!,id]))
 
 	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
