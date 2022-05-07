@@ -6,6 +6,7 @@ import Test
 import Downloads
 import CSV
 
+using DataFrames: DataFrame
 using Test: @testset, @test
 
 @testset verbose = true "PreprocessMD" begin
