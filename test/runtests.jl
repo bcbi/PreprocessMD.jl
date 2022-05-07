@@ -19,57 +19,52 @@ using Test: @test_skip
 
 @testset "PreprocessMD" begin
     @testset "File IO" begin
-        try
-            PERSON = DataFrame(
-                CSV.File.(
-                    Downloads.download(
-                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
-                    )
-                ),
-            )
-            DRUG = DataFrame(
-                CSV.File.(
-                    Downloads.download(
-                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
-                    )
-                ),
-            )
-            CONDITION = DataFrame(
-                CSV.File.(
-                    Downloads.download(
-                        "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
-                    )
-                ),
-            )
+        PERSON = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
+                )
+            ),
+        )
+        DRUG = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
+                )
+            ),
+        )
+        CONDITION = DataFrame(
+            CSV.File.(
+                Downloads.download(
+                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
+                )
+            ),
+        )
 
-            @test summary(PERSON) == "100×18 DataFrame"
-            @test names(PERSON) == [
-                "person_id",
-                "gender_concept_id",
-                "year_of_birth",
-                "month_of_birth",
-                "day_of_birth",
-                "birth_datetime",
-                "race_concept_id",
-                "ethnicity_concept_id",
-                "location_id",
-                "provider_id",
-                "care_site_id",
-                "person_source_value",
-                "gender_source_value",
-                "gender_source_concept_id",
-                "race_source_value",
-                "race_source_concept_id",
-                "ethnicity_source_value",
-                "ethnicity_source_concept_id",
-            ]
+        @test summary(PERSON) == "100×18 DataFrame"
+        @test names(PERSON) == [
+            "person_id",
+            "gender_concept_id",
+            "year_of_birth",
+            "month_of_birth",
+            "day_of_birth",
+            "birth_datetime",
+            "race_concept_id",
+            "ethnicity_concept_id",
+            "location_id",
+            "provider_id",
+            "care_site_id",
+            "person_source_value",
+            "gender_source_value",
+            "gender_source_concept_id",
+            "race_source_value",
+            "race_source_concept_id",
+            "ethnicity_source_value",
+            "ethnicity_source_concept_id",
+        ]
 
-            @test summary(DRUG) == "18229×23 DataFrame"
-            @test summary(CONDITION) == "16441×16 DataFrame"
-
-        catch
-            @test_skip false
-        end
+        @test summary(DRUG) == "18229×23 DataFrame"
+        @test summary(CONDITION) == "16441×16 DataFrame"
     end
 
     @testset "add_label_column!()" begin
