@@ -171,7 +171,7 @@ using CSV
 			new = deepcopy(short)
 
 			new = deepcopy(short)
-			add_label_column!(new, X, :name, :name, :LABEL)
+			add_label_column!(new, X, :name, :LABEL)
 			@test new == results
 		end
 	end
