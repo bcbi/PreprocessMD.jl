@@ -1,9 +1,12 @@
+import PreprocessMD
 
-using DataFrames
-using PreprocessMD
-using Test
-using Downloads
-using CSV
+import Aqua
+import DataFrames
+import Test
+import Downloads
+import CSV
+
+using Test: @testset, @test
 
 @testset verbose = true "PreprocessMD" begin
     @testset verbose = true "Sanity check" begin
@@ -242,5 +245,9 @@ using CSV
         add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
         @test size(p_AGGREGATE) == (100, 1878)
+    end
+
+    @testset "Aqua.jl" begin
+        Aqua.test_all(PreprocessMD)
     end
 end
