@@ -14,7 +14,7 @@ using DataFrames: unstack
 using ScientificTypes: coerce!
 using ScientificTypesBase: OrderedFactor
 
-export add_label_column!, pivot, repr, top_n_values
+export add_label_column!, pivot, top_n_values
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
