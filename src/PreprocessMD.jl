@@ -14,7 +14,7 @@ using DataFrames: unstack
 using ScientificTypes: coerce!
 using ScientificTypesBase: OrderedFactor
 
-export add_label_column!, pivot, repr, top_n_values
+export add_label_column!, pivot, top_n_values
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
@@ -99,6 +99,7 @@ function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 end
 =#
 
+#=
 """
 	function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
@@ -108,6 +109,7 @@ function repr(df::AbstractDataFrame)::Nothing
     invoke(show, Tuple{typeof(stdout),Any}, stdout, df)
     return nothing
 end
+=#
 
 """
 	function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
