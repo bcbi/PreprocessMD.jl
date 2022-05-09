@@ -236,7 +236,6 @@ using Test: @test_skip
         @test size(p_AGGREGATE) == (100, 1878)
 
         @testset "top_n_values()" begin
-            println(PreprocessMD.repr(top_n_values(CONDITION, :condition_concept_id, 6)))
             @test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
                 AbstractVector[
                     [4145513, 4064452, 4140598, 4092038, 4138456, 433753],
