@@ -54,8 +54,7 @@ function add_label_column!(
     coerce!(to_df, new_col_name => OrderedFactor{2})
     return nothing
 end
-function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing
-)::Nothing
+function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing)::Nothing
     assert_is_table(to_table)
     assert_is_table(from_table)
 
@@ -86,7 +85,6 @@ The single column `x` (the first column of `df`, by default) becomes the row nam
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
 function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
-
     assert_is_table(obj)
     df = DataFrame(obj)::DataFrame
     df::DataFrame
