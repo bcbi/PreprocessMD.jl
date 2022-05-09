@@ -104,9 +104,9 @@ end
 Print Julia-readable definition of a DataFrame
 """
 function repr(df::AbstractDataFrame)::Nothing
-	# https://discourse.julialang.org/t/given-an-object-return-julia-code-that-defines-the-object/80579/12
-	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
-	return nothing
+    # https://discourse.julialang.org/t/given-an-object-return-julia-code-that-defines-the-object/80579/12
+    invoke(show, Tuple{typeof(stdout),Any}, stdout, df)
+    return nothing
 end
 
 """
@@ -115,9 +115,8 @@ Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 """
 function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
-	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
+    return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
-
 
 end #module PreprocessMD
 
