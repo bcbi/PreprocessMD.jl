@@ -14,6 +14,7 @@ PreprocessMD
 add_label_column!
 pivot
 repr
+top_n_values
 ```
 
 ```@index
