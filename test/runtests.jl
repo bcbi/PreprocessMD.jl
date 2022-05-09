@@ -8,6 +8,7 @@ using CSV: CSV
 
 using PreprocessMD: add_label_column!
 using PreprocessMD: pivot
+using PreprocessMD: top_n_values
 
 using DataFrames: DataFrame
 using DataFrames: innerjoin
@@ -245,8 +246,8 @@ using Test: @test_skip
 
         @test size(p_AGGREGATE) == (100, 1878)
 
-	@testset "top_n_values()"
-		display(top_n_values(CONDITION, :condition_concept_id, 6)
+	@testset "top_n_values()" begin
+		display(top_n_values(CONDITION, :condition_concept_id, 6))
 	end
     end
 
