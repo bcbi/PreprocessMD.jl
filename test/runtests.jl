@@ -22,6 +22,10 @@ using Test: @test_skip
 
 @testset "PreprocessMD" begin
 
+	@testset "assert_is_table()" begin
+		@test_throws ArgumentError add_label_column!(12, 12)
+	end
+
 	# All external file downloads
         PERSON = DataFrame(
             CSV.File.(
