@@ -1,0 +1,51 @@
+name: Formatter
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+concurrency:
+  # Skip intermediate builds: all builds except for builds on the `main` branch
+  # Cancel intermediate builds: only pull request builds
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.ref != 'refs/heads/main' || github.run_number }}
+  cancel-in-progress: ${{ startsWith(github.ref, 'refs/pull/') }}
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  formatter:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install the JuliaFormatter package
+        run: |
+          import Pkg
+          Pkg.add(name = "JuliaFormatter", uuid = "98e50ef6-434e-11e9-1051-2b60c6c9e899")
+        shell: julia --color=yes {0}
+      - name: Precompile dependencies
+        run: |
+          import Pkg
+          Pkg.precompile()
+        shell: julia --color=yes {0}
+      - name: Use JuliaFormatter to format the code with the BlueStyle style
+        run: |
+          import JuliaFormatter
+          style = JuliaFormatter.BlueStyle()
+          JuliaFormatter.format(".", style; verbose = true)
+        shell: julia --color=yes {0}
+      - name: Create pull request
+        id: create_pr
+        uses: peter-evans/create-pull-request@bd72e1b7922d417764d27d30768117ad7da78a0e # v4.0.2
+        with:
+          token: ${{  secrets.GITHUB_TOKEN }}
+          commit-message: '🤖 Automatically format the source code files'
+          title: '🤖 Automatically format the source code files'
+          body: |-
+            This pull request formats the source code files using the JuliaFormatter package and the BlueStyle style.
+
+            Note: CI will not automatically trigger on this PR. Please close and reopen this PR in order to trigger CI.
+          branch: bot/formatter/${{ github.ref }}
+          delete-branch: true
+      - run: echo "The pull request number is ${{ steps.create_pr.outputs.pull-request-number }}"
+      - run: echo "The pull request URL is ${{ steps.create_pr.outputs.pull-request-url }}"
