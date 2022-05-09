@@ -8,6 +8,8 @@ using CSV: CSV
 
 using PreprocessMD: add_label_column!
 using PreprocessMD: pivot
+using PreprocessMD: repr
+using PreprocessMD: top_n_values
 
 using DataFrames: DataFrame
 using DataFrames: innerjoin
@@ -244,6 +246,13 @@ using Test: @test_skip
         add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
         @test size(p_AGGREGATE) == (100, 1878)
+
+	@testset "top_n_values()" begin
+		println(PreprocessMD.repr(top_n_values(CONDITION, :condition_concept_id, 6)))
+		@test top_n_values(CONDITION, :condition_concept_id, 6) == 
+			DataFrame(AbstractVector[[4145513, 4064452, 4140598, 4092038, 4138456, 433753], [6531, 2405, 2302, 502, 390, 181]],
+			DataFrames.Index(Dict(:condition_concept_id => 1, :nrow => 2), [:condition_concept_id, :nrow]))
+	end
     end
 
     @testset "Aqua.jl" begin

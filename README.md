@@ -6,10 +6,12 @@ Medically-informed data preprocessing for machine learning
 [![](https://img.shields.io/badge/docs-development-blue.svg)](https://docs.bcbi.brown.edu/PreprocessMD.jl/dev/)
 [![Build Status](https://github.com/bcbi/PreprocessMD.jl/actions/workflows/ci.yml/badge.svg)](https://github.com/bcbi/PreprocessMD.jl/actions/workflows/ci.yml)
 [![Coverage](https://codecov.io/gh/bcbi/PreprocessMD.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/bcbi/PreprocessMD.jl)
+<!--
 [![Style Guide][bluestyle-img]][bluestyle-url]
 
 [bluestyle-img]: https://img.shields.io/badge/code%20style-blue-4495d1.svg "Blue Style"
 [bluestyle-url]: https://github.com/invenia/BlueStyle
+-->
 
 ## Summary
 
@@ -55,7 +57,7 @@ p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
 
 # Add label data
 DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
-insertcols!(p_AGGREGATE, :death => map( x -> x in DEATH.person_id, temp.person_id))
+add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
 
 # Implement machine learning model...

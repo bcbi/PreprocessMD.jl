@@ -14,7 +14,7 @@ using DataFrames: unstack
 using ScientificTypes: coerce!
 using ScientificTypesBase: OrderedFactor
 
-export add_label_column!, pivot, repr
+export add_label_column!, pivot, repr, top_n_values
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
@@ -99,7 +99,6 @@ function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 end
 =#
 
-#=
 """
 	function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
@@ -109,7 +108,16 @@ function repr(df::AbstractDataFrame)::Nothing
 	invoke(show, Tuple{typeof(stdout), Any}, stdout, df)
 	return nothing
 end
-=#
+
+"""
+	function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+Find top n values by occurence
+Useful for initial feasibility checks, but medical codes are not considered
+"""
+function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
+end
+
 
 end #module PreprocessMD
 
@@ -156,15 +164,6 @@ function run_decision_tree(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tu
 	f1_score = f1score(MLJ.mode.(yhat), y[test])
 
 	return acc, f1_score
-end
-
-"""
-	function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
-Find top n values by occurence
-Useful for initial feasibility checks, but medical codes are not considered
-"""
-function top_n_values(df::DataFrame, col::Symbol, n::Int)::DataFrame
-	return first(sort(combine(nrow, groupby(df, col)), "nrow", rev=true), n)
 end
 
 end #module EXPERIMENTAL

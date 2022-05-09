@@ -13,6 +13,8 @@ Documentation for [PreprocessMD](https://github.com/bcbi/PreprocessMD.jl).
 PreprocessMD
 add_label_column!
 pivot
+repr
+top_n_values
 ```
 
 ```@index
