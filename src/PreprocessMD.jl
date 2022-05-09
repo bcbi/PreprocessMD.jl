@@ -4,6 +4,7 @@ Medically informed data transformations
 module PreprocessMD
 
 using DataFrames: AbstractDataFrame
+using DataFrames: DataFrame
 using DataFrames: Not
 using DataFrames: combine
 using DataFrames: groupby
@@ -11,6 +12,7 @@ using DataFrames: insertcols!
 using DataFrames: nrow
 using DataFrames: select
 using DataFrames: unstack
+using Tables
 using ScientificTypes: coerce!
 using ScientificTypesBase: OrderedFactor
 
@@ -52,9 +54,30 @@ function add_label_column!(
     coerce!(to_df, new_col_name => OrderedFactor{2})
     return nothing
 end
+function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing
+)::Nothing
+    assert_is_table(to_table)
+    assert_is_table(from_table)
+
+    to_df = DataFrame(to_table)::DataFrame
+    from_df = DataFrame(to_table)::DataFrame
+
+    to_df::DataFrame
+    from_df::DataFrame
+
+    return add_label_column!(to_df, from_df, id, new_col_name)
+end
+
+function assert_is_table(x)
+    if !Tables.istable(x)
+        msg = "Input must be a table, but $(typeof(x)) is not a table"
+        throw(ArgumentError(msg))
+    end
+    return nothing
+end
 
 """
-    function pivot(df::AbstractDataFrame[, x, y])::AbstractDataFrame
+    function pivot()
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -62,7 +85,12 @@ Optional arguments `x` and `y` are columns of `df`.
 The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 """
-function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
+function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
+
+    assert_is_table(obj)
+    df = DataFrame(obj)::DataFrame
+    df::DataFrame
+
     # Error checks
     if size(df)[1] < 1
         #@warn "DataFrame must have at least 1 row"
@@ -94,7 +122,6 @@ end
 #=
 function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 	df = pivot(df,x,y)
-	df |> display
 	return nothing
 end
 =#
