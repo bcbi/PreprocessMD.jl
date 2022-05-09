@@ -21,31 +21,30 @@ using Test: @test_skip
 
 @testset "PreprocessMD" begin
 
-	# All external file downloads
-        PERSON = DataFrame(
-            CSV.File.(
-                Downloads.download(
-                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
-                )
-            ),
-        )
-        DRUG = DataFrame(
-            CSV.File.(
-                Downloads.download(
-                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
-                )
-            ),
-        )
-        CONDITION = DataFrame(
-            CSV.File.(
-                Downloads.download(
-                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
-                )
-            ),
-        )
+    # All external file downloads
+    PERSON = DataFrame(
+        CSV.File.(
+            Downloads.download(
+                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/person.csv",
+            )
+        ),
+    )
+    DRUG = DataFrame(
+        CSV.File.(
+            Downloads.download(
+                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
+            )
+        ),
+    )
+    CONDITION = DataFrame(
+        CSV.File.(
+            Downloads.download(
+                "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
+            )
+        ),
+    )
 
     @testset "File IO" begin
-
         @test summary(PERSON) == "100×18 DataFrame"
         @test names(PERSON) == [
             "person_id",
