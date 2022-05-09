@@ -20,7 +20,8 @@ using Test: @test_throws
 using Test: @test_skip
 
 @testset "PreprocessMD" begin
-    @testset "File IO" begin
+
+	# All external file downloads
         PERSON = DataFrame(
             CSV.File.(
                 Downloads.download(
@@ -42,6 +43,8 @@ using Test: @test_skip
                 )
             ),
         )
+
+    @testset "File IO" begin
 
         @test summary(PERSON) == "100×18 DataFrame"
         @test names(PERSON) == [
@@ -216,21 +219,6 @@ using Test: @test_skip
     end
 
     @testset "Full pipeline" begin
-        CONDITION = DataFrame(
-            CSV.File.(
-                Downloads.download(
-                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv",
-                )
-            ),
-        )
-        DRUG = DataFrame(
-            CSV.File.(
-                Downloads.download(
-                    "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv",
-                )
-            ),
-        )
-
         p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id)
         p_DRUG = pivot(DRUG, :person_id, :drug_concept_id)
 
@@ -248,7 +236,6 @@ using Test: @test_skip
         @test size(p_AGGREGATE) == (100, 1878)
 
         @testset "top_n_values()" begin
-            println(PreprocessMD.repr(top_n_values(CONDITION, :condition_concept_id, 6)))
             @test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
                 AbstractVector[
                     [4145513, 4064452, 4140598, 4092038, 4138456, 433753],
