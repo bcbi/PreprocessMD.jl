@@ -213,9 +213,6 @@ using Test: @test_skip
         end
     end
 
-	@testset "top_n_values()"
-	end
-
     @testset "Full pipeline" begin
         CONDITION = DataFrame(
             CSV.File.(
@@ -247,6 +244,10 @@ using Test: @test_skip
         add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
         @test size(p_AGGREGATE) == (100, 1878)
+
+	@testset "top_n_values()"
+		#display(top_n_values(
+	end
     end
 
     @testset "Aqua.jl" begin
