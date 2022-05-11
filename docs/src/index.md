@@ -4,7 +4,7 @@ CurrentModule = PreprocessMD
 
 # PreprocessMD
 
-Documentation for [PreprocessMD](https://github.com/bcbi/PreprocessMD.jl).
+Documentation for [PreprocessMD.jl](https://github.com/bcbi/PreprocessMD.jl).
 
 ```@contents
 ```
