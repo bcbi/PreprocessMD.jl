@@ -8,7 +8,7 @@ makedocs(;
     modules=[PreprocessMD],
     authors="Ashlin Harris, Brown Center for Biomedical Informatics, and contributors",
     repo="https://github.com/bcbi/PreprocessMD.jl/blob/{commit}{path}#L{line}",
-    sitename="PreprocessMD.jl",
+    sitename="PreprocessMD",
     format=HTML(;
         prettyurls=get(ENV, "CI", "false") == "true",
         canonical="https://bcbi.github.io/PreprocessMD.jl",

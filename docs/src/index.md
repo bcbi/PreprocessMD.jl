@@ -4,10 +4,12 @@ CurrentModule = PreprocessMD
 
 # PreprocessMD
 
-Documentation for [PreprocessMD](https://github.com/bcbi/PreprocessMD.jl).
+Documentation for [PreprocessMD.jl](https://github.com/bcbi/PreprocessMD.jl).
 
 ```@contents
 ```
+
+# Example usage
 
 ```@example
 using CSV: File
@@ -33,6 +35,12 @@ add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
 MLDemo(p_AGGREGATE, :death, 1234) |> display
 ```
+# Function index
+
+```@index
+```
+
+# Function documentation
 
 ```@docs
 PreprocessMD
@@ -42,5 +50,3 @@ pivot
 top_n_values
 ```
 
-```@index
-```
