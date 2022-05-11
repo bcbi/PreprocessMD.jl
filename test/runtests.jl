@@ -1,13 +1,12 @@
 using PreprocessMD: PreprocessMD
 
 using Aqua: Aqua
-using CSV: CSV
-using DataFrames: DataFrames
-using Downloads: Downloads
-using Tables: Tables
-using Test: Test
+using CSV: File
+using Downloads: download
+using Tables: table
 
 using DataFrames: DataFrame
+using DataFrames: Index
 using DataFrames: innerjoin
 using DataFrames: summary
 using PreprocessMD: add_label_column!
@@ -25,10 +24,10 @@ using Test: @test_skip
 	# All external file downloads
 
 	url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
-	PERSON = DataFrame(CSV.File.(Downloads.download("$url/person.csv")))
-	DRUG = DataFrame(CSV.File.(Downloads.download("$url/drug_exposure.csv")))
-	CONDITION = DataFrame(CSV.File.(Downloads.download("$url/condition_occurrence.csv")))
-	DEATH = DataFrame(CSV.File.(Downloads.download("$url/death.csv")))
+	PERSON = DataFrame(File.(download("$url/person.csv")))
+	DRUG = DataFrame(File.(download("$url/drug_exposure.csv")))
+	CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")))
+	DEATH = DataFrame(File.(download("$url/death.csv")))
 
 #=
 	@testset "File IO" verbose = false begin
@@ -77,7 +76,7 @@ using Test: @test_skip
 		end
 	@testset "Table to DataFrame conversions" verbose = false begin
 		mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
-		mattbl = Tables.table(mat)
+		mattbl = table(mat)
 
 		pivot(mattbl)	
 	
@@ -157,12 +156,12 @@ using Test: @test_skip
 	@testset "Table" verbose = false begin
 
 		mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
-		mattbl = Tables.table(mat)
+		mattbl = table(mat)
 
 			X = DataFrame(name=["bbb", "ccc"], r=["BBB", "CCC"], Column1=[1, 2])
 	
 			add_label_column!(mattbl, X, :Column1)
-		#Tables.getcolumn(mattbl, :Column3) |> display
+		#getcolumn(mattbl, :Column3) |> display
 		@test true
 	end
 		
@@ -247,7 +246,7 @@ using Test: @test_skip
 					[4145513, 4064452, 4140598, 4092038, 4138456, 433753],
 					[6531, 2405, 2302, 502, 390, 181],
 				],
-				DataFrames.Index(
+				Index(
 					Dict(:condition_concept_id => 1, :nrow => 2),
 					[:condition_concept_id, :nrow],
 				),

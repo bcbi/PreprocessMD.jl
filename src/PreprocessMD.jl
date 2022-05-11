@@ -24,9 +24,11 @@ using MLJ: partition
 using MLJ: predict
 using MLJDecisionTreeInterface: DecisionTreeClassifier
 
-using Tables
 using MLJ: coerce!
 using MLJ: OrderedFactor
+
+using Tables: istable
+using Tables: getcolumn
 
 export add_label_column!, MLDemo, pivot, top_n_values
 
@@ -81,7 +83,7 @@ function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothin
 end
 
 function assert_is_table(x)
-	if !Tables.istable(x)
+	if !istable(x)
 		msg = "Input must be a table, but $(typeof(x)) is not a table"
 		throw(ArgumentError(msg))
 	end
