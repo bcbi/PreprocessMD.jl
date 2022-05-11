@@ -39,6 +39,7 @@ MLDemo(p_AGGREGATE, :death, 1234) |> display
 
 ```@docs
 PreprocessMD
+MLDemo
 add_label_column!
 pivot
 top_n_values
