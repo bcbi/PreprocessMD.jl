@@ -12,11 +12,23 @@ using DataFrames: insertcols!
 using DataFrames: nrow
 using DataFrames: select
 using DataFrames: unstack
-using Tables
-using ScientificTypes: coerce!
-using ScientificTypesBase: OrderedFactor
 
-export add_label_column!, pivot, top_n_values
+using MLJ:@load
+using MLJ: accuracy
+using MLJ: evaluate
+using MLJ: f1score
+using MLJ: fit!
+using MLJ: machine
+using MLJ: mode
+using MLJ: partition
+using MLJ: predict
+using MLJDecisionTreeInterface: DecisionTreeClassifier
+
+using Tables
+using MLJ: coerce!
+using MLJ: OrderedFactor
+
+export add_label_column!, MLDemo, pivot, top_n_values
 
 """
 	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
@@ -146,6 +158,31 @@ Useful for initial feasibility checks, but medical codes are not considered
 function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
 	return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
+
+"""
+	function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+Decision tree classifier on a DataFrame over a given output
+"""
+function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+               y = df[:, output]
+               X = select(df, Not([:person_id, output]))
+               
+               train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
+
+               # Evaluate model
+               Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+               tree_model = Tree(max_depth = 3)
+               evaluate(tree_model, X, y) |> display
+
+               # Return scores
+               tree = machine(tree_model, X, y)
+               fit!(tree, rows = train)
+               yhat = predict(tree, X[test, :])
+               acc = accuracy(mode.(yhat), y[test])
+               f1_score = f1score(mode.(yhat), y[test])
+
+               return acc, f1_score
+       end
 
 end #module PreprocessMD
 

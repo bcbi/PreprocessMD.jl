@@ -11,9 +11,11 @@ using DataFrames: DataFrame
 using DataFrames: innerjoin
 using DataFrames: summary
 using PreprocessMD: add_label_column!
+using PreprocessMD: MLDemo
 using PreprocessMD: pivot
 using PreprocessMD: repr
 using PreprocessMD: top_n_values
+
 using Test: @testset
 using Test: @test
 using Test: @test_throws
@@ -231,6 +233,8 @@ using Test: @test_skip
 
 		@test size(p_AGGREGATE) == (100, 1878)
 
+		MLDemo(p_AGGREGATE, :death, 1234) |> display
+
 		@testset "top_n_values()" verbose = false begin
 			@testset "ArgumentError" verbose = false begin
 			end
@@ -256,6 +260,54 @@ using Test: @test_skip
 		Aqua.test_all(PreprocessMD; ambiguities=false)
 	end
 end
+
+#=
+@testset "Example from README.md" begin
+# using CSV
+# using DataFrames
+# using Downloads
+# using MLJ
+# using MLJDecisionTreeInterface
+# 
+# using PreprocessMD
+
+# Read in feature data
+CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame;
+DRUG = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv") |> CSV.File |> DataFrame;
+
+# Pivot feature data (1 person per row, 1 Concept per column, 1 value per cell)
+p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id);
+p_DRUG = pivot(DRUG, :person_id, :drug_concept_id);
+
+# Combine feature data
+p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
+
+# Add label data
+DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
+add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
+
+#Partition data
+y = p_AGGREGATE[:, :death]
+X = select(p_AGGREGATE, Not([:person_id, :death]))
+train, test = partition(eachindex(y), 0.8, shuffle = true, rng = 1234)
+
+# Evaluate model
+Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+tree_model = Tree(max_depth = 3)
+evaluate(tree_model, X, y) |> display
+
+# Return scores
+tree = machine(tree_model, X, y)
+fit!(tree, rows = train)
+yhat = predict(tree, X[test, :])
+acc = accuracy(mode.(yhat), y[test])
+f1_score = f1score(mode.(yhat), y[test])
+
+println(acc, f1_score)
+
+
+end
+=#
 
 #=
 @testset "Template" verbose = false begin
