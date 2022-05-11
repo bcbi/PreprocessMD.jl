@@ -38,12 +38,6 @@ especially the MIMIC-IV demo set[^MIMIC].
 [^MIMIC]: https://physionet.org/content/mimic-iv-demo-omop/0.9/
 
 ```
-using CSV
-using DataFrames
-using Downloads
-using PreprocessMD
-
-# Read in feature data
 CONDITION = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/condition_occurrence.csv") |> CSV.File |> DataFrame;
 DRUG = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/drug_exposure.csv") |> CSV.File |> DataFrame;
 
@@ -54,13 +48,28 @@ p_DRUG = pivot(DRUG, :person_id, :drug_concept_id);
 # Combine feature data
 p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
 
-
 # Add label data
 DEATH = Downloads.download("https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv/death.csv") |> CSV.File |> DataFrame;
 add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
 
+#Partition data
+y = p_AGGREGATE[:, :death]
+X = select(p_AGGREGATE, Not([:person_id, :death]))
+train, test = partition(eachindex(y), 0.8, shuffle = true, rng = 1234)
 
-# Implement machine learning model...
+# Evaluate model
+Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+tree_model = Tree(max_depth = 3)
+evaluate(tree_model, X, y) |> display
+
+# Return scores
+tree = machine(tree_model, X, y)
+fit!(tree, rows = train)
+yhat = predict(tree, X[test, :])
+acc = accuracy(mode.(yhat), y[test])
+f1_score = f1score(mode.(yhat), y[test])
+
+println(acc, f1_score)
 ```
 
 ## Planned features
