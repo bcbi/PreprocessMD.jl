@@ -5,7 +5,6 @@
 #using Documenter: deploydocs
 
 using PreprocessMD, Documenter
-using MyPackage, Documenter
 DocMeta.setdocmeta!(PreprocessMD, :DocTestSetup, :(using DataFrames, PreprocessMD); recursive=true)
 
 makedocs(;
