@@ -27,14 +27,7 @@ using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Tables: istable
 using Tables: getcolumn
 
-```@meta
-DocTestSetup = quote
-	using DataFrames
-end
-```
-
 export add_label_column!, MLDemo, pivot, top_n_values
-
 
 """
     function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing

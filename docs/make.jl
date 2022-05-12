@@ -1,8 +1,12 @@
-using PreprocessMD: PreprocessMD
+#using PreprocessMD: PreprocessMD
 
-using Documenter: HTML
-using Documenter: makedocs
-using Documenter: deploydocs
+#using Documenter: HTML
+#using Documenter: makedocs
+#using Documenter: deploydocs
+
+using PreprocessMD, Documenter
+using MyPackage, Documenter
+DocMeta.setdocmeta!(MyPackage, :DocTestSetup, :(using DataFrames, MyPackage); recursive=true)
 
 makedocs(;
 	modules=[PreprocessMD],
