@@ -36,9 +36,10 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest
-julia> using DataFrames: DataFrame
-julia> df = (name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
-             fur_color=["blue", "red", "green", "blue"]);
+julia> a = [1 2; 3 4]
+2×2 Array{Int64,2}:
+ 1  2
+ 3  4
 ```
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
