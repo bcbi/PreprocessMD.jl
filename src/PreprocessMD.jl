@@ -35,20 +35,25 @@ export add_label_column!, MLDemo, pivot, top_n_values
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
-```jldoctest
-df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
-               fur_color=["blue", "red", "green", "blue"]);
-pivot(df)
+X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+	blue = [true, false, false, true],
+	red  = [false, true, false, false],
+	green = [false, false, true, false]);
+
+Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+	fuzzy = [true, true, false, true]);
+add_label_column!(X,Y,:name,:fuzzy)
+display(X)
 
 # output
-4×4 DataFrame
- Row │ name            blue   red    green 
-     │ String          Bool   Bool   Bool  
-─────┼─────────────────────────────────────
-   1 │ Cookie Monster   true  false  false
-   2 │ Elmo            false   true  false
-   3 │ Oscar           false  false   true
-   4 │ Grover           true  false  false
+4×5 DataFrame
+ Row │ name            blue   red    green  fuzzy 
+     │ String          Bool   Bool   Bool   Cat…  
+─────┼────────────────────────────────────────────
+   1 │ Cookie Monster   true  false  false  true
+   2 │ Elmo            false   true  false  true
+   3 │ Oscar           false  false   true  true
+   4 │ Grover           true  false  false  true
 
 ```
 """
@@ -112,6 +117,23 @@ Express the long format DataFrame `df` as a wide format DataFrame `B`.
 Optional arguments `x` and `y` are columns of `df`.
 The single column `x` (the first column of `df`, by default) becomes the row names of `B`.
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
+
+# Examples
+```jldoctest
+df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
+               fur_color=["blue", "red", "green", "blue"]);
+pivot(df)
+
+# output
+4×4 DataFrame
+ Row │ name            blue   red    green 
+     │ String          Bool   Bool   Bool  
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+   3 │ Oscar           false  false   true
+   4 │ Grover           true  false  false
+
 """
 function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
 
