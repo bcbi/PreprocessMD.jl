@@ -44,7 +44,7 @@ X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	fuzzy = [true, true, false, true]);
 add_label_column!(X,Y,:name,:fuzzy)
-display(X)
+X
 
 # output
 4×5 DataFrame
