@@ -4,42 +4,52 @@ Medically informed data transformations
 module PreprocessMD
 
 using DataFrames: AbstractDataFrame
-using DataFrames: DataFrame
-using DataFrames: Not
 using DataFrames: combine
+using DataFrames: DataFrame
 using DataFrames: groupby
 using DataFrames: insertcols!
+using DataFrames: Not
 using DataFrames: nrow
 using DataFrames: select
 using DataFrames: unstack
-
-using MLJ:@load
+using MLJ: @load
 using MLJ: accuracy
+using MLJ: coerce!
 using MLJ: evaluate
 using MLJ: f1score
 using MLJ: fit!
 using MLJ: machine
 using MLJ: mode
+using MLJ: OrderedFactor
 using MLJ: partition
 using MLJ: predict
 using MLJDecisionTreeInterface: DecisionTreeClassifier
-
-using MLJ: coerce!
-using MLJ: OrderedFactor
-
 using Tables: istable
 using Tables: getcolumn
 
 export add_label_column!, MLDemo, pivot, top_n_values
 
 """
-	function add_label_column!(df::AbstractDataFrame, symb::Symbol, target_df::AbstractDataFrame)::Nothing
+    function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
+
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
+# Examples
+```jldoctest
+julia> df = (name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
+             fur_color=["blue", "red", "green", "blue"]);
+julia> pivot(df)
+4×4 DataFrame
+ Row │ name            blue   red    green 
+     │ String          Bool   Bool   Bool  
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+   3 │ Oscar           false  false   true
+   4 │ Grover           true  false  false
+```
 """
-function add_label_column!(
-	to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing
-)::Nothing
+function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
 
 	# Error checks
 	for arg in [to_df, from_df]
@@ -91,7 +101,7 @@ function assert_is_table(x)
 end
 
 """
-	function pivot()
+    function pivot()
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -142,7 +152,7 @@ end
 
 #=
 """
-	function repr(df::AbstractDataFrame)::Nothing
+    function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
 """
 function repr(df::AbstractDataFrame)::Nothing
@@ -153,7 +163,7 @@ end
 =#
 
 """
-	function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+    function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
 Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 """
@@ -162,7 +172,7 @@ function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataF
 end
 
 """
-	function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+    function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 Decision tree classifier on a DataFrame over a given output
 """
 function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
@@ -191,7 +201,7 @@ end #module PreprocessMD
 #=
 
 """
-	function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
+    function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
 Return a DataFrame subset
 For check::DataFrame, including only PATIENTs present in check
 Otherwise, Subset DataFrame of PATIENTs with condition
