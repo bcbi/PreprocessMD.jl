@@ -6,7 +6,7 @@
 
 using PreprocessMD, Documenter
 using MyPackage, Documenter
-DocMeta.setdocmeta!(MyPackage, :DocTestSetup, :(using DataFrames, MyPackage); recursive=true)
+DocMeta.setdocmeta!(MyPackage, :DocTestSetup, :(using DataFrames, PreprocessMD); recursive=true)
 
 makedocs(;
 	modules=[PreprocessMD],
