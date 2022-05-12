@@ -36,9 +36,11 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest
-julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
-             fur_color=["blue", "red", "green", "blue"]);
-julia> pivot(df)
+df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
+               fur_color=["blue", "red", "green", "blue"]);
+pivot(df)
+
+# output
 4×4 DataFrame
  Row │ name            blue   red    green 
      │ String          Bool   Bool   Bool  
