@@ -35,6 +35,7 @@ export add_label_column!, MLDemo, pivot, top_n_values
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
+```jldoctest
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	blue = [true, false, false, true],
 	red  = [false, true, false, false],
@@ -43,7 +44,7 @@ X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	fuzzy = [true, true, false, true]);
 add_label_column!(X,Y,:name,:fuzzy)
-display(X)
+X
 
 # output
 4×5 DataFrame
@@ -134,6 +135,7 @@ pivot(df)
    3 │ Oscar           false  false   true
    4 │ Grover           true  false  false
 
+```
 """
 function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
 
