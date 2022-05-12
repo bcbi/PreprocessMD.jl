@@ -36,6 +36,8 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest
+julia> using DataFrames: DataFrame
+julia> using PreprocessMD: pivot
 julia> df = (name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
              fur_color=["blue", "red", "green", "blue"]);
 julia> pivot(df)
