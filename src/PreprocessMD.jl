@@ -38,21 +38,20 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 ```jldoctest
 julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
              fur_color=["blue", "red", "green", "blue"]);
+julia> pivot(df)
+4×4 DataFrame
+ Row │ name            blue   red    green 
+     │ String          Bool   Bool   Bool  
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+   3 │ Oscar           false  false   true
+   4 │ Grover           true  false  false
 
 ```
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
 
-#julia> using PreprocessMD: pivot
-#julia> pivot(df)
-#4×4 DataFrame
-# Row │ name            blue   red    green 
-#     │ String          Bool   Bool   Bool  
-#─────┼─────────────────────────────────────
-#   1 │ Cookie Monster   true  false  false
-#   2 │ Elmo            false   true  false
-#   3 │ Oscar           false  false   true
-#   4 │ Grover           true  false  false
 
 	# Error checks
 	for arg in [to_df, from_df]
