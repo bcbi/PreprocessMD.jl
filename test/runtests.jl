@@ -125,18 +125,12 @@ using Test: @test_skip
 				# @test_throws UndefVarError add_label_column!(new, X, :NONEXISTENT)
 			end
 			@testset "DomainError" verbose = false begin
-				@test_throws DomainError add_label_column!(DataFrame(), DataFrame())
-				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]))
-				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame())
-				@test_throws DomainError add_label_column!(
-					DataFrame(; x=[]), DataFrame(; x=[])
-				)
-				@test_throws DomainError add_label_column!(
-					DataFrame(; x=[1, 2]), DataFrame(; x=[])
-				)
-				@test_throws DomainError add_label_column!(
-					DataFrame(; x=[]), DataFrame(; x=[1, 2])
-				)
+				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[1, 2]), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[1, 2]), :NONEXISTENT)
 			end
 			@testset "MethodError" verbose = false begin
 				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
@@ -151,7 +145,7 @@ using Test: @test_skip
 	
 	@testset "NonTable" verbose = false begin
 
-		@test_throws ArgumentError add_label_column!(12, 12)
+		@test_throws ArgumentError add_label_column!(12, 12, :NONEXISTENT)
 	end
 	@testset "Table" verbose = false begin
 
@@ -160,7 +154,7 @@ using Test: @test_skip
 
 			X = DataFrame(name=["bbb", "ccc"], r=["BBB", "CCC"], Column1=[1, 2])
 	
-			add_label_column!(mattbl, X, :Column1)
+			add_label_column!(X, mattbl, :Column2)
 		#getcolumn(mattbl, :Column3) |> display
 		@test true
 	end
@@ -183,15 +177,12 @@ using Test: @test_skip
 				z=[false, false, true, false],
 				q=[true, false, false, false],
 				a=[false, false, true, false],
-				LABEL=[false, true, true, false],
+				r=[false, true, true, false],
 			)
 			new = deepcopy(short)
 
-			add_label_column!(new, X, :name)
-			@test new == results
-
 			new = deepcopy(short)
-			add_label_column!(new, X)
+			add_label_column!(new, X, :r)
 			@test new == results
 		end
 
@@ -212,12 +203,12 @@ using Test: @test_skip
 				z=[false, false, true, false],
 				q=[true, false, false, false],
 				a=[false, false, true, false],
-				LABEL=[false, true, true, false],
+				val=[false, true, true, false],
 			)
 			new = deepcopy(short)
 
 			new = deepcopy(short)
-			add_label_column!(new, X, :name, :LABEL)
+			add_label_column!(new, X, :val)
 			@test new == results
 		end
 	end
@@ -228,7 +219,7 @@ using Test: @test_skip
 
 		p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG; on=:person_id)
 
-		add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
+		add_label_column!(p_AGGREGATE, DEATH, :death)
 
 		@test size(p_AGGREGATE) == (100, 1878)
 

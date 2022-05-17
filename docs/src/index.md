@@ -31,7 +31,7 @@ p_DRUG = pivot(DRUG, :person_id, :drug_concept_id);
 
 p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
 
-add_label_column!(p_AGGREGATE, DEATH, :person_id, :death)
+add_label_column!(p_AGGREGATE, DEATH, :death)
 
 MLDemo(p_AGGREGATE, :death, 1234) |> display
 ```

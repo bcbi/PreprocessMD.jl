@@ -42,13 +42,16 @@ X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	green = [false, false, true, false]);
 
 Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	fuzzy = [true, true, false, true]);
-add_label_column!(X,Y,:name,:fuzzy)
+	lovable = [true, true, false, true],
+	furry = [true, true, true, true],
+	old = [false, false, true, true]
+	);
+add_label_column!(X,Y,:furry)
 X
 
 # output
 4×5 DataFrame
- Row │ name            blue   red    green  fuzzy 
+ Row │ name            blue   red    green  furry 
      │ String          Bool   Bool   Bool   Cat…  
 ─────┼────────────────────────────────────────────
    1 │ Cookie Monster   true  false  false  true
@@ -58,7 +61,7 @@ X
 
 ```
 """
-function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
+function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name::Symbol, id=nothing)::Nothing
 
 
 	# Error checks
@@ -76,9 +79,6 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	# Assign missing arguments
 	if isnothing(id)
 		id = Symbol(names(to_df)[1])
-	end
-	if isnothing(new_col_name)
-		new_col_name = :LABEL
 	end
 
 	# Add column
