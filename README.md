@@ -25,7 +25,7 @@ Let's just say we wouldn't use tree-based methods to separate them...
 
 [^Wu]: Wu, Hulin, Jose Miguel Yamal, Ashraf Yaseen, and Vahed Maroufy, eds. Statistics and Machine Learning Methods for EHR Data: From Data Extraction to Data Analytics. CRC Press, 2020.
 
-## Example Usage
+## Usage
 
 An [example pipeline](https://docs.bcbi.brown.edu/PreprocessMD.jl/stable/#Example-usage) is available in the documentation.
 
@@ -39,7 +39,7 @@ especially the MIMIC-IV demo set[^MIMIC].
 [^OMOP]: https://ohdsi.github.io/CommonDataModel/
 [^MIMIC]: https://physionet.org/content/mimic-iv-demo-omop/0.9/
 
-## Planned features
+## Features
 
 Planned features for **PreprocessMD.jl** include:
 * Summaries and feasibility checks
