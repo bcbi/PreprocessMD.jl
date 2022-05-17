@@ -25,12 +25,11 @@ Let's just say we wouldn't use tree-based methods to separate them...
 
 [^Wu]: Wu, Hulin, Jose Miguel Yamal, Ashraf Yaseen, and Vahed Maroufy, eds. Statistics and Machine Learning Methods for EHR Data: From Data Extraction to Data Analytics. CRC Press, 2020.
 
-## Example Usage
+## Usage
 
 An [example pipeline](https://docs.bcbi.brown.edu/PreprocessMD.jl/stable/#Example-usage) is available in the documentation.
 
-Currently, **PreprocessMD.jl** offers two functions, `pivot()` and `add_label_column()`, as
-we have not been able to find a robust API for both of these operations.
+Currently, **PreprocessMD.jl** offers two functions, `pivot()` and `add_label_column!()`.
 The scope of this package is ***medical data preprocessing***, so
 we develop functions that are specific to biomedical research but general enough for widespread use.
 These tools are developed for the OMOP Common Data Model[^OMOP],
@@ -39,7 +38,7 @@ especially the MIMIC-IV demo set[^MIMIC].
 [^OMOP]: https://ohdsi.github.io/CommonDataModel/
 [^MIMIC]: https://physionet.org/content/mimic-iv-demo-omop/0.9/
 
-## Planned features
+## Features
 
 Planned features for **PreprocessMD.jl** include:
 * Summaries and feasibility checks
