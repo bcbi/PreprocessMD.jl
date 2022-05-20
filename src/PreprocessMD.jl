@@ -30,9 +30,16 @@ using Tables: getcolumn
 export add_label_column!, MLDemo, pivot, top_n_values
 
 """
-    function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, id=nothing, new_col_name=nothing)::Nothing
+    function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
 
 Add column to a DataFrame based on symbol presence in the target DataFrame
+
+# Arguments
+- `
+- `to_df::AbstractDataFrame`: feature DataFrame to which label column is added
+- `from_df::AbstractDataFrame`: DataFrame containing the label column
+- `new_col_name`: name assigned to label column
+- `id=nothing`: row IDs (Default: first column)
 
 # Examples
 ```jldoctest
@@ -202,6 +209,13 @@ end
 """
     function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 Decision tree classifier on a DataFrame over a given output
+
+# Arguments
+
+- `df::AbstractDataFrame`: DataFrame containing feature and label data
+- `output::Symbol`: column containing label data
+- `RNG_VALUE`: 
+
 """
 function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
                y = df[:, output]
