@@ -197,6 +197,13 @@ function repr(df::AbstractDataFrame)::Nothing
 end
 =#
 
+function subsetMD(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
+	return filter(symb => x -> x in check.PATIENT, df)
+end
+function subsetMD(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
+	return filter(symb => x -> isequal(x, check), df)
+end
+
 """
     function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
 Find top n values by occurence
