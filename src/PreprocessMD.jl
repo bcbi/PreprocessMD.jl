@@ -70,7 +70,6 @@ X
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name::Symbol, id=nothing)::Nothing
 
-
 	# Error checks
 	for arg in [to_df, from_df]
 		if size(arg)[1] < 1
@@ -197,12 +196,24 @@ function repr(df::AbstractDataFrame)::Nothing
 end
 =#
 
-function subsetMD(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
-	return filter(symb => x -> x in check.PATIENT, df)
+function subsetMD(df::AbstractDataFrame, check::AbstractDataFrame, id, Patient)::AbstractDataFrame
+
+	# Assign missing arguments
+	if isnothing(id)
+		id = Symbol(names(to_df)[1])
+	end
+	if isnothing(Patient)
+		Patient = Symbol(names(to_df)[Not(1)])
+	end
+
+
+	return filter(id => x -> x in check[!,Patient], df)
 end
-function subsetMD(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
-	return filter(symb => x -> isequal(x, check), df)
+#=
+function subsetMD(df::AbstractDataFrame, check::Any, id::Symbol)::AbstractDataFrame
+	return filter(id => x -> isequal(x, check), df)
 end
+=#
 
 """
     function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
@@ -247,20 +258,3 @@ function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{Abstrac
 
 end #module PreprocessMD
 
-#=
-
-"""
-    function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
-Return a DataFrame subset
-For check::DataFrame, including only PATIENTs present in check
-Otherwise, Subset DataFrame of PATIENTs with condition
-Condition column name is given by symb
-"""
-function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
-	return filter(symb => x -> x in check.PATIENT, df)
-end
-function dataframe_subset(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
-	return filter(symb => x -> isequal(x, check), df)
-end
-
-=#
