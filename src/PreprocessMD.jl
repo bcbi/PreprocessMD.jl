@@ -1,8 +1,3 @@
-"""
-    module PreprocessMD
-
-Medically informed data transformations
-"""
 module PreprocessMD
 
 using DataFrames: AbstractDataFrame
