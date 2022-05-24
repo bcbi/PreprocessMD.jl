@@ -1,4 +1,4 @@
-using PreprocessMD: PreprocessMD
+using PreprocessMD
 
 using Aqua: Aqua
 using CSV: File
@@ -9,12 +9,6 @@ using DataFrames: DataFrame
 using DataFrames: Index
 using DataFrames: innerjoin
 using DataFrames: summary
-using PreprocessMD: add_label_column!
-using PreprocessMD: MLDemo
-using PreprocessMD: pivot
-using PreprocessMD: subsetMD
-using PreprocessMD: repr
-using PreprocessMD: top_n_values
 
 using Test: @testset
 using Test: @test

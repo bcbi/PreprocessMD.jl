@@ -27,7 +27,7 @@ using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Tables: istable
 using Tables: getcolumn
 
-export add_label_column!, MLDemo, pivot, top_n_values
+export add_label_column!, MLDemo, pivot, subsetMD, top_n_values
 
 """
     function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
@@ -196,6 +196,41 @@ function repr(df::AbstractDataFrame)::Nothing
 end
 =#
 
+"""
+    function subsetMD(main_df, check_df, main_id, check_id)
+
+Filtration step
+
+# Arguments
+- `main_df::AbstractDataFrame`: Rows are selected from this DataFrame...
+- `check_df::AbstractDataFrame`: ... if the IDs are present in this DataFrame
+- `main_id`: ID column from `main_df` (Default: first column)
+- `check_id`: ID column from `check_df` (Default: same as `main_id`)
+
+# Examples
+```jldoctest
+X = DataFrame(
+	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+	blue = [true, false, false, true],
+	red  = [false, true, false, false],
+	green = [false, false, true, false]);
+
+Y = DataFrame(
+	name=["Big Bird", "Cookie Monster", "Elmo"],
+	fuzzy=[false, true, true]
+	);
+subsetMD(X,Y)
+
+# output
+2×4 DataFrame
+ Row │ name            blue   red    green 
+     │ String          Bool   Bool   Bool  
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+
+```
+"""
 function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_id=nothing, check_id=nothing)::AbstractDataFrame
 
 	# Assign missing arguments
