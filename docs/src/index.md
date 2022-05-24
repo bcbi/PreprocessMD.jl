@@ -42,12 +42,9 @@ MLDemo(p_AGGREGATE, :death, 1234) |> display
 
 # Function documentation
 
-```@docs
-PreprocessMD
-MLDemo
-add_label_column!
-pivot
-subsetMD
-top_n_values
+```@autodocs
+Modules = [PreprocessMD]
+Private = false
+Order = [:function]
 ```
 
