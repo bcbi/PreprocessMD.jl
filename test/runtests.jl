@@ -216,13 +216,19 @@ using Test: @test_skip
 					name=["aaa", "ccc"],
 					d =[1, 2],
 				)
-				Z = subsetMD(X,Y,:w,:name)
+				Z = subsetMD(X,Y,:name,:name)
 
 				@test Z == DataFrame(
-					name=["aaa", "bbb", "ccc", "eee"],
-					x=[true, false, false, false],
-					w=[true, true, false, true],
+					name=["aaa", "ccc", ],
+					x=[true, false, ],
+					w=[true, false, ],
+					y=[true, true, ],
+					z=[false, true, ],
+					q=[true, false, ],
+					a=[false, true, ],
+					LABEL=[false, true, ],
 				)
+
 
 		end
 		@testset "Default options" verbose = true begin
@@ -241,6 +247,19 @@ using Test: @test_skip
 				Y = DataFrame(
 					name=["aaa", "ccc"],
 					d =[1, 2],
+				)
+
+				Z = subsetMD(X,Y, :name)
+
+				@test Z == DataFrame(
+					name=["aaa", "ccc", ],
+					x=[true, false, ],
+					w=[true, false, ],
+					y=[true, true, ],
+					z=[false, true, ],
+					q=[true, false, ],
+					a=[false, true, ],
+					LABEL=[false, true, ],
 				)
 
 				Z = subsetMD(X,Y)

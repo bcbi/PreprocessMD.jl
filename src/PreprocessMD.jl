@@ -196,22 +196,21 @@ function repr(df::AbstractDataFrame)::Nothing
 end
 =#
 
-function subsetMD(df::AbstractDataFrame, check::AbstractDataFrame, id, Patient)::AbstractDataFrame
+function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_id=nothing, check_id=nothing)::AbstractDataFrame
 
 	# Assign missing arguments
-	if isnothing(id)
-		id = Symbol(names(to_df)[1])
+	if isnothing(main_id)
+		main_id = Symbol(names(main_df)[1])
 	end
-	if isnothing(Patient)
-		Patient = Symbol(names(to_df)[Not(1)])
+	if isnothing(check_id)
+		check_id = main_id
 	end
 
-
-	return filter(id => x -> x in check[!,Patient], df)
+	return filter(main_id => x -> x in check_df[!,check_id], main_df)
 end
 #=
-function subsetMD(df::AbstractDataFrame, check::Any, id::Symbol)::AbstractDataFrame
-	return filter(id => x -> isequal(x, check), df)
+function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id::Symbol)::AbstractDataFrame
+	return filter(check_id => x -> isequal(x, check_df), main_df)
 end
 =#
 
