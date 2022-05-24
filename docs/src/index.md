@@ -47,6 +47,7 @@ PreprocessMD
 MLDemo
 add_label_column!
 pivot
+subsetMD
 top_n_values
 ```
 

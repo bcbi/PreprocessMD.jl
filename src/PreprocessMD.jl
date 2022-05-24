@@ -1,4 +1,6 @@
 """
+    module PreprocessMD
+
 Medically informed data transformations
 """
 module PreprocessMD
@@ -27,7 +29,7 @@ using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Tables: istable
 using Tables: getcolumn
 
-export add_label_column!, MLDemo, pivot, top_n_values
+export add_label_column!, MLDemo, pivot, subsetMD, top_n_values
 
 """
     function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
@@ -69,7 +71,6 @@ X
 ```
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name::Symbol, id=nothing)::Nothing
-
 
 	# Error checks
 	for arg in [to_df, from_df]
@@ -198,6 +199,59 @@ end
 =#
 
 """
+    function subsetMD(main_df, check_df, main_id, check_id)
+
+Filtration step
+
+# Arguments
+- `main_df::AbstractDataFrame`: Rows are selected from this DataFrame...
+- `check_df::AbstractDataFrame`: ... if the IDs are present in this DataFrame
+- `main_id`: ID column from `main_df` (Default: first column)
+- `check_id`: ID column from `check_df` (Default: same as `main_id`)
+
+# Examples
+```jldoctest
+X = DataFrame(
+	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+	blue = [true, false, false, true],
+	red  = [false, true, false, false],
+	green = [false, false, true, false]);
+
+Y = DataFrame(
+	name=["Big Bird", "Cookie Monster", "Elmo"],
+	fuzzy=[false, true, true]
+	);
+subsetMD(X,Y)
+
+# output
+2×4 DataFrame
+ Row │ name            blue   red    green 
+     │ String          Bool   Bool   Bool  
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+
+```
+"""
+function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_id=nothing, check_id=nothing)::AbstractDataFrame
+
+	# Assign missing arguments
+	if isnothing(main_id)
+		main_id = Symbol(names(main_df)[1])
+	end
+	if isnothing(check_id)
+		check_id = main_id
+	end
+
+	return filter(main_id => x -> x in check_df[!,check_id], main_df)
+end
+#=
+function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id::Symbol)::AbstractDataFrame
+	return filter(check_id => x -> isequal(x, check_df), main_df)
+end
+=#
+
+"""
     function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
 Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
@@ -240,20 +294,3 @@ function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{Abstrac
 
 end #module PreprocessMD
 
-#=
-
-"""
-    function dataframe_subset(df::AbstractDataFrame, check::Any)::AbstractDataFrame
-Return a DataFrame subset
-For check::DataFrame, including only PATIENTs present in check
-Otherwise, Subset DataFrame of PATIENTs with condition
-Condition column name is given by symb
-"""
-function dataframe_subset(df::AbstractDataFrame, check::AbstractDataFrame, symb::Symbol)::DataFrame
-	return filter(symb => x -> x in check.PATIENT, df)
-end
-function dataframe_subset(df::AbstractDataFrame, check::Any, symb::Symbol)::AbstractDataFrame
-	return filter(symb => x -> isequal(x, check), df)
-end
-
-=#
