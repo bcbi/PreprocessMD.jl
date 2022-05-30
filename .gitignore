@@ -1,7 +1,10 @@
-# Generated files
+# Directories
 docs/build/
-Manifest.toml
-*.jl.cov
+
+# Files
 *.jl.*.cov
-*.swp
+*.jl.cov
 *.swo
+*.swp
+.DS_Store
+Manifest.toml
