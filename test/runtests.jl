@@ -15,7 +15,7 @@ using Test: @test
 using Test: @test_throws
 using Test: @test_skip
 
-@testset "PreprocessMD" verbose = true begin
+@testset "PreprocessMD" verbose = false begin
 	# All external file downloads
 
 	url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
@@ -24,27 +24,27 @@ using Test: @test_skip
 	CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")))
 	DEATH = DataFrame(File.(download("$url/death.csv")))
 
-	@testset "pivot()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
+	@testset "pivot()" verbose = false begin
+		@testset "Intended exceptions" verbose = false begin
+			@testset "ArgumentError" verbose = false begin
 				@test true
 			end
-			@testset "DomainError" verbose = true begin
+			@testset "DomainError" verbose = false begin
 				for x in [DataFrame(), DataFrame(; x=[0, 1, 2, 3])]
 					@test_throws DomainError pivot(x)
 				end
 			end
-			@testset "MethodError" verbose = true begin
+			@testset "MethodError" verbose = false begin
 				for x in [12, 1.0, "", x -> x]
 					#@test_throws MethodError pivot(x)
 				end
 			end
 		end
 
-		@testset "Table inputs" verbose = true begin
-			@testset "NonTable" verbose = true begin
+		@testset "Table inputs" verbose = false begin
+			@testset "NonTable" verbose = false begin
 			end
-			@testset "Table" verbose = true begin
+			@testset "Table" verbose = false begin
 				mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
 				mattbl = table(mat)
 
@@ -55,7 +55,7 @@ using Test: @test_skip
 			
 		end
 
-		@testset "Simple examples" verbose = true begin
+		@testset "Simple examples" verbose = false begin
 			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
 			B = pivot(A, :a, :b)
 			C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
@@ -72,9 +72,9 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "add_label_column!()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
+	@testset "add_label_column!()" verbose = false begin
+		@testset "Intended exceptions" verbose = false begin
+			@testset "ArgumentError" verbose = false begin
 
 				# DataFrame definitions
 				long = DataFrame(
@@ -96,7 +96,7 @@ using Test: @test_skip
 				new = deepcopy(short)
 				# @test_throws UndefVarError add_label_column!(new, X, :NONEXISTENT)
 			end
-			@testset "DomainError" verbose = true begin
+			@testset "DomainError" verbose = false begin
 				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(), :NONEXISTENT)
@@ -104,7 +104,7 @@ using Test: @test_skip
 				@test_throws DomainError add_label_column!(DataFrame(; x=[1, 2]), DataFrame(; x=[]), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[1, 2]), :NONEXISTENT)
 			end
-			@testset "MethodError" verbose = true begin
+			@testset "MethodError" verbose = false begin
 				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
 				for x in [12, 1.0, "", x -> x]
 					# @test_throws MethodError add_label_column!(x, x)
@@ -114,12 +114,12 @@ using Test: @test_skip
 			end
 		end
 
-		@testset "Table inputs" verbose = true begin
-			@testset "NonTable" verbose = true begin
+		@testset "Table inputs" verbose = false begin
+			@testset "NonTable" verbose = false begin
 
 				@test_throws ArgumentError add_label_column!(12, 12, :NONEXISTENT)
 			end
-			@testset "Table" verbose = true begin
+			@testset "Table" verbose = false begin
 
 				mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
 				mattbl = table(mat)
@@ -131,7 +131,7 @@ using Test: @test_skip
 				@test true
 			end
 		end
-		@testset "Default options" verbose = true begin
+		@testset "Default options" verbose = false begin
 
 			# DataFrame definitions
 			long = DataFrame(
@@ -157,7 +157,7 @@ using Test: @test_skip
 			@test new == results
 		end
 
-		@testset "Simple examples" verbose = true begin
+		@testset "Simple examples" verbose = false begin
 
 			# DataFrame definitions
 			long = DataFrame(;
@@ -184,16 +184,16 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "subsetMD()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
+	@testset "subsetMD()" verbose = false begin
+		@testset "Intended exceptions" verbose = false begin
+			@testset "ArgumentError" verbose = false begin
 			end
-			@testset "DomainError" verbose = true begin
+			@testset "DomainError" verbose = false begin
 			end
-			@testset "MethodError" verbose = true begin
+			@testset "MethodError" verbose = false begin
 			end
 		end
-		@testset "Simple examples" verbose = true begin
+		@testset "Simple examples" verbose = false begin
 
 				X = DataFrame(;
 					name=["aaa", "bbb", "ccc", "eee"],
@@ -225,7 +225,7 @@ using Test: @test_skip
 
 
 		end
-		@testset "Default options" verbose = true begin
+		@testset "Default options" verbose = false begin
 
 				X = DataFrame(;
 					name=["aaa", "bbb", "ccc", "eee"],
@@ -272,7 +272,7 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "Full pipeline" verbose = true begin
+	@testset "Full pipeline" verbose = false begin
 		p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id)
 		p_DRUG = pivot(DRUG, :person_id, :drug_concept_id)
 
@@ -284,7 +284,7 @@ using Test: @test_skip
 
 		MLDemo(p_AGGREGATE, :death, 1234)
 
-		@testset "top_n_values()" verbose = true begin
+		@testset "top_n_values()" verbose = false begin
 			@test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
 				AbstractVector[
 					[4145513, 4064452, 4140598, 4092038, 4138456, 433753],
@@ -298,25 +298,25 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "Aqua.jl" verbose = true begin
+	@testset "Aqua.jl" verbose = false begin
 		Aqua.test_all(PreprocessMD; ambiguities=false)
 	end
 end
 
 #=
-@testset "Template" verbose = true begin
-	@testset "generic_function()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
+@testset "Template" verbose = false begin
+	@testset "generic_function()" verbose = false begin
+		@testset "Intended exceptions" verbose = false begin
+			@testset "ArgumentError" verbose = false begin
 			end
-			@testset "DomainError" verbose = true begin
+			@testset "DomainError" verbose = false begin
 			end
-			@testset "MethodError" verbose = true begin
+			@testset "MethodError" verbose = false begin
 			end
 		end
-		@testset "Default options" verbose = true begin
+		@testset "Default options" verbose = false begin
 		end
-		@testset "Simple examples" verbose = true begin
+		@testset "Simple examples" verbose = false begin
 		end
 	end
 end
