@@ -27,7 +27,7 @@ using Tables: getcolumn
 export add_label_column!, MLDemo, pivot, subsetMD, top_n_values
 
 """
-    function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
+	function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
 
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
@@ -114,7 +114,7 @@ function assert_is_table(x)
 end
 
 """
-    function pivot()
+	function pivot()
 
 Express the long format DataFrame `df` as a wide format DataFrame `B`.
 
@@ -183,7 +183,7 @@ end
 
 #=
 """
-    function repr(df::AbstractDataFrame)::Nothing
+	function repr(df::AbstractDataFrame)::Nothing
 Print Julia-readable definition of a DataFrame
 """
 function repr(df::AbstractDataFrame)::Nothing
@@ -194,7 +194,7 @@ end
 =#
 
 """
-    function subsetMD(main_df, check_df, main_id, check_id)
+	function subsetMD(main_df, check_df, main_id, check_id)
 
 Filtration step
 
@@ -247,7 +247,7 @@ end
 =#
 
 """
-    function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+	function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
 Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 """
@@ -256,7 +256,7 @@ function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataF
 end
 
 """
-    function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+	function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 Decision tree classifier on a DataFrame over a given output
 
 # Arguments
