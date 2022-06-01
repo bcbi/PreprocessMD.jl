@@ -23,6 +23,7 @@ using MLJ: predict
 using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Tables: istable
 using Tables: getcolumn
+using Tables: materializer
 
 export add_label_column!, MLDemo, pivot, subsetMD, top_n_values
 
@@ -140,11 +141,7 @@ pivot(df)
 
 ```
 """
-function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
-
-	assert_is_table(obj)
-	df = DataFrame(obj)::DataFrame
-	df::DataFrame
+function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
 
 	# Error checks
 	if size(df)[1] < 1
@@ -173,6 +170,21 @@ function pivot(obj, newcols=nothing, y=nothing)::AbstractDataFrame
 		B[!, q] = B[!, q] .!= 0
 	end
 	return B
+end
+function pivot(obj)
+	assert_is_table(obj)
+	df = DataFrame(obj)::DataFrame
+	df::DataFrame
+
+	input_table = obj
+	materializer_function = materializer(input_table)
+	input_dataframe = DataFrame(input_table)
+	output_dataframe = pivot(input_dataframe)
+	# Note: `output_dataframe` is of type `DataFrames.DataFrame`
+	output_table = materializer_function(output_dataframe)
+	# Now `output_table` will be of the same type as `input_table`
+	return output_table
+
 end
 #=
 function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
