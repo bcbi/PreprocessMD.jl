@@ -66,7 +66,9 @@ X
 
 ```
 """
-function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name::Symbol, id=nothing)::Nothing
+function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name, id=nothing)::Nothing
+
+	new_col_symb = Symbol(new_col_name)	
 
 	# Error checks
 	for arg in [to_df, from_df]
@@ -86,10 +88,10 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	end
 
 	# Add column
-	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
-	insertcols!(to_df, new_col_name => map(x -> x in from_df[!, id], to_df[!, id]))
+	#insertcols!(to_df, new_col_symb => [x[id] in from_df[!,id] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_symb => map(x -> x in from_df[!, id], to_df[!, id]))
 
-	coerce!(to_df, new_col_name => OrderedFactor{2})
+	coerce!(to_df, new_col_symb => OrderedFactor{2})
 	return nothing
 end
 function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing

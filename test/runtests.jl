@@ -155,6 +155,10 @@ using Test: @test_skip
 			new = deepcopy(short)
 			add_label_column!(new, X, :r)
 			@test new == results
+
+			new = deepcopy(short)
+			add_label_column!(new, X, "r")
+			@test new == results
 		end
 
 		@testset "Simple examples" verbose = false begin
