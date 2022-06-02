@@ -64,10 +64,16 @@ using Test: @test_skip
 			B = pivot(A, :a)
 			@test B == C
 
+			B = pivot(A, "a")
+			@test B == C
+
 			B = pivot(A)
 			@test B == C
 
 			B = pivot(A, "a", "b")
+			@test B == C
+
+			B = pivot(A, :a, :b)
 			@test B == C
 		end
 	end

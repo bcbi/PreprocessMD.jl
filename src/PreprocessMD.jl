@@ -157,18 +157,22 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 
 	# Assign missing arguments
 	if isnothing(newcols)
-		newcols = Symbol(names(df)[1])
+		newcols = names(df)[1]
 	end
 	if isnothing(y)
 		#y = Symbol.(names(select(df, Not(newcols))))
-		y = Symbol(names(df)[2])
+		y = names(df)[2]
 	end
+	
+	newcols_symb = Symbol.(newcols)
+	y_symb = Symbol.(y)
+	
 
 	# Pivot
 	B = unstack(
-		combine(groupby(df, [newcols, y]), nrow => :count), newcols, y, :count; fill=0
+		combine(groupby(df, [newcols_symb, y_symb]), nrow => :count), newcols_symb, y_symb, :count; fill=0
 	)
-	for q in names(select(B, Not(newcols)))
+	for q in names(select(B, Not(newcols_symb)))
 		B[!, q] = B[!, q] .!= 0
 	end
 	return B
