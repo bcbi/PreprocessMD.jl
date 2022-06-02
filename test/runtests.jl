@@ -27,7 +27,13 @@ using Test: @test_skip
 	@testset "pivot()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
 			@testset "ArgumentError" verbose = false begin
-				@test true
+				A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
+				B = pivot(A, :a, :b)
+				C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
+
+				@test_throws ArgumentError B = pivot(A, :a, "b")
+
+				@test_throws ArgumentError B = pivot(A, "a", :b)
 			end
 			@testset "DomainError" verbose = false begin
 				for x in [DataFrame(), DataFrame(; x=[0, 1, 2, 3])]
