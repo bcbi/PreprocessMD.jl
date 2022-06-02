@@ -68,8 +68,6 @@ X
 """
 function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name, id=nothing)::Nothing
 
-	new_col_symb = Symbol(new_col_name)	
-
 	# Error checks
 	for arg in [to_df, from_df]
 		if size(arg)[1] < 1
@@ -84,14 +82,14 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 
 	# Assign missing arguments
 	if isnothing(id)
-		id = Symbol(names(to_df)[1])
+		id = names(to_df)[1]
 	end
 
 	# Add column
-	#insertcols!(to_df, new_col_symb => [x[id] in from_df[!,id] for x in eachrow(to_df)])
-	insertcols!(to_df, new_col_symb => map(x -> x in from_df[!, id], to_df[!, id]))
+	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_name => map(x -> x in from_df[!, id], to_df[!, id]))
 
-	coerce!(to_df, new_col_symb => OrderedFactor{2})
+	coerce!(to_df, new_col_name => OrderedFactor{2})
 	return nothing
 end
 function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing
@@ -162,17 +160,21 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 	if isnothing(y)
 		#y = Symbol.(names(select(df, Not(newcols))))
 		y = names(df)[2]
+
+		# Ensure types match if only one argument is provided
+		# NOTE: convert(typeof(::Symbol), ::String) doesn't work
+		newcols_ = Symbol.(newcols)
+		y_ = Symbol.(y)
+	else
+		newcols_=newcols
+		y_=y
 	end
-	
-	newcols_symb = Symbol.(newcols)
-	y_symb = Symbol.(y)
-	
 
 	# Pivot
 	B = unstack(
-		combine(groupby(df, [newcols_symb, y_symb]), nrow => :count), newcols_symb, y_symb, :count; fill=0
+		combine(groupby(df, [newcols_, y_]), nrow => :count), newcols_, y_, :count; fill=0
 	)
-	for q in names(select(B, Not(newcols_symb)))
+	for q in names(select(B, Not(newcols)))
 		B[!, q] = B[!, q] .!= 0
 	end
 	return B
@@ -256,38 +258,35 @@ function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_
 		check_id = main_id
 	end
 
-	main_id_symb = Symbol.(main_id)
-	check_id_symb = Symbol.(check_id)
-
-	return filter(main_id_symb => x -> x in check_df[!,check_id_symb], main_df)
+	return filter(main_id => x -> x in check_df[!,check_id], main_df)
 end
 #=
-function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id::Symbol)::AbstractDataFrame
+function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id)::AbstractDataFrame
 	return filter(check_id => x -> isequal(x, check_df), main_df)
 end
 =#
 
 """
-	function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+	function top_n_values(df::AbstractDataFrame, col, n::Int)::AbstractDataFrame
 Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 """
-function top_n_values(df::AbstractDataFrame, col::Symbol, n::Int)::AbstractDataFrame
+function top_n_values(df::AbstractDataFrame, col, n::Int)::AbstractDataFrame
 	return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
 
 """
-	function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+	function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
 Decision tree classifier on a DataFrame over a given output
 
 # Arguments
 
 - `df::AbstractDataFrame`: DataFrame containing feature and label data
-- `output::Symbol`: column containing label data
+- `output`: column containing label data
 - `RNG_VALUE`: 
 
 """
-function MLDemo(df::AbstractDataFrame, output::Symbol, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
                y = df[:, output]
                X = select(df, Not([:person_id, output]))
                
