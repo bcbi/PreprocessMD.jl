@@ -64,10 +64,16 @@ using Test: @test_skip
 			B = pivot(A, :a)
 			@test B == C
 
+			B = pivot(A, "a")
+			@test B == C
+
 			B = pivot(A)
 			@test B == C
 
 			B = pivot(A, "a", "b")
+			@test B == C
+
+			B = pivot(A, :a, :b)
 			@test B == C
 		end
 	end
@@ -154,6 +160,10 @@ using Test: @test_skip
 
 			new = deepcopy(short)
 			add_label_column!(new, X, :r)
+			@test new == results
+
+			new = deepcopy(short)
+			add_label_column!(new, X, "r")
 			@test new == results
 		end
 
@@ -242,6 +252,21 @@ using Test: @test_skip
 					name=["aaa", "ccc"],
 					d =[1, 2],
 				)
+
+
+				Z = subsetMD(X,Y, "name")
+
+				@test Z == DataFrame(
+					name=["aaa", "ccc", ],
+					x=[true, false, ],
+					w=[true, false, ],
+					y=[true, true, ],
+					z=[false, true, ],
+					q=[true, false, ],
+					a=[false, true, ],
+					LABEL=[false, true, ],
+				)
+
 
 				Z = subsetMD(X,Y, :name)
 

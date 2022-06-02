@@ -66,7 +66,9 @@ X
 
 ```
 """
-function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name::Symbol, id=nothing)::Nothing
+function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name, id=nothing)::Nothing
+
+	new_col_symb = Symbol(new_col_name)	
 
 	# Error checks
 	for arg in [to_df, from_df]
@@ -86,10 +88,10 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 	end
 
 	# Add column
-	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
-	insertcols!(to_df, new_col_name => map(x -> x in from_df[!, id], to_df[!, id]))
+	#insertcols!(to_df, new_col_symb => [x[id] in from_df[!,id] for x in eachrow(to_df)])
+	insertcols!(to_df, new_col_symb => map(x -> x in from_df[!, id], to_df[!, id]))
 
-	coerce!(to_df, new_col_name => OrderedFactor{2})
+	coerce!(to_df, new_col_symb => OrderedFactor{2})
 	return nothing
 end
 function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing
@@ -155,18 +157,22 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 
 	# Assign missing arguments
 	if isnothing(newcols)
-		newcols = Symbol(names(df)[1])
+		newcols = names(df)[1]
 	end
 	if isnothing(y)
 		#y = Symbol.(names(select(df, Not(newcols))))
-		y = Symbol(names(df)[2])
+		y = names(df)[2]
 	end
+	
+	newcols_symb = Symbol.(newcols)
+	y_symb = Symbol.(y)
+	
 
 	# Pivot
 	B = unstack(
-		combine(groupby(df, [newcols, y]), nrow => :count), newcols, y, :count; fill=0
+		combine(groupby(df, [newcols_symb, y_symb]), nrow => :count), newcols_symb, y_symb, :count; fill=0
 	)
-	for q in names(select(B, Not(newcols)))
+	for q in names(select(B, Not(newcols_symb)))
 		B[!, q] = B[!, q] .!= 0
 	end
 	return B
@@ -244,13 +250,16 @@ function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_
 
 	# Assign missing arguments
 	if isnothing(main_id)
-		main_id = Symbol(names(main_df)[1])
+		main_id = names(main_df)[1]
 	end
 	if isnothing(check_id)
 		check_id = main_id
 	end
 
-	return filter(main_id => x -> x in check_df[!,check_id], main_df)
+	main_id_symb = Symbol.(main_id)
+	check_id_symb = Symbol.(check_id)
+
+	return filter(main_id_symb => x -> x in check_df[!,check_id_symb], main_df)
 end
 #=
 function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id::Symbol)::AbstractDataFrame
