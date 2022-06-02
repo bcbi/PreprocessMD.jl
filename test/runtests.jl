@@ -253,6 +253,21 @@ using Test: @test_skip
 					d =[1, 2],
 				)
 
+
+				Z = subsetMD(X,Y, "name")
+
+				@test Z == DataFrame(
+					name=["aaa", "ccc", ],
+					x=[true, false, ],
+					w=[true, false, ],
+					y=[true, true, ],
+					z=[false, true, ],
+					q=[true, false, ],
+					a=[false, true, ],
+					LABEL=[false, true, ],
+				)
+
+
 				Z = subsetMD(X,Y, :name)
 
 				@test Z == DataFrame(

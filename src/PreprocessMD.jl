@@ -250,13 +250,16 @@ function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_
 
 	# Assign missing arguments
 	if isnothing(main_id)
-		main_id = Symbol(names(main_df)[1])
+		main_id = names(main_df)[1]
 	end
 	if isnothing(check_id)
 		check_id = main_id
 	end
 
-	return filter(main_id => x -> x in check_df[!,check_id], main_df)
+	main_id_symb = Symbol.(main_id)
+	check_id_symb = Symbol.(check_id)
+
+	return filter(main_id_symb => x -> x in check_df[!,check_id_symb], main_df)
 end
 #=
 function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id::Symbol)::AbstractDataFrame
