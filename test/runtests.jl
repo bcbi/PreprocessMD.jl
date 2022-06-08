@@ -1,7 +1,7 @@
 using PreprocessMD
 
 using Aqua: Aqua
-using CSV: File
+using CSV: read
 using Downloads: download
 using Tables: table
 
@@ -19,10 +19,10 @@ using Test: @test_skip
 	# All external file downloads
 
 	url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
-	PERSON = DataFrame(File.(download("$url/person.csv")))
-	DRUG = DataFrame(File.(download("$url/drug_exposure.csv")))
-	CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")))
-	DEATH = DataFrame(File.(download("$url/death.csv")))
+	PERSON = DataFrame(read(download("$url/person.csv"), DataFrame))
+	DRUG = DataFrame(read(download("$url/drug_exposure.csv"), DataFrame))
+	CONDITION = DataFrame(read(download("$url/condition_occurrence.csv"), DataFrame))
+	DEATH = DataFrame(read(download("$url/death.csv"), DataFrame))
 
 	@testset "pivot()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
