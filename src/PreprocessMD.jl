@@ -9,23 +9,13 @@ using DataFrames: Not
 using DataFrames: nrow
 using DataFrames: select
 using DataFrames: unstack
-using MLJ: @load
-using MLJ: accuracy
 using MLJ: coerce!
-using MLJ: evaluate
-using MLJ: f1score
-using MLJ: fit!
-using MLJ: machine
-using MLJ: mode
 using MLJ: OrderedFactor
-using MLJ: partition
-using MLJ: predict
-using MLJDecisionTreeInterface: DecisionTreeClassifier
 using Tables: istable
 using Tables: getcolumn
 using Tables: materializer
 
-export add_label_column!, MLDemo, pivot, subsetMD, top_n_values
+export add_label_column!, pivot, subsetMD, top_n_values
 
 """
 	function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
@@ -274,38 +264,6 @@ Useful for initial feasibility checks, but medical codes are not considered
 function top_n_values(df::AbstractDataFrame, col, n::Int)::AbstractDataFrame
 	return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
-
-"""
-	function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
-Decision tree classifier on a DataFrame over a given output
-
-# Arguments
-
-- `df::AbstractDataFrame`: DataFrame containing feature and label data
-- `output`: column containing label data
-- `RNG_VALUE`: 
-
-"""
-function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
-               y = df[:, output]
-               X = select(df, Not([:person_id, output]))
-               
-               train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
-
-               # Evaluate model
-               Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
-               tree_model = Tree(max_depth = 3)
-               evaluate(tree_model, X, y) |> display
-
-               # Return scores
-               tree = machine(tree_model, X, y)
-               fit!(tree, rows = train)
-               yhat = predict(tree, X[test, :])
-               acc = accuracy(mode.(yhat), y[test])
-               f1_score = f1score(mode.(yhat), y[test])
-
-               return acc, f1_score
-       end
 
 end #module PreprocessMD
 
