@@ -18,7 +18,6 @@ using DataFrames: DataFrame
 using Downloads: download
 
 using PreprocessMD: add_label_column!
-using PreprocessMD: MLDemo
 using PreprocessMD: pivot
 
 url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
@@ -33,7 +32,6 @@ p_AGGREGATE = innerjoin(p_CONDITION, p_DRUG, on=:person_id);
 
 add_label_column!(p_AGGREGATE, DEATH, :death)
 
-MLDemo(p_AGGREGATE, :death, 1234) |> display
 ```
 # Function index
 
