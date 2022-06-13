@@ -5,15 +5,62 @@ using CSV: read
 using Downloads: download
 using Tables: table
 
+using DataFrames: AbstractDataFrame
 using DataFrames: DataFrame
 using DataFrames: Index
 using DataFrames: innerjoin
+using DataFrames: Not
+using DataFrames: select
 using DataFrames: summary
+
+using MLJ: @load
+using MLJ: accuracy
+using MLJ: evaluate
+using MLJ: f1score
+using MLJ: fit!
+using MLJ: machine
+using MLJ: mode
+using MLJ: partition
+using MLJ: predict
+using MLJDecisionTreeInterface: DecisionTreeClassifier
 
 using Test: @testset
 using Test: @test
 using Test: @test_throws
 using Test: @test_skip
+
+"""
+	function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+Decision tree classifier on a DataFrame over a given output
+
+# Arguments
+
+- `df::AbstractDataFrame`: DataFrame containing feature and label data
+- `output`: column containing label data
+- `RNG_VALUE`: 
+
+"""
+function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
+               y = df[:, output]
+               X = select(df, Not([:person_id, output]))
+               
+               train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
+
+               # Evaluate model
+               Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+               tree_model = Tree(max_depth = 3)
+               evaluate(tree_model, X, y) |> display
+
+               # Return scores
+               tree = machine(tree_model, X, y)
+               fit!(tree, rows = train)
+               yhat = predict(tree, X[test, :])
+               acc = accuracy(mode.(yhat), y[test])
+               f1_score = f1score(mode.(yhat), y[test])
+
+               return acc, f1_score
+       end
+
 
 @testset "PreprocessMD" verbose = false begin
 	# All external file downloads
