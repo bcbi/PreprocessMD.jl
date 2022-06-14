@@ -17,17 +17,20 @@ using Tables: materializer
 
 export add_label_column!, pivot, subsetMD, top_n_values
 
+COLUMN_TYPES = Union{String, Symbol}
+OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
+
 """
-	function add_label_column!(to_df, from_df, new_col_name[, id])::Nothing
+	function add_label_column!(feature_df, source_df, new_column[, id])
 
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Arguments
 - `
-- `to_df::AbstractDataFrame`: feature DataFrame to which label column is added
-- `from_df::AbstractDataFrame`: DataFrame containing the label column
-- `new_col_name`: name assigned to label column
-- `id=nothing`: row IDs (Default: first column)
+- `feature_df::AbstractDataFrame`: feature DataFrame to which label column is added
+- `source_df::AbstractDataFrame`: DataFrame containing the label column
+- `new_column::Union{String, Symbol}`: name assigned to label column
+- `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
 
 # Examples
 ```jldoctest
@@ -56,10 +59,15 @@ X
 
 ```
 """
-function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame, new_col_name, id=nothing)::Nothing
+function add_label_column!(
+	feature_df::AbstractDataFrame, 
+	source_df::AbstractDataFrame, 
+	new_column::COLUMN_TYPES,
+	id::OPTIONAL_COLUMN_TYPES=nothing,
+	)::Nothing
 
 	# Error checks
-	for arg in [to_df, from_df]
+	for arg in [feature_df, source_df]
 		if size(arg)[1] < 1
 			#@warn "DataFrame must have at least 1 row"
 			throw(DomainError(arg))
@@ -72,31 +80,30 @@ function add_label_column!(to_df::AbstractDataFrame, from_df::AbstractDataFrame,
 
 	# Assign missing arguments
 	if isnothing(id)
-		id = names(to_df)[1]
+		id = names(feature_df)[1]
 	end
 
 	# Add column
-	#insertcols!(to_df, new_col_name => [x[id] in from_df[!,id] for x in eachrow(to_df)])
-	insertcols!(to_df, new_col_name => map(x -> x in from_df[!, id], to_df[!, id]))
+	#insertcols!(feature_df, new_column => [x[id] in source_df[!,id] for x in eachrow(feature_df)])
+	insertcols!(feature_df, new_column => map(x -> x in source_df[!, id], feature_df[!, id]))
 
-	coerce!(to_df, new_col_name => OrderedFactor{2})
+	coerce!(feature_df, new_column => OrderedFactor{2})
 	return nothing
 end
-function add_label_column!(to_table, from_table, id=nothing, new_col_name=nothing
-)::Nothing
-	assert_is_table(to_table)
-	assert_is_table(from_table)
+function add_label_column!(feature_table::Any, source_table::Any, id::OPTIONAL_COLUMN_TYPES=nothing, new_column::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
+	assert_is_table(feature_table)
+	assert_is_table(source_table)
 
-	to_df = DataFrame(to_table)::DataFrame
-	from_df = DataFrame(to_table)::DataFrame
+	feature_df = DataFrame(feature_table)::DataFrame
+	source_df = DataFrame(feature_table)::DataFrame
 
-	to_df::DataFrame
-	from_df::DataFrame
+	feature_df::DataFrame
+	source_df::DataFrame
 
-	return add_label_column!(to_df, from_df, id, new_col_name)
+	return add_label_column!(feature_df, source_df, id, new_column)
 end
 
-function assert_is_table(x)
+function assert_is_table(x::Any)::Nothing
 	if !istable(x)
 		msg = "Input must be a table, but $(typeof(x)) is not a table"
 		throw(ArgumentError(msg))
@@ -131,7 +138,11 @@ pivot(df)
 
 ```
 """
-function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataFrame
+function pivot(
+	df::AbstractDataFrame,
+	newcols::OPTIONAL_COLUMN_TYPES=nothing,
+	y::OPTIONAL_COLUMN_TYPES=nothing,
+	)::AbstractDataFrame
 
 	# Error checks
 	if size(df)[1] < 1
@@ -169,7 +180,7 @@ function pivot(df::AbstractDataFrame, newcols=nothing, y=nothing)::AbstractDataF
 	end
 	return B
 end
-function pivot(obj)
+function pivot(obj::Any)::Any
 	assert_is_table(obj)
 	df = DataFrame(obj)::DataFrame
 	df::DataFrame
@@ -238,7 +249,12 @@ subsetMD(X,Y)
 
 ```
 """
-function subsetMD(main_df::AbstractDataFrame, check_df::AbstractDataFrame, main_id=nothing, check_id=nothing)::AbstractDataFrame
+function subsetMD(
+	main_df::AbstractDataFrame,
+	check_df::AbstractDataFrame,
+	main_id::OPTIONAL_COLUMN_TYPES=nothing,
+	check_id::OPTIONAL_COLUMN_TYPES=nothing,
+	)::AbstractDataFrame
 
 	# Assign missing arguments
 	if isnothing(main_id)
@@ -257,11 +273,11 @@ end
 =#
 
 """
-	function top_n_values(df::AbstractDataFrame, col, n::Int)::AbstractDataFrame
+	function top_n_values(df::AbstractDataFrame, col::Union{String, Symbol}, n::Int)::AbstractDataFrame
 Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 """
-function top_n_values(df::AbstractDataFrame, col, n::Int)::AbstractDataFrame
+function top_n_values(df::AbstractDataFrame, col::COLUMN_TYPES, n::Int)::AbstractDataFrame
 	return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
 
