@@ -241,14 +241,14 @@ set_label_column!(X,:lovable)
 X
 
 # output
-4×5 DataFrame
- Row │ name          lovable     furry    old 
-     │ String           Cat…      Bool    Bool  
-─────┼─────────────────────────────────────────────────
-   1 │ Cookie Monster   true      true   false
-   2 │ Elmo             true      true   false
-   3 │ Oscar           false      true    true
-   4 │ Grover           true      true    true
+4×4 DataFrame
+ Row │ name            lovable  furry  old   
+     │ String          Cat…     Bool   Bool  
+─────┼───────────────────────────────────────
+   1 │ Cookie Monster  true      true  false
+   2 │ Elmo            true      true  false
+   3 │ Oscar           false     true   true
+   4 │ Grover          true      true   true
 
 ```
 """
