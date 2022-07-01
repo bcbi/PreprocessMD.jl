@@ -15,7 +15,7 @@ using Tables: istable
 using Tables: getcolumn
 using Tables: materializer
 
-export add_label_column!, pivot, subsetMD, top_n_values
+export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values
 
 COLUMN_TYPES = Union{String, Symbol}
 OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
@@ -213,6 +213,96 @@ function repr(df::AbstractDataFrame)::Nothing
 	return nothing
 end
 =#
+
+
+
+
+
+
+"""
+	function set_label_column!(feature_df, source_df, new_column[, id])
+
+Designate one column within a DataFrame as the label
+
+# Arguments
+- `
+- `feature_df::AbstractDataFrame`: feature DataFrame
+- `col_name::Union{String, Symbol}`: label column
+- `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
+
+# Examples
+```jldoctest
+X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+	lovable = [true, true, false, true],
+	furry = [true, true, true, true],
+	old = [false, false, true, true]
+	);
+set_label_column!(X,:lovable)
+X
+
+# output
+4×4 DataFrame
+ Row │ name            lovable  furry  old   
+     │ String          Cat…     Bool   Bool  
+─────┼───────────────────────────────────────
+   1 │ Cookie Monster  true      true  false
+   2 │ Elmo            true      true  false
+   3 │ Oscar           false     true   true
+   4 │ Grover          true      true   true
+
+```
+"""
+function set_label_column!(
+	feature_df::AbstractDataFrame, 
+	col_name::COLUMN_TYPES,
+	id::OPTIONAL_COLUMN_TYPES=nothing,
+	)::Nothing
+
+	# Error checks
+	for arg in [feature_df]
+		if size(arg)[1] < 1
+			#@warn "DataFrame must have at least 1 row"
+			throw(DomainError(arg))
+		end
+		if size(arg)[2] < 1
+			#@warn "DataFrame must have at least 1 column"
+			throw(DomainError(arg))
+		end
+	end
+
+	# Assign missing arguments
+	if isnothing(id)
+		id = names(feature_df)[1]
+	end
+
+	# Set column as label
+	coerce!(feature_df, col_name => OrderedFactor{2})
+	return nothing
+end
+function set_label_column!(feature_table::Any, col_name::OPTIONAL_COLUMN_TYPES=nothing, id::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
+	assert_is_table(feature_table)
+
+	feature_df = DataFrame(feature_table)::DataFrame
+	source_df = DataFrame(feature_table)::DataFrame
+
+	feature_df::DataFrame
+	source_df::DataFrame
+
+	return set_label_column!(feature_df, col_name)
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 """
 	function subsetMD(main_df, check_df, main_id, check_id)

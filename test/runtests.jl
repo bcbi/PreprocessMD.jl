@@ -247,6 +247,151 @@ function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, 
 		end
 	end
 
+
+
+
+	@testset "set_label_column!()" verbose = false begin
+		@testset "Intended exceptions" verbose = false begin
+			@testset "ArgumentError" verbose = false begin
+
+				# DataFrame definitions
+				long = DataFrame(
+					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+				)
+				short = pivot(long)
+				X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+				results = DataFrame(;
+					name=["aaa", "bbb", "ccc", "eee"],
+					x=[true, false, false, false],
+					w=[true, true, false, true],
+					y=[true, false, true, false],
+					z=[false, false, true, false],
+					q=[true, false, false, false],
+					a=[false, false, true, false],
+					LABEL=[false, true, true, false],
+				)
+				new = deepcopy(short)
+				# @test_throws UndefVarError set_label_column!(new, X, :NONEXISTENT)
+			end
+			@testset "DomainError" verbose = false begin
+				@test_throws DomainError set_label_column!(DataFrame(), :NONEXISTENT)
+				@test_throws DomainError set_label_column!(DataFrame(; x=[]), :NONEXISTENT)
+				#@test_throws DomainError set_label_column!(DataFrame(; x=[1, 2]), :NONEXISTENT)
+			end
+			@testset "MethodError" verbose = false begin
+				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
+				for x in [12, 1.0, "", x -> x]
+					# @test_throws MethodError set_label_column!(x, x)
+					# @test_throws MethodError set_label_column!(x, y)
+					# @test_throws MethodError set_label_column!(y, x)
+				end
+			end
+		end
+
+		@testset "Table inputs" verbose = false begin
+			@testset "NonTable" verbose = false begin
+
+				@test_throws ArgumentError set_label_column!(12, :NONEXISTENT)
+			end
+			@testset "Table" verbose = false begin
+
+				mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
+				mattbl = table(mat)
+
+					X = DataFrame(name=["bbb", "ccc"], r=["BBB", "CCC"], Column1=[1, 2])
+			
+					set_label_column!(mattbl, :Column2)
+				#getcolumn(mattbl, :Column3) |> display
+				@test true
+			end
+		end
+#=
+		@testset "Default options" verbose = false begin
+
+			# DataFrame definitions
+			long = DataFrame(
+				name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+				val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+			)
+			short = pivot(long)
+			X = DataFrame(name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+			results = DataFrame(
+				name=["aaa", "bbb", "ccc", "eee"],
+				x=[true, false, false, false],
+				w=[true, true, false, true],
+				y=[true, false, true, false],
+				z=[false, false, true, false],
+				q=[true, false, false, false],
+				a=[false, false, true, false],
+				r=[false, true, true, false],
+			)
+			new = deepcopy(short)
+
+			new = deepcopy(short)
+			set_label_column!(new, X, :r)
+			@test new == results
+
+			new = deepcopy(short)
+			set_label_column!(new, X, "r")
+			@test new == results
+		end
+
+		@testset "Simple examples" verbose = false begin
+
+			# DataFrame definitions
+			long = DataFrame(;
+				name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+				val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+			)
+			short = pivot(long)
+			X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+			results = DataFrame(;
+				name=["aaa", "bbb", "ccc", "eee"],
+				x=[true, false, false, false],
+				w=[true, true, false, true],
+				y=[true, false, true, false],
+				z=[false, false, true, false],
+				q=[true, false, false, false],
+				a=[false, false, true, false],
+				val=[false, true, true, false],
+			)
+			new = deepcopy(short)
+
+			new = deepcopy(short)
+			set_label_column!(new, X, :val)
+			@test new == results
+		end
+=#
+	end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	@testset "subsetMD()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
 			@testset "ArgumentError" verbose = false begin
@@ -361,6 +506,24 @@ function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, 
 		@test size(p_AGGREGATE) == (100, 1878)
 
 		MLDemo(p_AGGREGATE, :death, 1234)
+
+#=
+
+		medical_codes = DataFrame(
+			CODE = [840544004, 840539006],
+			)
+		#p_medical_codes = pivot(medical_codes)
+		#medical_codes = DataFrame(
+			#"840544004" = [],
+			#"840539006" = [],
+			#)
+		#medical_codes = [840544004, 840539006]
+		println(names(medical_codes))
+		println(names(CONDITION))
+		COVID = subsetMD(CONDITION, medical_codes, :CODE)
+		add_label_column!(p_AGGREGATE, COVID, label)
+		MLDemo(p_AGGREGATE, :label, 9999)
+=#
 
 		@testset "top_n_values()" verbose = false begin
 			@test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
