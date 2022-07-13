@@ -71,6 +71,13 @@ function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, 
 	CONDITION = DataFrame(read(download("$url/condition_occurrence.csv"), DataFrame))
 	DEATH = DataFrame(read(download("$url/death.csv"), DataFrame))
 
+	@testset "Medical codes" verbose = false begin
+	x = filter(:ethnicity_concept_id => ==(38003563), PERSON) # Hispanic or Latino
+	# 38003564 # Not Hispanic or Latino
+	@test true
+	end
+
+
 	@testset "pivot()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
 			@testset "ArgumentError" verbose = false begin
