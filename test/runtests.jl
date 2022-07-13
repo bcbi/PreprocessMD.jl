@@ -49,7 +49,7 @@ function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, 
                # Evaluate model
                Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
                tree_model = Tree(max_depth = 3)
-               evaluate(tree_model, X, y) |> display
+               evaluate(tree_model, X, y)
 
                # Return scores
                tree = machine(tree_model, X, y)
