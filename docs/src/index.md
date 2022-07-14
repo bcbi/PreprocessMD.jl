@@ -34,7 +34,8 @@ add_label_column!(p_AGGREGATE, DEATH, :death)
 
 ###
 
-x = filter(:ethnicity_concept_id => ==(38003563), PERSON)
+PERSON = DataFrame(File.(download("$url/person.csv")));
+x = filter(:ethnicity_concept_id => ==(38003563), PERSON);
 
 ###
 
