@@ -24,6 +24,8 @@ using MLJ: partition
 using MLJ: predict
 using MLJDecisionTreeInterface: DecisionTreeClassifier
 
+using Suppressor: @suppress
+
 using Test: @testset
 using Test: @test
 using Test: @test_throws
@@ -41,25 +43,25 @@ Decision tree classifier on a DataFrame over a given output
 
 """
 function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
-               y = df[:, output]
-               X = select(df, Not([:person_id, output]))
-               
-               train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
+	y = df[:, output]
+	X = select(df, Not([:person_id, output]))
 
-               # Evaluate model
-               Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
-               tree_model = Tree(max_depth = 3)
-               evaluate(tree_model, X, y)
+	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
 
-               # Return scores
-               tree = machine(tree_model, X, y)
-               fit!(tree, rows = train)
-               yhat = predict(tree, X[test, :])
-               acc = accuracy(mode.(yhat), y[test])
-               f1_score = f1score(mode.(yhat), y[test])
+	# Evaluate model
+	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
+	tree_model = Tree(max_depth = 3)
+	evaluate(tree_model, X, y)
 
-               return acc, f1_score
-       end
+	# Return scores
+	tree = machine(tree_model, X, y)
+	fit!(tree, rows = train)
+	yhat = predict(tree, X[test, :])
+	acc = accuracy(mode.(yhat), y[test])
+	f1_score = f1score(mode.(yhat), y[test])
+
+	return acc, f1_score
+end
 
 
 @testset "PreprocessMD" verbose = false begin
@@ -512,7 +514,9 @@ function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, 
 
 		@test size(p_AGGREGATE) == (100, 1878)
 
-		MLDemo(p_AGGREGATE, :death, 1234)
+		@suppress begin
+			MLDemo(p_AGGREGATE, :death, 1234)
+		end
 
 #=
 
