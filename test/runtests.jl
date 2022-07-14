@@ -1,7 +1,7 @@
 using PreprocessMD
 
 using Aqua: Aqua
-using CSV: read
+using CSV: File
 using Downloads: download
 using Tables: table
 
@@ -68,16 +68,18 @@ end
 	# All external file downloads
 
 	url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
-	PERSON = DataFrame(read(download("$url/person.csv"), DataFrame))
-	DRUG = DataFrame(read(download("$url/drug_exposure.csv"), DataFrame))
-	CONDITION = DataFrame(read(download("$url/condition_occurrence.csv"), DataFrame))
-	DEATH = DataFrame(read(download("$url/death.csv"), DataFrame))
+	#DRUG = DataFrame(File.(download("$url/drug_exposure.csv")));
+	#PERSON = DataFrame(File.(download("$url/person.csv")));
+	CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")));
+	#DEATH = DataFrame(File.(download("$url/death.csv")));
 
+#=
 	@testset "Medical codes" verbose = false begin
 	x = filter(:ethnicity_concept_id => ==(38003563), PERSON) # Hispanic or Latino
 	# 38003564 # Not Hispanic or Latino
 	@test true
 	end
+=#
 
 
 	@testset "pivot()" verbose = false begin
@@ -504,7 +506,8 @@ end
 		end
 	end
 
-	@testset "Full pipeline" verbose = false begin
+	###@testset "Full pipeline" verbose = false begin
+#=
 		p_CONDITION = pivot(CONDITION, :person_id, :condition_concept_id)
 		p_DRUG = pivot(DRUG, :person_id, :drug_concept_id)
 
@@ -517,6 +520,7 @@ end
 		@suppress begin
 			MLDemo(p_AGGREGATE, :death, 1234)
 		end
+=#
 
 #=
 
@@ -536,18 +540,18 @@ end
 		MLDemo(p_AGGREGATE, :label, 9999)
 =#
 
-		@testset "top_n_values()" verbose = false begin
-			@test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
-				AbstractVector[
-					[4145513, 4064452, 4140598, 4092038, 4138456, 433753],
-					[6531, 2405, 2302, 502, 390, 181],
-				],
-				Index(
-					Dict(:condition_concept_id => 1, :nrow => 2),
-					[:condition_concept_id, :nrow],
-				),
-			)
-		end
+	###end
+	@testset "top_n_values()" verbose = false begin
+		@test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
+			AbstractVector[
+				[4145513, 4064452, 4140598, 4092038, 4138456, 433753],
+				[6531, 2405, 2302, 502, 390, 181],
+			],
+			Index(
+				Dict(:condition_concept_id => 1, :nrow => 2),
+				[:condition_concept_id, :nrow],
+			),
+		)
 	end
 
 	@testset "Aqua.jl" verbose = false begin
