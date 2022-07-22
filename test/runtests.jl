@@ -3,7 +3,7 @@ using PreprocessMD
 using Aqua: Aqua
 using CSV: File
 using Downloads: download
-using Tables: table
+#using Tables: table
 
 using DataFrames: AbstractDataFrame
 using DataFrames: DataFrame
@@ -105,6 +105,8 @@ end
 			end
 		end
 
+#=
+# Removed for 3.0 compatability requirements
 		@testset "Table inputs" verbose = false begin
 			@testset "NonTable" verbose = false begin
 			end
@@ -118,6 +120,7 @@ end
 			end
 			
 		end
+=#
 
 		@testset "Simple examples" verbose = false begin
 			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
@@ -185,10 +188,15 @@ end
 		end
 
 		@testset "Table inputs" verbose = false begin
+#=
+# Removed for 3.0 compatability requirements
 			@testset "NonTable" verbose = false begin
 
 				@test_throws ArgumentError add_label_column!(12, 12, :NONEXISTENT)
 			end
+=#
+#=
+# Removed for 3.0 compatability requirements
 			@testset "Table" verbose = false begin
 
 				mat = [1 4.0 "7"; 2 5.0 "8"; 3 6.0 "9"]
@@ -200,6 +208,7 @@ end
 				#getcolumn(mattbl, :Column3) |> display
 				@test true
 			end
+=#
 		end
 		@testset "Default options" verbose = false begin
 
@@ -300,6 +309,8 @@ end
 			end
 		end
 
+#=
+# Removed for 3.0 compatability requirements
 		@testset "Table inputs" verbose = false begin
 			@testset "NonTable" verbose = false begin
 
@@ -317,6 +328,7 @@ end
 				@test true
 			end
 		end
+=#
 #=
 		@testset "Default options" verbose = false begin
 
@@ -557,6 +569,7 @@ end
 	@testset "Aqua.jl" verbose = false begin
 		Aqua.test_all(PreprocessMD; ambiguities=false)
 	end
+
 end
 
 #=
