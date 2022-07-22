@@ -11,9 +11,9 @@ using DataFrames: select
 using DataFrames: unstack
 using MLJ: coerce!
 using MLJ: OrderedFactor
-using Tables: istable
-using Tables: getcolumn
-using Tables: materializer
+#using Tables: istable
+#using Tables: getcolumn
+#using Tables: materializer
 
 export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values
 
@@ -90,6 +90,8 @@ function add_label_column!(
 	coerce!(feature_df, new_column => OrderedFactor{2})
 	return nothing
 end
+#=
+# Removed for 3.0 compatability requirements
 function add_label_column!(feature_table::Any, source_table::Any, id::OPTIONAL_COLUMN_TYPES=nothing, new_column::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
 	assert_is_table(feature_table)
 	assert_is_table(source_table)
@@ -102,7 +104,10 @@ function add_label_column!(feature_table::Any, source_table::Any, id::OPTIONAL_C
 
 	return add_label_column!(feature_df, source_df, id, new_column)
 end
+=#
 
+#=
+# Removed for 3.0 compatability requirements
 function assert_is_table(x::Any)::Nothing
 	if !istable(x)
 		msg = "Input must be a table, but $(typeof(x)) is not a table"
@@ -110,6 +115,7 @@ function assert_is_table(x::Any)::Nothing
 	end
 	return nothing
 end
+=#
 
 """
 	function pivot()
@@ -180,6 +186,8 @@ function pivot(
 	end
 	return B
 end
+#=
+# Removed for 3.0 compatability requirements
 function pivot(obj::Any)::Any
 	assert_is_table(obj)
 	df = DataFrame(obj)::DataFrame
@@ -195,6 +203,7 @@ function pivot(obj::Any)::Any
 	return output_table
 
 end
+=#
 #=
 function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
 	df = pivot(df,x,y)
@@ -279,6 +288,8 @@ function set_label_column!(
 	coerce!(feature_df, col_name => OrderedFactor{2})
 	return nothing
 end
+#=
+# Removed for 3.0 compatability requirements
 function set_label_column!(feature_table::Any, col_name::OPTIONAL_COLUMN_TYPES=nothing, id::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
 	assert_is_table(feature_table)
 
@@ -290,6 +301,7 @@ function set_label_column!(feature_table::Any, col_name::OPTIONAL_COLUMN_TYPES=n
 
 	return set_label_column!(feature_df, col_name)
 end
+=#
 
 
 
