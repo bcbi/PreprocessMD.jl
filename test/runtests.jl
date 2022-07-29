@@ -267,9 +267,6 @@ end
 		end
 	end
 
-
-
-
 	@testset "set_label_column!()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
 			@testset "ArgumentError" verbose = false begin
@@ -297,7 +294,7 @@ end
 			@testset "DomainError" verbose = false begin
 				@test_throws DomainError set_label_column!(DataFrame(), :NONEXISTENT)
 				@test_throws DomainError set_label_column!(DataFrame(; x=[]), :NONEXISTENT)
-				#@test_throws DomainError set_label_column!(DataFrame(; x=[1, 2]), :NONEXISTENT)
+				@test_throws DomainError set_label_column!(DataFrame(; x=[], y=[]), :NONEXISTENT)
 			end
 			@testset "MethodError" verbose = false begin
 				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
@@ -386,6 +383,21 @@ end
 			@test new == results
 		end
 =#
+
+@testset "Functionality" verbose = false begin
+	X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+		lovable = [true, true, false, true],
+		furry = [true, true, true, true],
+		old = [false, false, true, true]
+		);
+	set_label_column!(X,:lovable)
+	#@test typeof(X.lovable[1]) == CategoricalArrays.CategoricalValue{Bool, UInt32}
+	@test true
+
+end	
+
+
+
 	end
 
 
