@@ -1,9 +1,6 @@
 using PreprocessMD
 
-#using Aqua: Aqua
 using CSV: File
-using Downloads: download
-#using Tables: table
 
 using DataFrames: AbstractDataFrame
 using DataFrames: DataFrame
@@ -67,10 +64,10 @@ end
 @testset "PreprocessMD" verbose = false begin
 	# All external file downloads
 
-	url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
+	#url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
 	#DRUG = DataFrame(File.(download("$url/drug_exposure.csv")));
 	#PERSON = DataFrame(File.(download("$url/person.csv")));
-	CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")));
+	#CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")));
 	#DEATH = DataFrame(File.(download("$url/death.csv")));
 
 #=
@@ -565,7 +562,16 @@ end
 =#
 
 	###end
+
 	@testset "top_n_values()" verbose = false begin
+
+df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
+                      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
+@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
+
+
+#=
+#Test removed to avoid downloading external files
 		@test top_n_values(CONDITION, :condition_concept_id, 6) == DataFrame(
 			AbstractVector[
 				[4145513, 4064452, 4140598, 4092038, 4138456, 433753],
@@ -576,6 +582,7 @@ end
 				[:condition_concept_id, :nrow],
 			),
 		)
+=#
 	end
 
 #=
