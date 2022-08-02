@@ -1,6 +1,6 @@
 using PreprocessMD
 
-using Aqua: Aqua
+#using Aqua: Aqua
 using CSV: File
 using Downloads: download
 #using Tables: table
@@ -578,9 +578,12 @@ end
 		)
 	end
 
+#=
+# Test removed to reduce dependencies
 	@testset "Aqua.jl" verbose = false begin
 		Aqua.test_all(PreprocessMD; ambiguities=false)
 	end
+=#
 
 end
 
