@@ -384,21 +384,3 @@ df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "E
 
 end
 
-#=
-@testset "Template" verbose = false begin
-	@testset "generic_function()" verbose = false begin
-		@testset "Intended exceptions" verbose = false begin
-			@testset "ArgumentError" verbose = false begin
-			end
-			@testset "DomainError" verbose = false begin
-			end
-			@testset "MethodError" verbose = false begin
-			end
-		end
-		@testset "Default options" verbose = false begin
-		end
-		@testset "Simple examples" verbose = false begin
-		end
-	end
-end
-=#
