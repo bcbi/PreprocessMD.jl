@@ -308,17 +308,12 @@ using Test: @test_skip
 					LABEL=[false, true, ],
 				)
 
-
 		end
-	end
-
-
-
-
-	@testset "top_n_values()" verbose = true begin
-		df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
-				      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
-		@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
+		@testset "top_n_values()" verbose = true begin
+			df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
+					      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
+			@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
+		end
 	end
 end
 
