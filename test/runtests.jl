@@ -131,108 +131,15 @@ using Test: @test_skip
 
 	@testset "Default options" verbose = true begin
 
-		# DataFrame definitions
-		long = DataFrame(
-			name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
-			val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
-		)
-		short = pivot(long)
-		X = DataFrame(name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
-		results = DataFrame(
-			name=["aaa", "bbb", "ccc", "eee"],
-			x=[true, false, false, false],
-			w=[true, true, false, true],
-			y=[true, false, true, false],
-			z=[false, false, true, false],
-			q=[true, false, false, false],
-			a=[false, false, true, false],
-			r=[false, true, true, false],
-		)
-		new = deepcopy(short)
-
-		new = deepcopy(short)
-		add_label_column!(new, X, :r)
-		@test new == results
-
-		new = deepcopy(short)
-		add_label_column!(new, X, "r")
-		@test new == results
-	end
-
-	@testset "Simple examples" verbose = true begin
-		@testset "pivot()" verbose = true begin
-			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
-			B = pivot(A, :a, :b)
-			C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
-			@test B == C
-
-			B = pivot(A, :a)
-			@test B == C
-
-			B = pivot(A, "a")
-			@test B == C
-
-			B = pivot(A)
-			@test B == C
-
-			B = pivot(A, "a", "b")
-			@test B == C
-
-			B = pivot(A, :a, :b)
-			@test B == C
-		end
 		@testset "add_label_column!()" verbose = true begin
-
 			# DataFrame definitions
-			long = DataFrame(;
-				name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
-				val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
-			)
-			short = pivot(long)
-			X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
-			results = DataFrame(;
-				name=["aaa", "bbb", "ccc", "eee"],
-				x=[true, false, false, false],
-				w=[true, true, false, true],
-				y=[true, false, true, false],
-				z=[false, false, true, false],
-				q=[true, false, false, false],
-				a=[false, false, true, false],
-				val=[false, true, true, false],
-			)
-			new = deepcopy(short)
-
-			new = deepcopy(short)
-			add_label_column!(new, X, :val)
-			@test new == results
-		end
-		@testset "set_label_column!()" verbose = true begin
-			X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-				lovable = [true, true, false, true],
-				furry = [true, true, true, true],
-				old = [false, false, true, true]
-				);
-			set_label_column!(X,:lovable)
-			#@test typeof(X.lovable[1]) == CategoricalArrays.CategoricalValue{Bool, UInt32}
-			@test true
-		end	
-	end
-
-
-
-
-	@testset "subsetMD()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
-			end
-			@testset "DomainError" verbose = true begin
-			end
-			@testset "MethodError" verbose = true begin
-			end
-		end
-		@testset "Simple examples" verbose = true begin
-
-				X = DataFrame(;
+				long = DataFrame(
+					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+				)
+				short = pivot(long)
+				X = DataFrame(name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+				results = DataFrame(
 					name=["aaa", "bbb", "ccc", "eee"],
 					x=[true, false, false, false],
 					w=[true, true, false, true],
@@ -240,29 +147,19 @@ using Test: @test_skip
 					z=[false, false, true, false],
 					q=[true, false, false, false],
 					a=[false, false, true, false],
-					LABEL=[false, true, true, false],
+					r=[false, true, true, false],
 				)
+				new = deepcopy(short)
 
-				Y = DataFrame(
-					name=["aaa", "ccc"],
-					d =[1, 2],
-				)
-				Z = subsetMD(X,Y,:name,:name)
+				new = deepcopy(short)
+				add_label_column!(new, X, :r)
+				@test new == results
 
-				@test Z == DataFrame(
-					name=["aaa", "ccc", ],
-					x=[true, false, ],
-					w=[true, false, ],
-					y=[true, true, ],
-					z=[false, true, ],
-					q=[true, false, ],
-					a=[false, true, ],
-					LABEL=[false, true, ],
-				)
-
-
+				new = deepcopy(short)
+				add_label_column!(new, X, "r")
+				@test new == results
 		end
-		@testset "Default options" verbose = true begin
+		@testset "subsetMD()" verbose = true begin
 
 				X = DataFrame(;
 					name=["aaa", "bbb", "ccc", "eee"],
@@ -323,6 +220,100 @@ using Test: @test_skip
 
 		end
 	end
+
+	@testset "Simple examples" verbose = true begin
+		@testset "pivot()" verbose = true begin
+			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
+			B = pivot(A, :a, :b)
+			C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
+			@test B == C
+
+			B = pivot(A, :a)
+			@test B == C
+
+			B = pivot(A, "a")
+			@test B == C
+
+			B = pivot(A)
+			@test B == C
+
+			B = pivot(A, "a", "b")
+			@test B == C
+
+			B = pivot(A, :a, :b)
+			@test B == C
+		end
+		@testset "add_label_column!()" verbose = true begin
+
+			# DataFrame definitions
+			long = DataFrame(;
+				name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+				val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+			)
+			short = pivot(long)
+			X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+			results = DataFrame(;
+				name=["aaa", "bbb", "ccc", "eee"],
+				x=[true, false, false, false],
+				w=[true, true, false, true],
+				y=[true, false, true, false],
+				z=[false, false, true, false],
+				q=[true, false, false, false],
+				a=[false, false, true, false],
+				val=[false, true, true, false],
+			)
+			new = deepcopy(short)
+
+			new = deepcopy(short)
+			add_label_column!(new, X, :val)
+			@test new == results
+		end
+		@testset "set_label_column!()" verbose = true begin
+			X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+				lovable = [true, true, false, true],
+				furry = [true, true, true, true],
+				old = [false, false, true, true]
+				);
+			set_label_column!(X,:lovable)
+			#@test typeof(X.lovable[1]) == CategoricalArrays.CategoricalValue{Bool, UInt32}
+			@test true
+		end	
+		@testset "subsetMD()" verbose = true begin
+
+				X = DataFrame(;
+					name=["aaa", "bbb", "ccc", "eee"],
+					x=[true, false, false, false],
+					w=[true, true, false, true],
+					y=[true, false, true, false],
+					z=[false, false, true, false],
+					q=[true, false, false, false],
+					a=[false, false, true, false],
+					LABEL=[false, true, true, false],
+				)
+
+				Y = DataFrame(
+					name=["aaa", "ccc"],
+					d =[1, 2],
+				)
+				Z = subsetMD(X,Y,:name,:name)
+
+				@test Z == DataFrame(
+					name=["aaa", "ccc", ],
+					x=[true, false, ],
+					w=[true, false, ],
+					y=[true, true, ],
+					z=[false, true, ],
+					q=[true, false, ],
+					a=[false, true, ],
+					LABEL=[false, true, ],
+				)
+
+
+		end
+	end
+
+
+
 
 	@testset "top_n_values()" verbose = true begin
 		df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
