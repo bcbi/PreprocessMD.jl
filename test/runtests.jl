@@ -61,6 +61,28 @@ using Test: @test_skip
 
 				@test_throws ArgumentError B = pivot(A, "a", :b)
 			end
+			@testset "set_label_column!()" verbose = true begin
+
+				# DataFrame definitions
+				long = DataFrame(
+					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+				)
+				short = pivot(long)
+				X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+				results = DataFrame(;
+					name=["aaa", "bbb", "ccc", "eee"],
+					x=[true, false, false, false],
+					w=[true, true, false, true],
+					y=[true, false, true, false],
+					z=[false, false, true, false],
+					q=[true, false, false, false],
+					a=[false, false, true, false],
+					LABEL=[false, true, true, false],
+				)
+				new = deepcopy(short)
+				# @test_throws UndefVarError set_label_column!(new, X, :NONEXISTENT)
+			end
 		end
 		@testset "DomainError" verbose = true begin
 			@testset "add_label_column!()" verbose = true begin
@@ -76,6 +98,11 @@ using Test: @test_skip
 					@test_throws DomainError pivot(x)
 				end
 			end
+			@testset "set_label_column!()" verbose = true begin
+				@test_throws DomainError set_label_column!(DataFrame(), :NONEXISTENT)
+				@test_throws DomainError set_label_column!(DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError set_label_column!(DataFrame(; x=[], y=[]), :NONEXISTENT)
+			end
 		end
 		@testset "MethodError" verbose = true begin
 			@testset "add_label_column!()" verbose = true begin
@@ -89,6 +116,14 @@ using Test: @test_skip
 			@testset "pivot()" verbose = true begin
 				for x in [12, 1.0, "", x -> x]
 					#@test_throws MethodError pivot(x)
+				end
+			end
+			@testset "set_label_column!()" verbose = true begin
+				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
+				for x in [12, 1.0, "", x -> x]
+					# @test_throws MethodError set_label_column!(x, x)
+					# @test_throws MethodError set_label_column!(x, y)
+					# @test_throws MethodError set_label_column!(y, x)
 				end
 			end
 		end
@@ -171,51 +206,7 @@ using Test: @test_skip
 			add_label_column!(new, X, :val)
 			@test new == results
 		end
-	end
-
-
-
-
-	@testset "set_label_column!()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
-
-				# DataFrame definitions
-				long = DataFrame(
-					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
-					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
-				)
-				short = pivot(long)
-				X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
-				results = DataFrame(;
-					name=["aaa", "bbb", "ccc", "eee"],
-					x=[true, false, false, false],
-					w=[true, true, false, true],
-					y=[true, false, true, false],
-					z=[false, false, true, false],
-					q=[true, false, false, false],
-					a=[false, false, true, false],
-					LABEL=[false, true, true, false],
-				)
-				new = deepcopy(short)
-				# @test_throws UndefVarError set_label_column!(new, X, :NONEXISTENT)
-			end
-			@testset "DomainError" verbose = true begin
-				@test_throws DomainError set_label_column!(DataFrame(), :NONEXISTENT)
-				@test_throws DomainError set_label_column!(DataFrame(; x=[]), :NONEXISTENT)
-				@test_throws DomainError set_label_column!(DataFrame(; x=[], y=[]), :NONEXISTENT)
-			end
-			@testset "MethodError" verbose = true begin
-				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
-				for x in [12, 1.0, "", x -> x]
-					# @test_throws MethodError set_label_column!(x, x)
-					# @test_throws MethodError set_label_column!(x, y)
-					# @test_throws MethodError set_label_column!(y, x)
-				end
-			end
-		end
-
-		@testset "Functionality" verbose = true begin
+		@testset "set_label_column!()" verbose = true begin
 			X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 				lovable = [true, true, false, true],
 				furry = [true, true, true, true],
@@ -226,6 +217,9 @@ using Test: @test_skip
 			@test true
 		end	
 	end
+
+
+
 
 	@testset "subsetMD()" verbose = true begin
 		@testset "Intended exceptions" verbose = true begin
