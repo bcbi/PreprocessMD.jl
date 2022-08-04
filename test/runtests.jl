@@ -27,15 +27,6 @@ using Test: @test_throws
 using Test: @test_skip
 
 @testset "PreprocessMD" verbose = false begin
-	# All external file downloads
-
-	#url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"
-	#DRUG = DataFrame(File.(download("$url/drug_exposure.csv")));
-	#PERSON = DataFrame(File.(download("$url/person.csv")));
-	#CONDITION = DataFrame(File.(download("$url/condition_occurrence.csv")));
-	#DEATH = DataFrame(File.(download("$url/death.csv")));
-
-
 
 	@testset "pivot()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
@@ -59,7 +50,6 @@ using Test: @test_skip
 				end
 			end
 		end
-
 
 		@testset "Simple examples" verbose = false begin
 			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
@@ -224,49 +214,17 @@ using Test: @test_skip
 			end
 		end
 
-
-@testset "Functionality" verbose = false begin
-	X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-		lovable = [true, true, false, true],
-		furry = [true, true, true, true],
-		old = [false, false, true, true]
-		);
-	set_label_column!(X,:lovable)
-	#@test typeof(X.lovable[1]) == CategoricalArrays.CategoricalValue{Bool, UInt32}
-	@test true
-
-end	
-
-
-
+		@testset "Functionality" verbose = false begin
+			X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
+				lovable = [true, true, false, true],
+				furry = [true, true, true, true],
+				old = [false, false, true, true]
+				);
+			set_label_column!(X,:lovable)
+			#@test typeof(X.lovable[1]) == CategoricalArrays.CategoricalValue{Bool, UInt32}
+			@test true
+		end	
 	end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	@testset "subsetMD()" verbose = false begin
 		@testset "Intended exceptions" verbose = false begin
@@ -373,14 +331,9 @@ end
 
 
 	@testset "top_n_values()" verbose = false begin
-
-df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
-                      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
-@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
-
-
+		df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
+				      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
+		@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
 	end
-
-
 end
 
