@@ -30,6 +30,28 @@ using Test: @test_skip
 
 	@testset "Intended exceptions" verbose = true begin
 		@testset "ArgumentError" verbose = true begin
+			@testset "add_label_column!()" verbose = true begin
+
+				# DataFrame definitions
+				long = DataFrame(
+					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+				)
+				short = pivot(long)
+				X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+				results = DataFrame(;
+					name=["aaa", "bbb", "ccc", "eee"],
+					x=[true, false, false, false],
+					w=[true, true, false, true],
+					y=[true, false, true, false],
+					z=[false, false, true, false],
+					q=[true, false, false, false],
+					a=[false, false, true, false],
+					LABEL=[false, true, true, false],
+				)
+				new = deepcopy(short)
+				# @test_throws UndefVarError add_label_column!(new, X, :NONEXISTENT)
+			end
 			@testset "pivot()" verbose = true begin
 				A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
 				B = pivot(A, :a, :b)
@@ -41,6 +63,14 @@ using Test: @test_skip
 			end
 		end
 		@testset "DomainError" verbose = true begin
+			@testset "add_label_column!()" verbose = true begin
+				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[1, 2]), DataFrame(; x=[]), :NONEXISTENT)
+				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[1, 2]), :NONEXISTENT)
+			end
 			@testset "pivot()" verbose = true begin
 				for x in [DataFrame(), DataFrame(; x=[0, 1, 2, 3])]
 					@test_throws DomainError pivot(x)
@@ -48,12 +78,50 @@ using Test: @test_skip
 			end
 		end
 		@testset "MethodError" verbose = true begin
+			@testset "add_label_column!()" verbose = true begin
+				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
+				for x in [12, 1.0, "", x -> x]
+					# @test_throws MethodError add_label_column!(x, x)
+					# @test_throws MethodError add_label_column!(x, y)
+					# @test_throws MethodError add_label_column!(y, x)
+				end
+			end
 			@testset "pivot()" verbose = true begin
 				for x in [12, 1.0, "", x -> x]
 					#@test_throws MethodError pivot(x)
 				end
 			end
 		end
+	end
+
+	@testset "Default options" verbose = true begin
+
+		# DataFrame definitions
+		long = DataFrame(
+			name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
+			val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
+		)
+		short = pivot(long)
+		X = DataFrame(name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
+		results = DataFrame(
+			name=["aaa", "bbb", "ccc", "eee"],
+			x=[true, false, false, false],
+			w=[true, true, false, true],
+			y=[true, false, true, false],
+			z=[false, false, true, false],
+			q=[true, false, false, false],
+			a=[false, false, true, false],
+			r=[false, true, true, false],
+		)
+		new = deepcopy(short)
+
+		new = deepcopy(short)
+		add_label_column!(new, X, :r)
+		@test new == results
+
+		new = deepcopy(short)
+		add_label_column!(new, X, "r")
+		@test new == results
 	end
 
 	@testset "Simple examples" verbose = true begin
@@ -78,83 +146,7 @@ using Test: @test_skip
 			B = pivot(A, :a, :b)
 			@test B == C
 		end
-	end
-
-	@testset "add_label_column!()" verbose = true begin
-		@testset "Intended exceptions" verbose = true begin
-			@testset "ArgumentError" verbose = true begin
-
-				# DataFrame definitions
-				long = DataFrame(
-					name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
-					val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
-				)
-				short = pivot(long)
-				X = DataFrame(; name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
-				results = DataFrame(;
-					name=["aaa", "bbb", "ccc", "eee"],
-					x=[true, false, false, false],
-					w=[true, true, false, true],
-					y=[true, false, true, false],
-					z=[false, false, true, false],
-					q=[true, false, false, false],
-					a=[false, false, true, false],
-					LABEL=[false, true, true, false],
-				)
-				new = deepcopy(short)
-				# @test_throws UndefVarError add_label_column!(new, X, :NONEXISTENT)
-			end
-			@testset "DomainError" verbose = true begin
-				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(), :NONEXISTENT)
-				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]), :NONEXISTENT)
-				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(), :NONEXISTENT)
-				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[]), :NONEXISTENT)
-				@test_throws DomainError add_label_column!(DataFrame(; x=[1, 2]), DataFrame(; x=[]), :NONEXISTENT)
-				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[1, 2]), :NONEXISTENT)
-			end
-			@testset "MethodError" verbose = true begin
-				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
-				for x in [12, 1.0, "", x -> x]
-					# @test_throws MethodError add_label_column!(x, x)
-					# @test_throws MethodError add_label_column!(x, y)
-					# @test_throws MethodError add_label_column!(y, x)
-				end
-			end
-		end
-
-		@testset "Table inputs" verbose = true begin
-		end
-		@testset "Default options" verbose = true begin
-
-			# DataFrame definitions
-			long = DataFrame(
-				name=["aaa", "bbb", "aaa", "ccc", "ccc", "aaa", "aaa", "ccc", "eee"],
-				val=['x', 'w', 'w', 'y', 'z', 'q', 'y', 'a', 'w'],
-			)
-			short = pivot(long)
-			X = DataFrame(name=["bbb", "ccc", "fff"], r=["BBB", "CCC", "FFF"])
-			results = DataFrame(
-				name=["aaa", "bbb", "ccc", "eee"],
-				x=[true, false, false, false],
-				w=[true, true, false, true],
-				y=[true, false, true, false],
-				z=[false, false, true, false],
-				q=[true, false, false, false],
-				a=[false, false, true, false],
-				r=[false, true, true, false],
-			)
-			new = deepcopy(short)
-
-			new = deepcopy(short)
-			add_label_column!(new, X, :r)
-			@test new == results
-
-			new = deepcopy(short)
-			add_label_column!(new, X, "r")
-			@test new == results
-		end
-
-		@testset "Simple examples" verbose = true begin
+		@testset "add_label_column!()" verbose = true begin
 
 			# DataFrame definitions
 			long = DataFrame(;
@@ -180,6 +172,9 @@ using Test: @test_skip
 			@test new == results
 		end
 	end
+
+
+
 
 	@testset "set_label_column!()" verbose = true begin
 		@testset "Intended exceptions" verbose = true begin
