@@ -26,11 +26,11 @@ using Test: @test
 using Test: @test_throws
 using Test: @test_skip
 
-@testset "PreprocessMD" verbose = false begin
+@testset "PreprocessMD" verbose = true begin
 
-	@testset "pivot()" verbose = false begin
-		@testset "Intended exceptions" verbose = false begin
-			@testset "ArgumentError" verbose = false begin
+	@testset "Intended exceptions" verbose = true begin
+		@testset "ArgumentError" verbose = true begin
+			@testset "pivot()" verbose = true begin
 				A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
 				B = pivot(A, :a, :b)
 				C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
@@ -39,19 +39,25 @@ using Test: @test_skip
 
 				@test_throws ArgumentError B = pivot(A, "a", :b)
 			end
-			@testset "DomainError" verbose = false begin
+		end
+		@testset "DomainError" verbose = true begin
+			@testset "pivot()" verbose = true begin
 				for x in [DataFrame(), DataFrame(; x=[0, 1, 2, 3])]
 					@test_throws DomainError pivot(x)
 				end
 			end
-			@testset "MethodError" verbose = false begin
+		end
+		@testset "MethodError" verbose = true begin
+			@testset "pivot()" verbose = true begin
 				for x in [12, 1.0, "", x -> x]
 					#@test_throws MethodError pivot(x)
 				end
 			end
 		end
+	end
 
-		@testset "Simple examples" verbose = false begin
+	@testset "Simple examples" verbose = true begin
+		@testset "pivot()" verbose = true begin
 			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
 			B = pivot(A, :a, :b)
 			C = DataFrame(; a=[1, 2], x=[true, false], y=[true, true])
@@ -74,9 +80,9 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "add_label_column!()" verbose = false begin
-		@testset "Intended exceptions" verbose = false begin
-			@testset "ArgumentError" verbose = false begin
+	@testset "add_label_column!()" verbose = true begin
+		@testset "Intended exceptions" verbose = true begin
+			@testset "ArgumentError" verbose = true begin
 
 				# DataFrame definitions
 				long = DataFrame(
@@ -98,7 +104,7 @@ using Test: @test_skip
 				new = deepcopy(short)
 				# @test_throws UndefVarError add_label_column!(new, X, :NONEXISTENT)
 			end
-			@testset "DomainError" verbose = false begin
+			@testset "DomainError" verbose = true begin
 				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(), DataFrame(; x=[]), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(), :NONEXISTENT)
@@ -106,7 +112,7 @@ using Test: @test_skip
 				@test_throws DomainError add_label_column!(DataFrame(; x=[1, 2]), DataFrame(; x=[]), :NONEXISTENT)
 				@test_throws DomainError add_label_column!(DataFrame(; x=[]), DataFrame(; x=[1, 2]), :NONEXISTENT)
 			end
-			@testset "MethodError" verbose = false begin
+			@testset "MethodError" verbose = true begin
 				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
 				for x in [12, 1.0, "", x -> x]
 					# @test_throws MethodError add_label_column!(x, x)
@@ -116,9 +122,9 @@ using Test: @test_skip
 			end
 		end
 
-		@testset "Table inputs" verbose = false begin
+		@testset "Table inputs" verbose = true begin
 		end
-		@testset "Default options" verbose = false begin
+		@testset "Default options" verbose = true begin
 
 			# DataFrame definitions
 			long = DataFrame(
@@ -148,7 +154,7 @@ using Test: @test_skip
 			@test new == results
 		end
 
-		@testset "Simple examples" verbose = false begin
+		@testset "Simple examples" verbose = true begin
 
 			# DataFrame definitions
 			long = DataFrame(;
@@ -175,9 +181,9 @@ using Test: @test_skip
 		end
 	end
 
-	@testset "set_label_column!()" verbose = false begin
-		@testset "Intended exceptions" verbose = false begin
-			@testset "ArgumentError" verbose = false begin
+	@testset "set_label_column!()" verbose = true begin
+		@testset "Intended exceptions" verbose = true begin
+			@testset "ArgumentError" verbose = true begin
 
 				# DataFrame definitions
 				long = DataFrame(
@@ -199,12 +205,12 @@ using Test: @test_skip
 				new = deepcopy(short)
 				# @test_throws UndefVarError set_label_column!(new, X, :NONEXISTENT)
 			end
-			@testset "DomainError" verbose = false begin
+			@testset "DomainError" verbose = true begin
 				@test_throws DomainError set_label_column!(DataFrame(), :NONEXISTENT)
 				@test_throws DomainError set_label_column!(DataFrame(; x=[]), :NONEXISTENT)
 				@test_throws DomainError set_label_column!(DataFrame(; x=[], y=[]), :NONEXISTENT)
 			end
-			@testset "MethodError" verbose = false begin
+			@testset "MethodError" verbose = true begin
 				y = DataFrame(x=[1, 2, 3], y=['a', 'b', 'c'])
 				for x in [12, 1.0, "", x -> x]
 					# @test_throws MethodError set_label_column!(x, x)
@@ -214,7 +220,7 @@ using Test: @test_skip
 			end
 		end
 
-		@testset "Functionality" verbose = false begin
+		@testset "Functionality" verbose = true begin
 			X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 				lovable = [true, true, false, true],
 				furry = [true, true, true, true],
@@ -226,16 +232,16 @@ using Test: @test_skip
 		end	
 	end
 
-	@testset "subsetMD()" verbose = false begin
-		@testset "Intended exceptions" verbose = false begin
-			@testset "ArgumentError" verbose = false begin
+	@testset "subsetMD()" verbose = true begin
+		@testset "Intended exceptions" verbose = true begin
+			@testset "ArgumentError" verbose = true begin
 			end
-			@testset "DomainError" verbose = false begin
+			@testset "DomainError" verbose = true begin
 			end
-			@testset "MethodError" verbose = false begin
+			@testset "MethodError" verbose = true begin
 			end
 		end
-		@testset "Simple examples" verbose = false begin
+		@testset "Simple examples" verbose = true begin
 
 				X = DataFrame(;
 					name=["aaa", "bbb", "ccc", "eee"],
@@ -267,7 +273,7 @@ using Test: @test_skip
 
 
 		end
-		@testset "Default options" verbose = false begin
+		@testset "Default options" verbose = true begin
 
 				X = DataFrame(;
 					name=["aaa", "bbb", "ccc", "eee"],
@@ -329,8 +335,7 @@ using Test: @test_skip
 		end
 	end
 
-
-	@testset "top_n_values()" verbose = false begin
+	@testset "top_n_values()" verbose = true begin
 		df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
 				      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
 		@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
