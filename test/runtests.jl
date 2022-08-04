@@ -21,45 +21,10 @@ using MLJ: partition
 using MLJ: predict
 using MLJDecisionTreeInterface: DecisionTreeClassifier
 
-using Suppressor: @suppress
-
 using Test: @testset
 using Test: @test
 using Test: @test_throws
 using Test: @test_skip
-
-"""
-	function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
-Decision tree classifier on a DataFrame over a given output
-
-# Arguments
-
-- `df::AbstractDataFrame`: DataFrame containing feature and label data
-- `output`: column containing label data
-- `RNG_VALUE`: 
-
-"""
-function MLDemo(df::AbstractDataFrame, output, RNG_VALUE)::Tuple{AbstractFloat, AbstractFloat}
-	y = df[:, output]
-	X = select(df, Not([:person_id, output]))
-
-	train, test = partition(eachindex(y), 0.8, shuffle = true, rng = RNG_VALUE)
-
-	# Evaluate model
-	Tree = @load DecisionTreeClassifier pkg=DecisionTree verbosity=0
-	tree_model = Tree(max_depth = 3)
-	evaluate(tree_model, X, y)
-
-	# Return scores
-	tree = machine(tree_model, X, y)
-	fit!(tree, rows = train)
-	yhat = predict(tree, X[test, :])
-	acc = accuracy(mode.(yhat), y[test])
-	f1_score = f1score(mode.(yhat), y[test])
-
-	return acc, f1_score
-end
-
 
 @testset "PreprocessMD" verbose = false begin
 	# All external file downloads
@@ -537,10 +502,6 @@ end
 		add_label_column!(p_AGGREGATE, DEATH, :death)
 
 		@test size(p_AGGREGATE) == (100, 1878)
-
-		@suppress begin
-			MLDemo(p_AGGREGATE, :death, 1234)
-		end
 =#
 
 #=
@@ -558,7 +519,6 @@ end
 		println(names(CONDITION))
 		COVID = subsetMD(CONDITION, medical_codes, :CODE)
 		add_label_column!(p_AGGREGATE, COVID, label)
-		MLDemo(p_AGGREGATE, :label, 9999)
 =#
 
 	###end
