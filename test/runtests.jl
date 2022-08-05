@@ -19,7 +19,6 @@ using MLJ: machine
 using MLJ: mode
 using MLJ: partition
 using MLJ: predict
-using MLJDecisionTreeInterface: DecisionTreeClassifier
 
 using Test: @testset
 using Test: @test
