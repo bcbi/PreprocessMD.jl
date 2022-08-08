@@ -33,7 +33,7 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 - `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
 
 # Examples
-```jldoctest
+```jldoctest; output = false
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	blue = [true, false, false, true],
 	red  = [false, true, false, false],
@@ -127,7 +127,7 @@ The single column `x` (the first column of `df`, by default) becomes the row nam
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 
 # Examples
-```jldoctest
+```jldoctest; output = false
 df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
                fur_color=["blue", "red", "green", "blue"]);
 pivot(df)
@@ -240,7 +240,7 @@ Designate one column within a DataFrame as the label
 - `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
 
 # Examples
-```jldoctest
+```jldoctest; output = false
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	lovable = [true, true, false, true],
 	furry = [true, true, true, true],
@@ -328,7 +328,7 @@ Filtration step
 - `check_id`: ID column from `check_df` (Default: same as `main_id`)
 
 # Examples
-```jldoctest
+```jldoctest; output = false
 X = DataFrame(
 	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	blue = [true, false, false, true],
