@@ -391,7 +391,7 @@ df |> show; println(); top_n_values(df, :fur_color, 4) |> show
 8×2 DataFrame
  Row │ name            fur_color
      │ String          String
------+---------------------------
+─────┼───────────────────────────
    1 │ Cookie Monster  blue
    2 │ Elmo            red
    3 │ Oscar           green
@@ -403,7 +403,7 @@ df |> show; println(); top_n_values(df, :fur_color, 4) |> show
 4×2 DataFrame
  Row │ fur_color  nrow
      │ String     Int64
------+------------------
+─────┼──────────────────
    1 │ blue           3
    2 │ yellow         2
    3 │ red            1
