@@ -34,6 +34,8 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest; output = false
+using DataFrames
+
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	blue = [true, false, false, true],
 	red  = [false, true, false, false],
@@ -128,6 +130,8 @@ Column(s) `y` (all columns besides `x`, by default) become the column names of `
 
 # Examples
 ```jldoctest; output = false
+using DataFrames
+
 df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
                fur_color=["blue", "red", "green", "blue"]);
 pivot(df)
@@ -241,6 +245,8 @@ Designate one column within a DataFrame as the label
 
 # Examples
 ```jldoctest; output = false
+using DataFrames
+
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	lovable = [true, true, false, true],
 	furry = [true, true, true, true],
@@ -329,6 +335,8 @@ Filtration step
 
 # Examples
 ```jldoctest; output = false
+using DataFrames
+
 X = DataFrame(
 	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
 	blue = [true, false, false, true],
