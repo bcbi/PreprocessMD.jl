@@ -11,9 +11,6 @@ using DataFrames: select
 using DataFrames: unstack
 using MLJ: coerce!
 using MLJ: OrderedFactor
-#using Tables: istable
-#using Tables: getcolumn
-#using Tables: materializer
 
 export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values
 
@@ -92,32 +89,6 @@ function add_label_column!(
 	coerce!(feature_df, new_column => OrderedFactor{2})
 	return nothing
 end
-#=
-# Removed for 3.0 compatability requirements
-function add_label_column!(feature_table::Any, source_table::Any, id::OPTIONAL_COLUMN_TYPES=nothing, new_column::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
-	assert_is_table(feature_table)
-	assert_is_table(source_table)
-
-	feature_df = DataFrame(feature_table)::DataFrame
-	source_df = DataFrame(feature_table)::DataFrame
-
-	feature_df::DataFrame
-	source_df::DataFrame
-
-	return add_label_column!(feature_df, source_df, id, new_column)
-end
-=#
-
-#=
-# Removed for 3.0 compatability requirements
-function assert_is_table(x::Any)::Nothing
-	if !istable(x)
-		msg = "Input must be a table, but $(typeof(x)) is not a table"
-		throw(ArgumentError(msg))
-	end
-	return nothing
-end
-=#
 
 """
 	function pivot()
@@ -190,47 +161,6 @@ function pivot(
 	end
 	return B
 end
-#=
-# Removed for 3.0 compatability requirements
-function pivot(obj::Any)::Any
-	assert_is_table(obj)
-	df = DataFrame(obj)::DataFrame
-	df::DataFrame
-
-	input_table = obj
-	materializer_function = materializer(input_table)
-	input_dataframe = DataFrame(input_table)
-	output_dataframe = pivot(input_dataframe)
-	# Note: `output_dataframe` is of type `DataFrames.DataFrame`
-	output_table = materializer_function(output_dataframe)
-	# Now `output_table` will be of the same type as `input_table`
-	return output_table
-
-end
-=#
-#=
-function pivot!(df::AbstractDataFrame, x=nothing, y=nothing)::Nothing
-	df = pivot(df,x,y)
-	return nothing
-end
-=#
-
-#=
-"""
-	function repr(df::AbstractDataFrame)::Nothing
-Print Julia-readable definition of a DataFrame
-"""
-function repr(df::AbstractDataFrame)::Nothing
-	# https://discourse.julialang.org/t/given-an-object-return-julia-code-that-defines-the-object/80579/12
-	invoke(show, Tuple{typeof(stdout),Any}, stdout, df)
-	return nothing
-end
-=#
-
-
-
-
-
 
 """
 	function set_label_column!(feature_df, source_df, new_column[, id])
@@ -294,33 +224,6 @@ function set_label_column!(
 	coerce!(feature_df, col_name => OrderedFactor{2})
 	return nothing
 end
-#=
-# Removed for 3.0 compatability requirements
-function set_label_column!(feature_table::Any, col_name::OPTIONAL_COLUMN_TYPES=nothing, id::OPTIONAL_COLUMN_TYPES=nothing)::Nothing
-	assert_is_table(feature_table)
-
-	feature_df = DataFrame(feature_table)::DataFrame
-	source_df = DataFrame(feature_table)::DataFrame
-
-	feature_df::DataFrame
-	source_df::DataFrame
-
-	return set_label_column!(feature_df, col_name)
-end
-=#
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 """
 	function subsetMD(main_df, check_df, main_id, check_id)
@@ -376,11 +279,6 @@ function subsetMD(
 
 	return filter(main_id => x -> x in check_df[!,check_id], main_df)
 end
-#=
-function subsetMD(main_df::AbstractDataFrame, check_df::Any, check_id)::AbstractDataFrame
-	return filter(check_id => x -> isequal(x, check_df), main_df)
-end
-=#
 
 """
 	function top_n_values(df::AbstractDataFrame, col::Union{String, Symbol}, n::Int)::AbstractDataFrame
