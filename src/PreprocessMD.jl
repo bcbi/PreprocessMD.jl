@@ -30,7 +30,7 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 - `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
 
 # Examples
-```jldoctest; output = false
+```jldoctest
 using DataFrames
 
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
@@ -100,7 +100,7 @@ The single column `x` (the first column of `df`, by default) becomes the row nam
 Column(s) `y` (all columns besides `x`, by default) become the column names of `B`.
 
 # Examples
-```jldoctest; output = false
+```jldoctest
 using DataFrames
 
 df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
@@ -174,7 +174,7 @@ Designate one column within a DataFrame as the label
 - `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
 
 # Examples
-```jldoctest; output = false
+```jldoctest
 using DataFrames
 
 X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
@@ -237,7 +237,7 @@ Filtration step
 - `check_id`: ID column from `check_df` (Default: same as `main_id`)
 
 # Examples
-```jldoctest; output = false
+```jldoctest
 using DataFrames
 
 X = DataFrame(
@@ -286,7 +286,7 @@ Find top n values by occurence
 Useful for initial feasibility checks, but medical codes are not considered
 
 # Examples
-```jldoctest; output = false
+```jldoctest
 using DataFrames
 
 df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
