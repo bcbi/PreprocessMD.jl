@@ -32,18 +32,9 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest
-using DataFrames
-
-julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	blue = [true, false, false, true],
-	red  = [false, true, false, false],
-	green = [false, false, true, false])
-
-julia> Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	lovable = [true, true, false, true],
-	furry = [true, true, true, true],
-	old = [false, false, true, true]
-	);
+julia> using DataFrames
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], blue = [true, false, false, true], red  = [false, true, false, false], green = [false, false, true, false])
+julia> Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], lovable = [true, true, false, true], furry = [true, true, true, true], old = [false, false, true, true] )
 julia> add_label_column!(X,Y,:furry)
 ```
 """
@@ -90,10 +81,8 @@ Column(s) `y` (all columns besides `x`, by default) become the column names of `
 
 # Examples
 ```jldoctest
-using DataFrames
-
-julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
-               fur_color=["blue", "red", "green", "blue"])
+julia> using DataFrames
+julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], fur_color=["blue", "red", "green", "blue"])
 julia> pivot(df)
 ```
 """
@@ -153,13 +142,8 @@ Designate one column within a DataFrame as the label
 
 # Examples
 ```jldoctest
-using DataFrames
-
-julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	lovable = [true, true, false, true],
-	furry = [true, true, true, true],
-	old = [false, false, true, true]
-	)
+julia> using DataFrames
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], lovable = [true, true, false, true], furry = [true, true, true, true], old = [false, false, true, true] )
 julia> set_label_column!(X,:lovable)
 ```
 """
@@ -204,18 +188,9 @@ Filtration step
 
 # Examples
 ```jldoctest
-using DataFrames
-
-julia> X = DataFrame(
-	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	blue = [true, false, false, true],
-	red  = [false, true, false, false],
-	green = [false, false, true, false])
-
-julia> Y = DataFrame(
-	name=["Big Bird", "Cookie Monster", "Elmo"],
-	fuzzy=[false, true, true]
-	)
+julia> using DataFrames
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], blue = [true, false, false, true], red  = [false, true, false, false], green = [false, false, true, false])
+julia> Y = DataFrame(name=["Big Bird", "Cookie Monster", "Elmo"], fuzzy=[false, true, true])
 julia> subsetMD(X,Y)
 ```
 """
@@ -244,10 +219,8 @@ Useful for initial feasibility checks, but medical codes are not considered
 
 # Examples
 ```jldoctest
-using DataFrames
-
-julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
-	fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"])
+julia> using DataFrames
+julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"], fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"])
 julia> top_n_values(df, :fur_color, 4)
 ```
 """
