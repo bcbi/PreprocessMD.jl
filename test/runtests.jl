@@ -166,63 +166,68 @@ global const VFunction = false
 		end
 		@testset "subsetMD()" verbose = VFunction begin
 
-				X = DataFrame(;
-					name=["aaa", "bbb", "ccc", "eee"],
-					x=[true, false, false, false],
-					w=[true, true, false, true],
-					y=[true, false, true, false],
-					z=[false, false, true, false],
-					q=[true, false, false, false],
-					a=[false, false, true, false],
-					LABEL=[false, true, true, false],
-				)
+			X = DataFrame(;
+				name=["aaa", "bbb", "ccc", "eee"],
+				x=[true, false, false, false],
+				w=[true, true, false, true],
+				y=[true, false, true, false],
+				z=[false, false, true, false],
+				q=[true, false, false, false],
+				a=[false, false, true, false],
+				LABEL=[false, true, true, false],
+			)
 
-				Y = DataFrame(
-					name=["aaa", "ccc"],
-					d =[1, 2],
-				)
-
-
-				Z = subsetMD(X,Y, "name")
-
-				@test Z == DataFrame(
-					name=["aaa", "ccc", ],
-					x=[true, false, ],
-					w=[true, false, ],
-					y=[true, true, ],
-					z=[false, true, ],
-					q=[true, false, ],
-					a=[false, true, ],
-					LABEL=[false, true, ],
-				)
+			Y = DataFrame(
+				name=["aaa", "ccc"],
+				d =[1, 2],
+			)
 
 
-				Z = subsetMD(X,Y, :name)
+			Z = subsetMD(X,Y, "name")
 
-				@test Z == DataFrame(
-					name=["aaa", "ccc", ],
-					x=[true, false, ],
-					w=[true, false, ],
-					y=[true, true, ],
-					z=[false, true, ],
-					q=[true, false, ],
-					a=[false, true, ],
-					LABEL=[false, true, ],
-				)
+			@test Z == DataFrame(
+				name=["aaa", "ccc", ],
+				x=[true, false, ],
+				w=[true, false, ],
+				y=[true, true, ],
+				z=[false, true, ],
+				q=[true, false, ],
+				a=[false, true, ],
+				LABEL=[false, true, ],
+			)
 
-				Z = subsetMD(X,Y)
 
-				@test Z == DataFrame(
-					name=["aaa", "ccc", ],
-					x=[true, false, ],
-					w=[true, false, ],
-					y=[true, true, ],
-					z=[false, true, ],
-					q=[true, false, ],
-					a=[false, true, ],
-					LABEL=[false, true, ],
-				)
+			Z = subsetMD(X,Y, :name)
 
+			@test Z == DataFrame(
+				name=["aaa", "ccc", ],
+				x=[true, false, ],
+				w=[true, false, ],
+				y=[true, true, ],
+				z=[false, true, ],
+				q=[true, false, ],
+				a=[false, true, ],
+				LABEL=[false, true, ],
+			)
+
+			Z = subsetMD(X,Y)
+
+			@test Z == DataFrame(
+				name=["aaa", "ccc", ],
+				x=[true, false, ],
+				w=[true, false, ],
+				y=[true, true, ],
+				z=[false, true, ],
+				q=[true, false, ],
+				a=[false, true, ],
+				LABEL=[false, true, ],
+			)
+
+		end
+		@testset "top_n_values()" verbose = VFunction begin
+			df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
+					      fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
+			@test top_n_values(df, :fur_color) == top_n_values(df, :fur_color, 10)
 		end
 	end
 
