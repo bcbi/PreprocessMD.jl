@@ -16,6 +16,7 @@ export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values
 
 COLUMN_TYPES = Union{String, Symbol}
 OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
+OPTIONAL_INT_TYPES = Union{Int,Nothing}
 
 """
 	function add_label_column!(feature_df, source_df, new_column[, id])
@@ -317,7 +318,17 @@ df |> show; println(); top_n_values(df, :fur_color, 4) |> show
 
 ```
 """
-function top_n_values(df::AbstractDataFrame, col::COLUMN_TYPES, n::Int)::AbstractDataFrame
+function top_n_values(
+	df::AbstractDataFrame,
+	col::COLUMN_TYPES,
+	n::OPTIONAL_INT_TYPES=nothing
+	)::AbstractDataFrame
+
+	# Assign missing arguments
+	if isnothing(n)
+		n = 10
+	end
+
 	return first(sort(combine(nrow, groupby(df, col)), "nrow"; rev=true), n)
 end
 
