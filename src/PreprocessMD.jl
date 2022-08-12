@@ -32,25 +32,34 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Examples
 ```jldoctest
-using DataFrames
+julia> using DataFrames
 
-X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	blue = [true, false, false, true],
-	red  = [false, true, false, false],
-	green = [false, false, true, false]);
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], blue = [true, false, false, true], red  = [false, true, false, false], green = [false, false, true, false])
+4×4 DataFrame
+ Row │ name            blue   red    green
+     │ String          Bool   Bool   Bool
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+   3 │ Oscar           false  false   true
+   4 │ Grover           true  false  false
 
-Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	lovable = [true, true, false, true],
-	furry = [true, true, true, true],
-	old = [false, false, true, true]
-	);
-add_label_column!(X,Y,:furry)
-X
+julia> Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], lovable = [true, true, false, true], furry = [true, true, true, true], old = [false, false, true, true])
+4×4 DataFrame
+ Row │ name            lovable  furry  old
+     │ String          Bool     Bool   Bool
+─────┼───────────────────────────────────────
+   1 │ Cookie Monster     true   true  false
+   2 │ Elmo               true   true  false
+   3 │ Oscar             false   true   true
+   4 │ Grover             true   true   true
 
-# output
+julia> add_label_column!(X,Y,:furry)
+
+julia> X
 4×5 DataFrame
- Row │ name            blue   red    green  furry 
-     │ String          Bool   Bool   Bool   Cat…  
+ Row │ name            blue   red    green  furry
+     │ String          Bool   Bool   Bool   Cat…
 ─────┼────────────────────────────────────────────
    1 │ Cookie Monster   true  false  false  true
    2 │ Elmo            false   true  false  true
@@ -102,16 +111,22 @@ Column(s) `y` (all columns besides `x`, by default) become the column names of `
 
 # Examples
 ```jldoctest
-using DataFrames
+julia> using DataFrames
 
-df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], 
-               fur_color=["blue", "red", "green", "blue"]);
-pivot(df)
+julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], fur_color=["blue", "red", "green", "blue"])
+4×2 DataFrame
+ Row │ name            fur_color
+     │ String          String
+─────┼───────────────────────────
+   1 │ Cookie Monster  blue
+   2 │ Elmo            red
+   3 │ Oscar           green
+   4 │ Grover          blue
 
-# output
+julia> pivot(df)
 4×4 DataFrame
- Row │ name            blue   red    green 
-     │ String          Bool   Bool   Bool  
+ Row │ name            blue   red    green
+     │ String          Bool   Bool   Bool
 ─────┼─────────────────────────────────────
    1 │ Cookie Monster   true  false  false
    2 │ Elmo            false   true  false
@@ -176,20 +191,24 @@ Designate one column within a DataFrame as the label
 
 # Examples
 ```jldoctest
-using DataFrames
+julia> using DataFrames
 
-X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	lovable = [true, true, false, true],
-	furry = [true, true, true, true],
-	old = [false, false, true, true]
-	);
-set_label_column!(X,:lovable)
-X
-
-# output
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], lovable = [true, true, false, true], furry = [true, true, true, true], old = [false, false, true, true] )
 4×4 DataFrame
- Row │ name            lovable  furry  old   
-     │ String          Cat…     Bool   Bool  
+ Row │ name            lovable  furry  old
+     │ String          Bool     Bool   Bool
+─────┼───────────────────────────────────────
+   1 │ Cookie Monster     true   true  false
+   2 │ Elmo               true   true  false
+   3 │ Oscar             false   true   true
+   4 │ Grover             true   true   true
+
+julia> set_label_column!(X,:lovable)
+
+julia> X
+4×4 DataFrame
+ Row │ name            lovable  furry  old
+     │ String          Cat…     Bool   Bool
 ─────┼───────────────────────────────────────
    1 │ Cookie Monster  true      true  false
    2 │ Elmo            true      true  false
@@ -239,24 +258,31 @@ Filtration step
 
 # Examples
 ```jldoctest
-using DataFrames
+julia> using DataFrames
 
-X = DataFrame(
-	name=["Cookie Monster", "Elmo", "Oscar", "Grover"],
-	blue = [true, false, false, true],
-	red  = [false, true, false, false],
-	green = [false, false, true, false]);
+julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], blue = [true, false, false, true], red  = [false, true, false, false], green = [false, false, true, false])
+4×4 DataFrame
+ Row │ name            blue   red    green
+     │ String          Bool   Bool   Bool
+─────┼─────────────────────────────────────
+   1 │ Cookie Monster   true  false  false
+   2 │ Elmo            false   true  false
+   3 │ Oscar           false  false   true
+   4 │ Grover           true  false  false
 
-Y = DataFrame(
-	name=["Big Bird", "Cookie Monster", "Elmo"],
-	fuzzy=[false, true, true]
-	);
-subsetMD(X,Y)
+julia> Y = DataFrame(name=["Big Bird", "Cookie Monster", "Elmo"], fuzzy=[false, true, true])
+3×2 DataFrame
+ Row │ name            fuzzy
+     │ String          Bool
+─────┼───────────────────────
+   1 │ Big Bird        false
+   2 │ Cookie Monster   true
+   3 │ Elmo             true
 
-# output
+julia> subsetMD(X,Y)
 2×4 DataFrame
- Row │ name            blue   red    green 
-     │ String          Bool   Bool   Bool  
+ Row │ name            blue   red    green
+     │ String          Bool   Bool   Bool
 ─────┼─────────────────────────────────────
    1 │ Cookie Monster   true  false  false
    2 │ Elmo            false   true  false
@@ -288,13 +314,9 @@ Useful for initial feasibility checks, but medical codes are not considered
 
 # Examples
 ```jldoctest
-using DataFrames
+julia> using DataFrames
 
-df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"],
-	fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"]);
-df |> show; println(); top_n_values(df, :fur_color, 4) |> show
-
-# output
+julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"], fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"])
 8×2 DataFrame
  Row │ name            fur_color
      │ String          String
@@ -307,6 +329,8 @@ df |> show; println(); top_n_values(df, :fur_color, 4) |> show
    6 │ Ernie           orange
    7 │ Bert            yellow
    8 │ Rosita          blue
+
+julia> top_n_values(df, :fur_color, 4)
 4×2 DataFrame
  Row │ fur_color  nrow
      │ String     Int64
