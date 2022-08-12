@@ -15,7 +15,6 @@ makedocs(;
 	pages=["Home" => "index.md"],
 	strict=true,
 	doctest=true,
-	fix=true, #Set fix=true to update outdated doctests or generate new output
 )
 
 deploydocs(; repo="github.com/bcbi/PreprocessMD.jl", devbranch="main")
