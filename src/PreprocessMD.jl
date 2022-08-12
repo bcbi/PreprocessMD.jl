@@ -14,9 +14,9 @@ using MLJ: OrderedFactor
 
 export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values
 
-COLUMN_TYPES = Union{String, Symbol}
-OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
-OPTIONAL_INT_TYPES = Union{Int,Nothing}
+const COLUMN_TYPES = Union{String, Symbol}
+const OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
+const OPTIONAL_INT_TYPES = Union{Int,Nothing}
 
 """
 	function add_label_column!(feature_df, source_df, new_column[, id])
