@@ -2,6 +2,15 @@
 # Description
 Medically-informed data preprocessing for machine learning
 
+# Structure
+
+`PreprocessMD`:
+- `add_label_column!`
+- `pivot`
+- `set_label_column!`
+- `subsetMD`
+- `top_n_values`
+
 """
 module PreprocessMD
 
