@@ -1,3 +1,17 @@
+"""
+# Description
+Medically-informed data preprocessing for machine learning
+
+# Structure
+
+`PreprocessMD`:
+- `add_label_column!`
+- `pivot`
+- `set_label_column!`
+- `subsetMD`
+- `top_n_values`
+
+"""
 module PreprocessMD
 
 using DataFrames: AbstractDataFrame
@@ -24,7 +38,6 @@ const OPTIONAL_INT_TYPES = Union{Int,Nothing}
 Add column to a DataFrame based on symbol presence in the target DataFrame
 
 # Arguments
-- `
 - `feature_df::AbstractDataFrame`: feature DataFrame to which label column is added
 - `source_df::AbstractDataFrame`: DataFrame containing the label column
 - `new_column::Union{String, Symbol}`: name assigned to label column
@@ -184,7 +197,6 @@ end
 Designate one column within a DataFrame as the label
 
 # Arguments
-- `
 - `feature_df::AbstractDataFrame`: feature DataFrame
 - `col_name::Union{String, Symbol}`: label column
 - `id::Union{Nothing, String, Symbol}`: row IDs (Default: first column)
