@@ -257,6 +257,13 @@ function set_label_column!(
 	return nothing
 end
 
+function size_warning(df::AbstractDataFrame)::Nothing
+	WARN_SIZE = 10 ^ 6
+	if( size(df)[1] >= WARN_SIZE || size(df)[2] >= WARN_SIZE )
+		@warn "This DataFrame is large. Computation may take a while."
+	end
+end
+
 """
 	function subsetMD(main_df, check_df, main_id, check_id)
 
