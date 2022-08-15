@@ -51,6 +51,6 @@ add_label_column!(p_AGGREGATE, DEATH, :death)
 ```@autodocs
 Modules = [PreprocessMD]
 Private = false
-Order = [:function]
+Order = [:module, :function]
 ```
 
