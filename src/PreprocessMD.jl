@@ -100,6 +100,9 @@ function add_label_column!(
 		end
 	end
 
+	size_warning(feature_df)
+	size_warning(source_df)
+
 	# Assign missing arguments
 	if isnothing(id)
 		id = names(feature_df)[1]
@@ -163,6 +166,8 @@ function pivot(
 		#@warn "DataFrame must have at least 2 columns"
 		throw(DomainError(df))
 	end
+
+	size_warning(df)
 
 	# Assign missing arguments
 	if isnothing(newcols)
@@ -247,6 +252,8 @@ function set_label_column!(
 		end
 	end
 
+	size_warning(feature_df)
+
 	# Assign missing arguments
 	if isnothing(id)
 		id = names(feature_df)[1]
@@ -315,6 +322,9 @@ function subsetMD(
 	check_id::OPTIONAL_COLUMN_TYPES=nothing,
 	)::AbstractDataFrame
 
+	size_warning(maindf)
+	size_warning(check_df)
+
 	# Assign missing arguments
 	if isnothing(main_id)
 		main_id = names(main_df)[1]
@@ -366,6 +376,8 @@ function top_n_values(
 	col::COLUMN_TYPES,
 	n::OPTIONAL_INT_TYPES=nothing
 	)::AbstractDataFrame
+
+	size_warning(df)
 
 	# Assign missing arguments
 	if isnothing(n)
