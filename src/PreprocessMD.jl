@@ -48,36 +48,12 @@ Add column to a DataFrame based on symbol presence in the target DataFrame
 julia> using DataFrames
 
 julia> X = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], blue = [true, false, false, true], red  = [false, true, false, false], green = [false, false, true, false])
-4×4 DataFrame
- Row │ name            blue   red    green
-     │ String          Bool   Bool   Bool
-─────┼─────────────────────────────────────
-   1 │ Cookie Monster   true  false  false
-   2 │ Elmo            false   true  false
-   3 │ Oscar           false  false   true
-   4 │ Grover           true  false  false
 
 julia> Y = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover"], lovable = [true, true, false, true], furry = [true, true, true, true], old = [false, false, true, true])
-4×4 DataFrame
- Row │ name            lovable  furry  old
-     │ String          Bool     Bool   Bool
-─────┼───────────────────────────────────────
-   1 │ Cookie Monster     true   true  false
-   2 │ Elmo               true   true  false
-   3 │ Oscar             false   true   true
-   4 │ Grover             true   true   true
 
 julia> add_label_column!(X,Y,:furry)
 
 julia> X
-4×5 DataFrame
- Row │ name            blue   red    green  furry
-     │ String          Bool   Bool   Bool   Cat…
-─────┼────────────────────────────────────────────
-   1 │ Cookie Monster   true  false  false  true
-   2 │ Elmo            false   true  false  true
-   3 │ Oscar           false  false   true  true
-   4 │ Grover           true  false  false  true
 
 ```
 """
