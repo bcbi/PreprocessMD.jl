@@ -14,7 +14,8 @@ makedocs(;
 	sitename="PreprocessMD",
 	pages=["Home" => "index.md"],
 	strict=true,
-	doctest=true,
+	#doctest=true,
+	doctest=:fix,
 )
 
 deploydocs(; repo="github.com/bcbi/PreprocessMD.jl", devbranch="main")
