@@ -33,6 +33,12 @@ global const VFunction = false
 
 @testset "PreprocessMD" verbose = VPackage begin
 
+	@testset "Warnings" verbose = VTestCategory begin
+		N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
+		N = 10^5; df2 = DataFrame(name=rand(N), a=rand(1:10, N));
+		add_label_column!(df, df2, :b)
+		@test true
+	end
 	@testset "Intended exceptions" verbose = VTestCategory begin
 		@testset "ArgumentError" verbose = VErrorType begin
 			@testset "add_label_column!()" verbose = VFunction begin

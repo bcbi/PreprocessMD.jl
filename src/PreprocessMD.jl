@@ -100,6 +100,9 @@ function add_label_column!(
 		end
 	end
 
+	size_warning(feature_df)
+	size_warning(source_df)
+
 	# Assign missing arguments
 	if isnothing(id)
 		id = names(feature_df)[1]
@@ -163,6 +166,8 @@ function pivot(
 		#@warn "DataFrame must have at least 2 columns"
 		throw(DomainError(df))
 	end
+
+	size_warning(df)
 
 	# Assign missing arguments
 	if isnothing(newcols)
@@ -247,6 +252,8 @@ function set_label_column!(
 		end
 	end
 
+	size_warning(feature_df)
+
 	# Assign missing arguments
 	if isnothing(id)
 		id = names(feature_df)[1]
@@ -255,6 +262,13 @@ function set_label_column!(
 	# Set column as label
 	coerce!(feature_df, col_name => OrderedFactor{2})
 	return nothing
+end
+
+function size_warning(df::AbstractDataFrame)::Nothing
+	WARN_SIZE = 10 ^ 5
+	if( size(df)[1] >= WARN_SIZE || size(df)[2] >= WARN_SIZE )
+		@warn "This DataFrame is large. Computation may take a while."
+	end
 end
 
 """
@@ -308,6 +322,9 @@ function subsetMD(
 	check_id::OPTIONAL_COLUMN_TYPES=nothing,
 	)::AbstractDataFrame
 
+	size_warning(main_df)
+	size_warning(check_df)
+
 	# Assign missing arguments
 	if isnothing(main_id)
 		main_id = names(main_df)[1]
@@ -359,6 +376,8 @@ function top_n_values(
 	col::COLUMN_TYPES,
 	n::OPTIONAL_INT_TYPES=nothing
 	)::AbstractDataFrame
+
+	size_warning(df)
 
 	# Assign missing arguments
 	if isnothing(n)
