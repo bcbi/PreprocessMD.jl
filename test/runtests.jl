@@ -1,4 +1,8 @@
-using PreprocessMD
+using PreprocessMD: add_label_column!
+using PreprocessMD: pivot
+using PreprocessMD: set_label_column!
+using PreprocessMD: subsetMD
+using PreprocessMD: top_n_values
 
 using CSV: File
 
