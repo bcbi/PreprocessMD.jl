@@ -54,6 +54,9 @@ global const VFunction = false
 				@test_logs (:warn,) match_mode=:any set_label_column!(df, :a)
 			end
 			@testset "subsetMD" verbose = VFunction begin
+				N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
+				df2=df[1:10,:]
+				@test_logs (:warn,) match_mode=:any subsetMD(df, df2)
 			end
 			@testset "top_n_values" verbose = VFunction begin
 			end
