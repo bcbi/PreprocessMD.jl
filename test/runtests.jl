@@ -65,7 +65,6 @@ global const VFunction = false
 		end
 	end
 
-#=
 	@testset "Intended exceptions" verbose = VTestCategory begin
 		@testset "ArgumentError" verbose = VErrorType begin
 			@testset "add_label_column!()" verbose = VFunction begin
@@ -358,6 +357,5 @@ global const VFunction = false
 			@test top_n_values(df, :fur_color, 4) == DataFrame(AbstractVector[["blue", "yellow", "red", "green"], [3, 2, 1, 1]], Index(Dict(:nrow => 2, :fur_color => 1), [:fur_color, :nrow]))
 		end
 	end
-=#
 end
 
