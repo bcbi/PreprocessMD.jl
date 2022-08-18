@@ -1,9 +1,3 @@
-#using PreprocessMD: PreprocessMD
-
-#using Documenter: HTML
-#using Documenter: makedocs
-#using Documenter: deploydocs
-
 using PreprocessMD, Documenter
 DocMeta.setdocmeta!(PreprocessMD, :DocTestSetup, :(using DataFrames, PreprocessMD); recursive=true)
 
@@ -14,7 +8,7 @@ makedocs(;
 	sitename="PreprocessMD",
 	pages=["Home" => "index.md"],
 	strict=true,
-	doctest=true,
+	doctest=true, # Set doctest=:fix to revise the output of any failing tests
 )
 
 deploydocs(; repo="github.com/bcbi/PreprocessMD.jl", devbranch="main")
