@@ -50,6 +50,8 @@ global const VFunction = false
 				@test_logs (:warn,) match_mode=:any pivot(df)
 			end
 			@testset "set_label_column!" verbose = VFunction begin
+				N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
+				@test_logs (:warn,) match_mode=:any set_label_column!(df, :a)
 			end
 			@testset "subsetMD" verbose = VFunction begin
 			end
