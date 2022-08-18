@@ -38,13 +38,25 @@ global const VFunction = false
 
 @testset "PreprocessMD" verbose = VPackage begin
 
-	@testset "Warnings" verbose = VTestCategory begin
-		N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
-		N = 10^5; df2 = DataFrame(name=rand(N), a=rand(1:10, N));
-		@test_logs (:warn,) match_mode=:any add_label_column!(df, df2, :b)
+	@testset "Log messages" verbose = VTestCategory begin
+		@testset "Warnings" verbose = VTestCategory begin
+			@testset "add_label_column!()" verbose = VFunction begin
+				N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
+				N = 10^5; df2 = DataFrame(name=rand(N), a=rand(1:10, N));
+				@test_logs (:warn,) match_mode=:any add_label_column!(df, df2, :b)
+			end
+			@testset "pivot" verbose = VFunction begin
+			end
+			@testset "set_label_column!" verbose = VFunction begin
+			end
+			@testset "subsetMD" verbose = VFunction begin
+			end
+			@testset "top_n_values" verbose = VFunction begin
+			end
+		end
 	end
-#=
 
+#=
 	@testset "Intended exceptions" verbose = VTestCategory begin
 		@testset "ArgumentError" verbose = VErrorType begin
 			@testset "add_label_column!()" verbose = VFunction begin
