@@ -59,6 +59,8 @@ global const VFunction = false
 				@test_logs (:warn,) match_mode=:any subsetMD(df, df2)
 			end
 			@testset "top_n_values" verbose = VFunction begin
+				N = 10^5; df = DataFrame(name=rand(N), a=rand(1:10, N));
+				@test_logs (:warn,) match_mode=:any top_n_values(df, :a)
 			end
 		end
 	end
