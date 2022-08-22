@@ -345,7 +345,7 @@ Useful for initial feasibility checks, but medical codes are not considered
 ```jldoctest
 julia> using DataFrames
 
-julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Rosita"], fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"])
+julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bird", "Ernie", "Bert", "Herry"], fur_color=["blue", "red", "green", "blue", "yellow", "orange", "yellow", "blue"])
 8×2 DataFrame
  Row │ name            fur_color
      │ String          String
@@ -357,7 +357,7 @@ julia> df = DataFrame(name=["Cookie Monster", "Elmo", "Oscar", "Grover", "Big Bi
    5 │ Big Bird        yellow
    6 │ Ernie           orange
    7 │ Bert            yellow
-   8 │ Rosita          blue
+   8 │ Herry          blue
 
 julia> top_n_values(df, :fur_color, 4)
 4×2 DataFrame
