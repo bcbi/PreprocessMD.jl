@@ -1,7 +1,7 @@
 name = "PreprocessMD"
 uuid = "f785c8c6-3d80-4813-989a-2eb5f27d6bef"
 authors = ["Ashlin Harris <ashlin_harris@brown.edu>"]
-version = "3.1.0"
+version = "3.1.1"
 
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
