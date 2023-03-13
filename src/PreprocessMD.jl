@@ -35,7 +35,10 @@ const OPTIONAL_INT_TYPES = Union{Int,Nothing}
 """
 	function add_label_column!(feature_df, source_df, new_column[, id])
 
-Add column to a DataFrame based on symbol presence in the target DataFrame
+Add a label column to a DataFrame based on symbol presence in the target DataFrame
+
+A column from the target is not copied.
+Instead, the new column is a `CategoricalArray` containing `true` for any ID that is present in the target and `false` otherwise.
 
 # Arguments
 - `feature_df::AbstractDataFrame`: feature DataFrame to which label column is added
