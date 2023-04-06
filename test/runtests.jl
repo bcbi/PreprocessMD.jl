@@ -3,6 +3,7 @@ using PreprocessMD: pivot
 using PreprocessMD: set_label_column!
 using PreprocessMD: subsetMD
 using PreprocessMD: top_n_values
+using PreprocessMD: generate_cohort
 
 using CSV: File
 
@@ -284,6 +285,16 @@ global const VFunction = false
 
 			B = pivot(A, :a, :b)
 			@test B == C
+		end
+		@testset "pivot()" verbose = VFunction begin
+			df_condition_occurrence = DataFrame(condition_occurrence_id=[123, 5433, 8765, 12345, 6457, 62898], person_id = [1, 2, 3, 4, 5, 6], condition_concept_id = [196523, 436659, 435515, 436096, 440383, 37311319])
+
+			concepts = [196523, 436659, 435515, 436096, 440383]
+			
+			result = generate_cohort( :condition_concept_id, df_condition_occurrence, concepts)
+			
+			output = [1, 2, 3, 4, 5]
+			@test output == result
 		end
 		@testset "add_label_column!()" verbose = VFunction begin
 
