@@ -399,16 +399,16 @@ Output
 Unique list of person ids in your cohort whom you want to study
 
 # Examples
-# ```jldoctest
-# julia> using DataFrames
+ ```jldoctest
+ julia> using DataFrames
 
-# julia> df_condition_occurrence = DataFrame(condition_occurrence_id=[123, 5433, 8765, 12345, 6457, 62898], person_id = [1, 2, 3, 4, 5, 6], condition_concept_id = [196523, 436659, 435515, 436096, 440383, 37311319])
+ julia> df_condition_occurrence = DataFrame(condition_occurrence_id=[123, 5433, 8765, 12345, 6457, 62898], person_id = [1, 2, 3, 4, 5, 6], condition_concept_id = [196523, 436659, 435515, 436096, 440383, 37311319])
 
-# julia> concepts = [196523, 436659, 435515, 436096, 440383]
+ julia> concepts = [196523, 436659, 435515, 436096, 440383]
 
-# julia> result = generate_cohort( :condition_concept_id, df_condition_occurrence, concepts)
+ julia> result = generate_cohort( :condition_concept_id, df_condition_occurrence, concepts)
 
-# ```
+ ```
 """
 function generate_cohort(col_name, domain_table, concepts)
     # Load the relevant tables from the dataset
