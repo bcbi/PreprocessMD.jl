@@ -433,16 +433,10 @@ julia> result = generate_cohort( :condition_concept_id, df_condition_occurrence,
 ```
 """
 function generate_cohort(col_name, domain_table, concepts)
-    # Load the relevant tables from the dataset
-
     # Filter the domain table by concept IDs
     filtered_table = filter(row -> row[col_name] in concepts, domain_table)
 
-    # Join the filtered domain table with the person table to get demographics
-    #result = join(filtered_table, person_table, on = :person_id)
-    unique_id = unique(filtered_table, :person_id)
-
-    return unique_id.person_id
+    return unique(filtered_table.person_id)
 end
 
 end #module PreprocessMD
