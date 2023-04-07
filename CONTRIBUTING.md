@@ -7,3 +7,16 @@ Branches with additions may be submitted in a pull request, but issues with spec
 `PreprocessMD.jl` needs to run on a secure system (no internet access, fixed registry).
 Until we can make significant changes to our Julia environment maintenance pipeline (planned for Fall 2022), adding additional dependencies might not be feasible.
 In general, external packages with an emphasis on biomedical data should be linked within the documentation, rather than be integrated as dependencies in PreprocessMD.jl.
+
+## Doctests
+
+Generate missing doctest output:
+```
+$ cd PreprocessMD/docs/
+$ julia --project
+julia> using Pkg, Documenter
+julia> Pkg.develop(path="..")
+julia> using PreprocessMD
+julia> DocMeta.setdocmeta!(PreprocessMD, :DocTestSetup, :(using DataFrames, PreprocessMD); recursive=true)
+julia> doctest(PreprocessMD; fix=true)
+```
