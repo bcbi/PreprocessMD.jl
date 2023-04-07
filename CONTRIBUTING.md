@@ -4,9 +4,9 @@ Any preprocessing function that takes a DataFrame as input is a good candidate f
 Functions for data scrubbing (further upstream) and data preparing (further downstream) might also be a good fit. 
 Branches with additions may be submitted in a pull request, but issues with specific feature requests are also greatly appreciated!
 
-`PreprocessMD.jl` needs to run on a secure system (no internet access, fixed registry).
-Until we can make significant changes to our Julia environment maintenance pipeline (planned for Fall 2022), adding additional dependencies might not be feasible.
-In general, external packages with an emphasis on biomedical data should be linked within the documentation, rather than be integrated as dependencies in PreprocessMD.jl.
+At BCBI, `PreprocessMD.jl` is run on a secure enclave (no internet access, fixed registry).
+The local Julia package environment is managed with [SIEGE-internal](https://github.com/bcbi/SIEGE-internal), so all dependencies should be included here
+(A [public version of SIEGE](https://github.com/bcbi/SIEGE) is also available).
 
 ## Doctests
 
