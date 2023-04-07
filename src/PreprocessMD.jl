@@ -2,7 +2,7 @@
 # Description
 Medically-informed data preprocessing for machine learning
 
-# Structure
+# Functions
 
 `PreprocessMD`:
 - `add_label_column!`
@@ -10,7 +10,7 @@ Medically-informed data preprocessing for machine learning
 - `set_label_column!`
 - `subsetMD`
 - `top_n_values`
-- 'generate_cohort'
+- `generate_cohort`
 """
 module PreprocessMD
 
