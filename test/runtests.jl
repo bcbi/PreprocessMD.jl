@@ -1,4 +1,5 @@
 using PreprocessMD: add_label_column!
+using PreprocessMD: subset_invalid_date
 using PreprocessMD: pivot
 using PreprocessMD: set_label_column!
 using PreprocessMD: subsetMD
@@ -150,6 +151,9 @@ global const VFunction = false
 					# @test_throws MethodError add_label_column!(x, y)
 					# @test_throws MethodError add_label_column!(y, x)
 				end
+			end
+			@testset "subset_invalid_date" verbose = VFunction begin
+				@test_throws MethodError subset_invalid_date()
 			end
 			@testset "pivot()" verbose = VFunction begin
 				for x in [12, 1.0, "", x -> x]
