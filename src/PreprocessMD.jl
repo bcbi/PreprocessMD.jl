@@ -17,7 +17,7 @@ using DataFrames: unstack
 using MLJ: coerce!
 using MLJ: OrderedFactor
 
-export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values, generate_cohort
+export add_label_column!, subset_invalid_year, pivot, set_label_column!, subsetMD, top_n_values, generate_cohort
 
 const COLUMN_TYPES = Union{String, Symbol}
 const OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
@@ -108,6 +108,10 @@ function add_label_column!(
 
 	coerce!(feature_df, new_column => OrderedFactor{2})
 	return nothing
+end
+
+function subset_invalid_date(df, col, min, max)
+        filter( x-> !(Year(min) < Year(x[col]) < Year(max) ), df)
 end
 
 """
