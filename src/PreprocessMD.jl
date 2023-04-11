@@ -2,15 +2,6 @@
 # Description
 Medically-informed data preprocessing for machine learning
 
-# Functions
-
-`PreprocessMD`:
-- `add_label_column!`
-- `pivot`
-- `set_label_column!`
-- `subsetMD`
-- `top_n_values`
-- `generate_cohort`
 """
 module PreprocessMD
 
