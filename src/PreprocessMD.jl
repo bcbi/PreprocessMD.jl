@@ -2,18 +2,10 @@
 # Description
 Medically-informed data preprocessing for machine learning
 
-# Functions
-
-`PreprocessMD`:
-- `add_label_column!`
-- `pivot`
-- `set_label_column!`
-- `subsetMD`
-- `top_n_values`
-- `generate_cohort`
 """
 module PreprocessMD
 
+using Dates: Year
 using DataFrames: AbstractDataFrame
 using DataFrames: combine
 using DataFrames: DataFrame
@@ -26,7 +18,7 @@ using DataFrames: unstack
 using MLJ: coerce!
 using MLJ: OrderedFactor
 
-export add_label_column!, pivot, set_label_column!, subsetMD, top_n_values, generate_cohort
+export add_label_column!, subset_invalid_year, pivot, set_label_column!, subsetMD, top_n_values, generate_cohort
 
 const COLUMN_TYPES = Union{String, Symbol}
 const OPTIONAL_COLUMN_TYPES = Union{COLUMN_TYPES, Nothing}
@@ -117,6 +109,40 @@ function add_label_column!(
 
 	coerce!(feature_df, new_column => OrderedFactor{2})
 	return nothing
+end
+
+"""
+	function subset_invalid_year
+# Arguments
+#
+# Examples
+```jldoctest
+julia> using PreprocessMD, Dates, DataFrames
+
+julia> X = DataFrame(name=["Kermit", "Big Bird", "Herry", "Mr. Snuffleupagus", "Rosita", "Julia"], first_appearance=Date.(["1955-05-09", "1969-11-10", "1970-11-09", "1971-11-15", "1991-11-26", "2017-04-10"]))
+6×2 DataFrame
+ Row │ name               first_appearance
+     │ String             Dates.Date
+─────┼─────────────────────────────────────
+   1 │ Kermit             1955-05-09
+   2 │ Big Bird           1969-11-10
+   3 │ Herry              1970-11-09
+   4 │ Mr. Snuffleupagus  1971-11-15
+   5 │ Rosita             1991-11-26
+   6 │ Julia              2017-04-10
+
+julia> subset_invalid_year(X, :first_appearance, 1969, 2000)
+2×2 DataFrame
+ Row │ name    first_appearance
+     │ String  Dates.Date
+─────┼──────────────────────────
+   1 │ Kermit  1955-05-09
+   2 │ Julia   2017-04-10
+
+```
+"""
+function subset_invalid_year(df, col, min, max)
+        filter( x-> !(Year(min) <= Year(x[col]) <= Year(max) ), df)
 end
 
 """

@@ -1,4 +1,5 @@
 using PreprocessMD: add_label_column!
+using PreprocessMD: subset_invalid_year
 using PreprocessMD: pivot
 using PreprocessMD: set_label_column!
 using PreprocessMD: subsetMD
@@ -6,6 +7,9 @@ using PreprocessMD: top_n_values
 using PreprocessMD: generate_cohort
 
 using CSV: File
+
+using Dates: Date
+using Dates: Year
 
 using DataFrames: AbstractDataFrame
 using DataFrames: DataFrame
@@ -151,6 +155,9 @@ global const VFunction = false
 					# @test_throws MethodError add_label_column!(y, x)
 				end
 			end
+			@testset "subset_invalid_year" verbose = VFunction begin
+				@test_throws MethodError subset_invalid_year()
+			end
 			@testset "pivot()" verbose = VFunction begin
 				for x in [12, 1.0, "", x -> x]
 					#@test_throws MethodError pivot(x)
@@ -265,6 +272,19 @@ global const VFunction = false
 	end
 
 	@testset "Simple examples" verbose = VTestCategory begin
+		
+		@testset "subset_invalid_year" verbose = VFunction begin
+			X = DataFrame(
+				name=["Kermit", "Big Bird", "Herry", "Mr. Snuffleupagus", "Rosita", "Julia"],
+				first_appearance=Date.(["1955-05-09", "1969-11-10", "1970-11-09", "1971-11-15", "1991-11-26", "2017-04-10"])
+			)
+			Y = DataFrame(
+				name=["Kermit", "Julia"],
+				first_appearance=Date.(["1955-05-09", "2017-04-10"])
+			)
+			Z = subset_invalid_year(X, :first_appearance, 1969, 2000)
+			@test Y == Z
+		end
 		@testset "pivot()" verbose = VFunction begin
 			A = DataFrame(; a=[1, 2, 1], b=['x', 'y', 'y'])
 			B = pivot(A, :a, :b)
@@ -286,7 +306,7 @@ global const VFunction = false
 			B = pivot(A, :a, :b)
 			@test B == C
 		end
-		@testset "pivot()" verbose = VFunction begin
+		@testset "generate_cohort" verbose = VFunction begin
 			df_condition_occurrence = DataFrame(condition_occurrence_id=[123, 5433, 8765, 12345, 6457, 62898], person_id = [1, 2, 3, 4, 5, 6], condition_concept_id = [196523, 436659, 435515, 436096, 440383, 37311319])
 
 			concepts = [196523, 436659, 435515, 436096, 440383]
