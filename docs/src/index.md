@@ -17,6 +17,8 @@ using DataFrames: innerjoin
 using DataFrames: DataFrame
 using Downloads: download
 
+using MLJ
+
 using PreprocessMD: add_label_column!
 using PreprocessMD: pivot
 
