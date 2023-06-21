@@ -1,3 +1,6 @@
+using MLJ
+using PreprocessMD
+
 using PreprocessMD: add_label_column!
 using PreprocessMD: subset_invalid_year
 using PreprocessMD: pivot
