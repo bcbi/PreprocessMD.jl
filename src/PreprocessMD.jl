@@ -265,7 +265,7 @@ end
 Function -> Generate_cohort
 Inputs 
 Col_name -> column name
-domain_table -> the case table on which your concapts are based on example conditions, onservations, drugs, measurements
+domain_table -> the case table on which your concepts are based on example conditions, observations, drugs, measurements
 concepts -> The list of concept id's you want to study
 Output
 Unique list of person ids in your cohort whom you want to study
