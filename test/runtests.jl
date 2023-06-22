@@ -46,6 +46,11 @@ global const VFunction = false
 
 @testset "PreprocessMD" verbose = VPackage begin
 
+	@testset "No weakdeps tests" verbose = VTestCategory begin
+		@test add_label_column!() |> isnothing
+		@test set_label_column!() |> isnothing
+	end
+
 	@testset "Log messages" verbose = VTestCategory begin
 		@testset "Warnings" verbose = VTestCategory begin
 			@testset "add_label_column!()" verbose = VFunction begin
