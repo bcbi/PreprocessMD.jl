@@ -1,5 +1,6 @@
 # Directories
 docs/build/
+.vscode/
 
 # Files
 *.jl.*.cov

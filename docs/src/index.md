@@ -13,12 +13,9 @@ Documentation for [PreprocessMD.jl](https://github.com/bcbi/PreprocessMD.jl).
 
 ```@example
 using CSV: File
-using DataFrames: innerjoin
-using DataFrames: DataFrame
 using Downloads: download
 
-using PreprocessMD: add_label_column!
-using PreprocessMD: pivot
+using DataFrames, MLJ, PreprocessMD
 
 # Download synthetic data
 url = "https://physionet.org/files/mimic-iv-demo-omop/0.9/1_omop_data_csv"

@@ -1,5 +1,5 @@
 using PreprocessMD, Documenter
-DocMeta.setdocmeta!(PreprocessMD, :DocTestSetup, :(using DataFrames, PreprocessMD); recursive=true)
+DocMeta.setdocmeta!(PreprocessMD, :DocTestSetup, :(using DataFrames, MLJ, PreprocessMD); recursive=true)
 
 makedocs(;
 	modules=[PreprocessMD],

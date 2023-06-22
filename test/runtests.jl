@@ -1,3 +1,6 @@
+using MLJ
+using PreprocessMD
+
 using PreprocessMD: add_label_column!
 using PreprocessMD: subset_invalid_year
 using PreprocessMD: pivot
@@ -42,6 +45,11 @@ global const VErrorType = false
 global const VFunction = false
 
 @testset "PreprocessMD" verbose = VPackage begin
+
+	@testset "No weakdeps tests" verbose = VTestCategory begin
+		@test add_label_column!() |> isnothing
+		@test set_label_column!() |> isnothing
+	end
 
 	@testset "Log messages" verbose = VTestCategory begin
 		@testset "Warnings" verbose = VTestCategory begin
